@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\WebsiteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,9 +15,8 @@ use App\Http\Controllers\LoginController;
 |
 */
 
-Route::get('/', function () {
-    return view('login'); 
-});
+Route::get('/',[WebsiteController::class,'index'])->name('index');
+Route::get('/login',[LoginController::class,'index']);
 Route::post('/login',[LoginController::class,'login'])->name('login');
 Route::post('/register',[LoginController::class,'register'])->name('register');
 Route::get('/logout',[LoginController::class,'logout'])->name('logout');
