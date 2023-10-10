@@ -1,5 +1,5 @@
-@include('layout.head')
-@include('layout.navbar')
+@include('layouts.head')
+@include('layouts.navbar')
 
         <main class="main">
             <div class="home-slider slide-animate owl-carousel owl-theme show-nav-hover nav-big mb-2 text-uppercase" data-owl-options="{
@@ -2515,4 +2515,4 @@
 		</button>
     </div>
     <!-- End .newsletter-popup -->
-@include('layout.footer')
+@include('layouts.footer')

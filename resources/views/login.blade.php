@@ -1,5 +1,5 @@
-@include('layout.head')
-@include('layout.navbar')
+@include('layouts.head')
+@include('layouts.navbar')
 <main class="main">
     <div class="page-header">
         <div class="container d-flex flex-column align-items-center">
@@ -86,7 +86,7 @@
         </div>
     </div>
 </main><!-- End .main -->
-@include('layout.footer')
+@include('layouts.footer')
 <script>
     $(document).ready(function() {
         $("#login-form").submit(function(e) {
