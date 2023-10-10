@@ -665,7 +665,7 @@
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="mb-3">
-                                                <label>Product Image</label>
+                                                <label>Product Image.*</label>
                                                 <input type="file" name="image" id="image" class="form-control"
                                                     onchange="loadFile(event)">
                                                 <img id="output" width="55px" class="mt-3" />
@@ -685,87 +685,26 @@
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="mb-3">
-                                                <label>Product Name</label>
+                                                <label>Product Name.*</label>
                                                 <input class="form-control" id="product_name" type="text"
                                                     placeholder="Enter Product Title" data-bs-original-title=""
                                                     title="" name="product_name" value="{{ old('product_name') }}">
                                             </div>
                                         </div>
-
                                         <div class="col-lg-6">
                                             <div class="mb-3">
-                                                <label>Product Color</label>
-                                                <select name="color[]" class="form-control js-example-basic-multiple"
-                                                    multiple>
-                                                    @if (count($attributes->get_attr) > 0)
-                                                        @foreach ($attributes->get_attr as $attribute)
-                                                            <option value="{{ $attribute->id }}"
-                                                                {{ collect(old('color'))->contains($attribute->id) ? 'selected' : '' }}>
-                                                                <div class="color_box m-1"
-                                                                    style="background-color: {{ $attribute->color_code }}">
-                                                                </div> {{ $attribute->attribute_value }}
-                                                            </option>
-                                                        @endforeach
-                                                    @endif
-                                                </select>
-                                                <input type="hidden" name="color_id" value="{{ $attributes->id }}">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="mb-3">
-                                                <label>Select Parent Category.*</label>
+                                                <label>SelectCategory.*</label>
                                                 <select id="parent_category_id" name="parent_category_id"
                                                     for="exampleFormControlInput10" class="form-control btn-square type">
-                                                    <option value="" disabled selected>Choose Parent Category</option>
-                                                    @foreach ($parent_categories as $parents)
-                                                        <option id="parent_category_id" value="{{ $parents->id }}"
-                                                            class="form-control btn-square">
-                                                            {{ $parents->parent_category_name }}
-                                                        </option>
-                                                    @endforeach
+                                                    <option value="" disabled selected>Choose Category</option>
+                                                    <option value="Dummy Category">Dummy Category</option>
+                                                  
                                                 </select>
                                             </div>
                                         </div>
-
-                                        {{-- <div class="col-lg-6">
-                                            <div class="mb-3">
-                                                <label>Length Size</label>
-                                                <select name="length_ids[]" class="form-control js-example-basic" multiple>
-                                                    @foreach ($length as $lengthname)
-                                                        <option value="{{ $lengthname->id }}">{{ $lengthname->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                                <input type="hidden" name="color_id" value="{{ $attributes->id }}">
-                                            </div>
-                                        </div> --}}
-
-                                        <div class="col-lg-6">
-                                            <div class="mb-3">
-                                                <label>Length Size</label>
-                                                <select name="length_id[]" class="form-control js-example-basic"
-                                                    multiple>
-                                                        @foreach ($length as $lengthname)
-
-                                                        <option value="{{$lengthname->id}}"  class="form-control btn-square">{{$lengthname->name}}</option>
-                                                        @endforeach
-                                                </select>
-                                                {{-- <input type="hidden" name="length_id" value="{{ $lengthname->id }}"> --}}
-                                            </div>
-                                        </div>
-                                        {{-- <div class="col-lg-6">
-                                            <div class="mb-3">
-                                                <label>Select Main Category.*</label>
-                                                <select id="main-category_id" for="exampleFormControlInput10"
-                                                    class="form-control btn-square type" name="main_category_id">
-
-                                                </select>
-                                            </div>
-                                        </div> --}}
                                     </div>
                                     <div class="row mt-4 mb-4" id="discounted_id">
-                                        <div class="col-md-4">
+                                        <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="exampleFormControlInput10">Regular price.*</label>
                                                 <input type="number" class="form-control regularPrice salePrice"
@@ -773,45 +712,12 @@
                                                     value="{{ old('regular_price') }}">
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="exampleFormControlInput10">Sale price.* <span
-                                                        class="schedule">Schedule</span></label>
+                                                <label for="exampleFormControlInput10">Sale price.*</label>
                                                 <input type="number" class="form-control salePrice"
                                                     placeholder="Sale price" id="sale_price" name="sale_price"
                                                     value="{{ old('sale_price') }}">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="exampleFormControlInput10">Quantity.*</label>
-                                                <input type="text" class="form-control quantity" placeholder="Quantity"
-                                                    id="quantity" name="quantity" value="{{ old('quantity') }}">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row mt-4 mb-4 data" id="sale">
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label for="exampleFormControlInput10">Sale start
-                                                    date.*</label>
-                                                <input type="date" class="form-control" placeholder="Sale start date"
-                                                    id="sale_start" name="sale_start">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <label for="exampleFormControlInput10">Sale end date.*</label>
-                                                <input type="date" class="form-control" placeholder="Sale end date"
-                                                    id="sale_end" name="sale_end">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="mb-3">
-                                                <label for="">Short Description</label>
-                                                <textarea class="form-control" name="short_description" id="short_description" cols="30" rows="3">{{ old('short_description') }}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -856,15 +762,6 @@
         };
     </script>
     <script>
-        $(":input").on("keyup change", function(e) {
-            var price = $("#price").val();
-            var discount = $("#discount").val();
-            var discounted_price = price * discount / 100;
-            // console.log(discounted_price);
-
-            var final = $("#discounted_price").val(price - discounted_price);
-
-        });
 
 
 
@@ -909,203 +806,6 @@
             }
         });
 
-
-        $("#sale_end").on("change", function() {
-            var sale_start = $("#sale_start").val();
-            var sale_end = $("#sale_end").val();
-
-            if (sale_start == '' && sale_end == '') {
-                $("#sale_start").removeClass('is-error');
-                $("#sale_end").removeClass('is-error');
-                $("#save_next_btn").attr('disabled', false);
-                $("#save_next_btn").removeClass("not-allowed");
-                return false;
-            }
-
-
-            if (sale_start != '' && sale_end != '') {
-
-                if (new Date(sale_start) >= new Date(sale_end)) {
-                    $("#sale_end").val("");
-                    $("#sale_end").focus();
-                    $("#sale_start").addClass('is-error');
-                    $("#sale_start").focus();
-                    $("#save_next_btn").attr('disabled', true);
-                    $("#save_next_btn").addClass("not-allowed");
-                    toastr.error('Sale end date must be greate than sale start date.');
-                    return false;
-                }
-
-
-                $("#sale_start").removeClass('is-error');
-                $("#sale_end").removeClass('is-error');
-                $("#save_next_btn").attr('disabled', false);
-                $("#save_next_btn").removeClass("not-allowed");
-                return false;
-            }
-
-            if (sale_end == '' && sale_start != '') {
-                $("#sale_start").focus();
-                $("#save_next_btn").attr('disabled', true);
-                $("#save_next_btn").addClass("not-allowed");
-                $("#sale_start").addClass('is-error');
-                // return false;
-            }
-
-            if (sale_end != '' && sale_start == '') {
-                $("#sale_start").focus();
-                $("#save_next_btn").attr('disabled', true);
-                $("#save_next_btn").addClass("not-allowed");
-                $("#sale_start").addClass('is-error');
-                // return false;
-            }
-
-
-
-            if (new Date(sale_start) >= new Date(sale_end)) {
-                $("#sale_end").val("");
-                $("#sale_end").focus();
-                $("#sale_end").addClass('is-error');
-                $("#sale_end").focus();
-                $("#save_next_btn").attr('disabled', true);
-                $("#save_next_btn").addClass("not-allowed");
-                toastr.error('Sale end date must be greate than sale start date.');
-            }
-
-
-            // if(sale_start == ''){
-            //     toastr.error('Please add sale start date.');
-            //     $("#sale_start").addClass('is-error');
-            //     $("#sale_start").focus();
-            //     return false
-            // }
-            // if(new Date(sale_start) >= new Date(sale_end)){
-            //     $("#sale_end").val("");
-            //     $("#sale_end").focus();
-            //     $("#sale_end").addClass('is-error');
-            //     $("#sale_end").focus();
-            //     toastr.error('Sale end date must be greate than sale start date.');
-            // }
-
-            // if(sale_start != '' && sale_end != ''){
-            //     $("#save_next_btn").attr('disabled', false);
-            //     $("#save_next_btn").removeClass("not-allowed");
-            // }
-
-            // if(sale_start == '' && sale_end == ''){
-            //     $("#save_next_btn").attr('disabled', false);
-            //     $("#save_next_btn").removeClass("not-allowed");
-            // }
-
-        });
-
-        $("#sale_start").on("change", function() {
-            var sale_start = $("#sale_start").val();
-            var sale_end = $("#sale_end").val();
-
-            if (sale_start == '' && sale_end == '') {
-                $("#sale_start").removeClass('is-error');
-                $("#sale_end").removeClass('is-error');
-                $("#save_next_btn").attr('disabled', false);
-                $("#save_next_btn").removeClass("not-allowed");
-                return false;
-            }
-
-            if (sale_start != '' && sale_end != '') {
-
-                if (new Date(sale_start) >= new Date(sale_end)) {
-                    $("#sale_end").val("");
-                    $("#sale_end").focus();
-                    $("#sale_end").addClass('is-error');
-                    $("#sale_start").addClass('is-error');
-                    $("#sale_start").focus();
-                    $("#save_next_btn").attr('disabled', true);
-                    $("#save_next_btn").addClass("not-allowed");
-                    toastr.error('Sale end date must be greate than sale start date.');
-                    return false;
-                }
-
-                $("#sale_end").removeClass('is-error');
-                $("#sale_start").removeClass('is-error');
-                $("#save_next_btn").attr('disabled', false);
-                $("#save_next_btn").removeClass("not-allowed");
-                return false;
-            }
-
-            if (sale_start == '' && sale_end != '') {
-                $("#sale_start").focus();
-                $("#save_next_btn").attr('disabled', true);
-                $("#save_next_btn").addClass("not-allowed");
-                $("#sale_start").addClass('is-error');
-                return false;
-            }
-
-            if (sale_start != '' && sale_end == '') {
-                $("#sale_end").focus();
-                $("#save_next_btn").attr('disabled', true);
-                $("#save_next_btn").addClass("not-allowed");
-                $("#sale_end").addClass('is-error');
-                return false;
-            }
-
-
-            if (new Date(sale_start) >= new Date(sale_end)) {
-                $("#sale_end").val("");
-                $("#sale_end").focus();
-                $("#sale_start").addClass('is-error');
-                $("#sale_start").focus();
-                $("#save_next_btn").attr('disabled', false);
-                $("#save_next_btn").removeClass("not-allowed");
-                toastr.error('Sale end date must be greate than sale start date.');
-            }
-
-        });
-    </script>
-    <script>
-        $(document).ready(function() {
-            $('.data').hide()
-            jQuery('.schedule').on('click', function() {
-                jQuery('.data').toggle();
-            })
-        });
-        $(document).ready(function() {
-
-            $('#parent_category_id').on('change', function() {
-                var id = $(this).val();
-                $.ajax({
-                    type: "GET",
-                    url: '{{ route('get_main_category') }}',
-                    "dataSrc": "",
-                    data: {
-                        'id': id
-                    },
-                    beforeSend: function() {
-                        $(".loader-bg").removeClass('loader-active');
-                    },
-                    success: function(response) {
-                        $(".loader-bg").addClass('loader-active');
-                        $('#main-category_id').html('');
-                        if (response != '') {
-                            $.each(response.maincategory, function(value, i) {
-
-                                $('#main-category_id').append(
-                                    `<option   value ="${i.id}" >${i.main_category_name}</option>`
-                                );
-                            });
-                        } else {
-                            $('#main-category_id').append('<h3>No Category Found</h3>');
-                        }
-                    }
-                });
-            });
-
-
-
-
-        });
-    </script>
-    {{-- image upload --}}
-    <script>
         var images = [];
 
         function image_select() {

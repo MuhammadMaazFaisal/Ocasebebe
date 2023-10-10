@@ -1,22 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Backend;
+namespace App\Http\Controllers\Admin;
 
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Models\BackendModels\Brand;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
-use App\Models\BackendModels\Product;
-use App\Models\BackendModels\Length;
-use App\Models\BackendModels\Attribute;
-use App\Models\BackendModels\AttributeValue;
-use App\Models\BackendModels\SubCategory;
-use Illuminate\Support\Facades\Validator;
-use App\Models\BackendModels\MainCategory;
-use App\Models\BackendModels\ParentCategory;
-use App\Models\BackendModels\ProductAttribute;
+use App\Models\Product;
 
 class ProductController extends Controller
 {
@@ -27,7 +18,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::get();
+        $products = Product::latest()->get();
         return view('admin_dashboard.product.index', get_defined_vars());
     }
 
@@ -40,9 +31,6 @@ class ProductController extends Controller
     {
         $data = Product::get();
         $last_data_object = collect($data)->last();
-        $parent_categories = ParentCategory::get();
-        $attributes = Attribute::where('id', 1)->with('get_attr')->first();
-        $length = Length::where('status','1')->get();
 
         return view('admin_dashboard.product.create', get_defined_vars());
     }
@@ -56,32 +44,20 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $products = Product::where('id', $id)->with('product_attribute', 'get_main_category')->first();
-        // return json_decode($products->product_attribute->attribute_value_id);
-        $parent_categories = ParentCategory::get();
-        $main_categories = maincategory::get();
-        // return $products->product_attributes[0]->product_attribute_id;
-        // return $attributes = ProductAttribute::where('product_id', $id)->get();
-        $attribute_lists = AttributeValue::where('attribute_id', 1)->get();
-        $length = Length::where('status','1')->get();
+        $products = Product::where('id', $id)->first();
 
         return view('admin_dashboard.product.edit', get_defined_vars());
     }
 
     public function updateproductdata(Request $request, $id)
     {
-
         $product_validation = Product::find($id);
 
         $validated = $request->validate([
             'product_name' => 'required',
-            // 'color' => 'required',
             'parent_category_id' => 'required',
             'regular_price' => 'required',
-            'quantity' => 'required',
-            'short_description' => 'required',
             'description' => 'required',
-            'length_id' => 'required',['length_id.required'=>'length field is required']
         ]);
 
 
@@ -93,65 +69,17 @@ class ProductController extends Controller
         }
 
 
-        $discount_status = null;
-
-        if (!empty($request->sale_start) && !empty($request->sale_end)) {
-            $now = strtotime(now());
-            $sale_start = Carbon::create(date('Y', strtotime($request->sale_start)), date('m', strtotime($request->sale_start)), date('d', strtotime($request->sale_start)));
-            $sale_end = Carbon::create(date('Y', strtotime($request->sale_end)), date('m', strtotime($request->sale_end)), date('d', strtotime($request->sale_end)));
-
-            if ($request->sale_price != null) {
-                $discount_status = true;
-            }
-        }
 
 
 
         // return $request->all();
         $product = Product::find($id);
-        $product->length_id = json_encode($request->length_id);
-        $product->parent_category_id = $request->parent_category_id;
-        $product->main_category_id = $request->main_category_id;
-        // $product->length_id = $request->length_id;
-        $product->sub_category_id = $request->sub_category_id;
+        $product->category = $request->parent_category_id;
         $product->product_name = $request->product_name;
-        $product->slug = Str::slug($request->product_name, "-");
         $product->price = $request->regular_price;
-        $product->sale_price = $request->sale_price;
-
-
-        if ($request->sale_price != '') {
-            $product->discounted_price = $request->sale_price;
-            $product->discount = ($request->regular_price - $request->sale_price);
-            $product->discount_percent = number_format((($request->regular_price - $request->sale_price) / $request->regular_price) * 100, 2);
-            $product->sale_start = $request->sale_start ?? null;
-            $product->sale_end = $request->sale_end ?? null;
-            $product->discount_status = 1;
-        } else {
-
-            $product->sale_price = null;
-            $product->discounted_price = null;
-            $product->discount = null;
-            $product->discount_percent = null;
-            $product->discount_status = null;
-            $product->sale_start = null;
-            $product->sale_end = null;
-        }
-
-
-
-
-        $product->total_price = $request->total_price;
-        // $product->price = $request->price;
-        // $product->sku = $request->sku;
-        $product->brand_id = $request->brand_id;
-        $product->quantity = $request->quantity;
-        $product->remaining_quantity = $request->quantity;
+        $product->discount_price = $request->sale_price;
         $product->status = 1;
         $product->description = $request->description;
-        $product->short_description = $request->short_description;
-
-
 
 
         // single image
@@ -174,22 +102,6 @@ class ProductController extends Controller
 
         $product->save();
 
-        if (!empty($request->color)) {
-            $attribute_value = AttributeValue::whereIn('id', $request->color)->get();
-            $attr_id =  $attribute_value->pluck('id');
-            $attr_value = $attribute_value->pluck('attribute_value');
-
-
-            $product_attribute = ProductAttribute::where('product_id', $product->id)->first();
-            $product_attribute->product_id = $product->id;
-            $product_attribute->product_attribute_id = 1;
-            $product_attribute->attribute_value_id = json_encode($attr_id);
-            $product_attribute->attribute_value = json_encode($attr_value);
-            $product_attribute->save();
-            // }
-        }
-
-
         $notification = array('message' => 'Product added successfully! ', 'alert-type' => 'success');
         return redirect()->route('product.index')->with($notification);
 
@@ -205,76 +117,23 @@ class ProductController extends Controller
     {
         $validated = $request->validate([
             'image' => 'required',
-            'multiple_image' => 'required',
             'product_name' => 'required|unique:products,product_name',
-            // 'color' => 'required',
             'parent_category_id' => 'required',
             'regular_price' => 'required',
-            'quantity' => 'required',
-            'short_description' => 'required',
             'description' => 'required',
-            'length_id' => 'required',['length_id.required'=>'length field is required']
 
 
         ]);
 
 
-        $discount_status = null;
-
-        if (!empty($request->sale_start) && !empty($request->sale_end)) {
-            $now = strtotime(now());
-            $sale_start = Carbon::create(date('Y', strtotime($request->sale_start)), date('m', strtotime($request->sale_start)), date('d', strtotime($request->sale_start)));
-            $sale_end = Carbon::create(date('Y', strtotime($request->sale_end)), date('m', strtotime($request->sale_end)), date('d', strtotime($request->sale_end)));
-
-            if ($request->sale_price != null) {
-                $discount_status = true;
-            }
-        }
-
-
         // return $request->all();
         $product = new Product();
-        $product->length_id = json_encode($request->length_id);
-        $product->parent_category_id = $request->parent_category_id;
-        // $product->length_id = $request->length_id;
-        $product->main_category_id = $request->main_category_id;
-        $product->sub_category_id = $request->sub_category_id;
+        $product->category = $request->parent_category_id;
         $product->product_name = $request->product_name;
-        $product->slug = Str::slug($request->product_name, "-");
         $product->price = $request->regular_price;
-        $product->sale_price = $request->sale_price;
-
-
-        if ($request->sale_price != '') {
-            $product->discounted_price = $request->sale_price;
-            $product->discount = ($request->regular_price - $request->sale_price);
-            $product->discount_percent = number_format((($request->regular_price - $request->sale_price) / $request->regular_price) * 100, 2);
-            $product->sale_start = $request->sale_start ?? null;
-            $product->sale_end = $request->sale_end ?? null;
-            $product->discount_status = 1;
-        } else {
-
-            $product->sale_price = null;
-            $product->discounted_price = null;
-            $product->discount = null;
-            $product->discount_percent = null;
-            $product->discount_status = null;
-            $product->sale_start = null;
-            $product->sale_end = null;
-        }
-
-
-
-
-        $product->total_price = $request->total_price;
-        // $product->price = $request->price;
-        // $product->sku = $request->sku;
-        $product->brand_id = $request->brand_id;
-        $product->quantity = $request->quantity;
-        $product->remaining_quantity = $request->quantity;
+        $product->discount_price = $request->sale_price;
         $product->status = 1;
         $product->description = $request->description;
-        $product->short_description = $request->short_description;
 
 
 
@@ -298,22 +157,6 @@ class ProductController extends Controller
         }
         // $product->length
         $product->save();
-
-        if (!empty($request->color)) {
-            $attribute_value = AttributeValue::whereIn('id', $request->color)->get();
-            $attr_id =  $attribute_value->pluck('id');
-            $attr_value = $attribute_value->pluck('attribute_value');
-            // for ($i=0; $i < count($request->color); $i++) {
-
-            $product_attribute = new ProductAttribute();
-            $product_attribute->product_id = $product->id;
-            $product_attribute->product_attribute_id = $request->color_id;
-            $product_attribute->attribute_value_id = json_encode($attr_id);
-            $product_attribute->attribute_value = json_encode($attr_value);
-            $product_attribute->save();
-            // }
-        }
-
 
         $notification = array('message' => 'Product added successfully! ', 'alert-type' => 'success');
         return redirect()->route('product.index')->with($notification);
@@ -663,7 +506,6 @@ class ProductController extends Controller
         File::delete(public_path('products/' . $image_delete->image));
         $product_delete  = Product::where('id', $id)->first();
         $product_delete->delete();
-        $product_delete = ProductAttribute::where('product_id', $product_delete->id)->delete();
         $notification = array('message' => 'Product Deleted Successfully ! ', 'alert-type' => 'success');
         return redirect()->route('product.index')->with($notification);
     }

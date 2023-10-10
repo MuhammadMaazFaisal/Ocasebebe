@@ -1,18 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\Configuration;
 use Carbon\Carbon;
 use App\Models\User;
-use App\Models\BillingInfo;
 use Illuminate\Http\Request;
-use App\Models\OrderCancellation;
-use App\Models\FrontendModels\Order;
+use App\Models\Order;
 use Illuminate\Support\Facades\Mail;
-use App\Models\BackendModels\Product;
-use App\Models\BackendModels\OrderNote;
-use App\Models\FrontendModels\UserAddress;
+use App\Models\Product;
+use App\Http\Controllers\Controller;
 
 
 
@@ -27,17 +24,8 @@ class OrderManagementController extends Controller
      */
     public function index()
     {
-        // $orders = Order::with('user')->orderBy('id', 'desc')->where('order_status', '!=', null)->withCount(['purchased_items' => function ($query) {
-        //     $query->where('admin_product_approval_status', 1);
-        // }])->withCount(['purchased_items_refund_admin_count' => function ($query) {
-        //     $query->where('admin_product_approval_status', 2);
-        // }])->get();
-        // // check single product checked admin approval
-        // $single_product_admin_approval_count = BillingInfo::where('admin_product_approval_status',1)->get()->count();
 
-        // return view('admin_dashboard.orderManagement.index', get_defined_vars());
-
-        $orders = Order::with('order_product.color_id', 'order_product.product', 'order_address.country', 'order_address.state', 'order_address.city')->withSum('order_product', 'quantity')->orderby('id', 'ASC')->get();
+        $orders = Order::all();
 
         return view('admin_dashboard.orderManagement.index', get_defined_vars());
     }
@@ -71,26 +59,6 @@ class OrderManagementController extends Controller
      */
     public function show($id)
     {
-
-
-        // $order = Order::where('id', $id)->with('user', 'purchased_items.product', 'purchased_items.variations','purchased_items.get_refund')->first();
-        // $order_notes = OrderNote::where('order_id', $order->id)->with('ordernotes')->with('purchased_items.product', 'purchased_items.variations')->get();
-        // $invoices = Order::where('id', $id)->with('user', 'purchased_items', 'billing_address', 'shipping_address')->has('purchased_items', '!=', '')->first();
-        // $shipping = UserAddress::where('user_id', $order->user_id)->where('shipping_active_address', 1)->first();
-        // $billing = UserAddress::where('user_id', $order->user_id)->where('billing_active_address', 2)->first();
-        // $check_cancelled_order = BillingInfo::where('order_id', $order->id)->where('product_request_status', 2)->first();
-        // $check_refund_order = BillingInfo::where('order_id', $order->id)->where('product_request_status', 3)->first();
-        // $reasons = BillingInfo::where('order_id', $order->id)->where('product_request_status', 2)->first();
-        // $refundreasons = BillingInfo::where('order_id', $order->id)->where('product_request_status', 2)->first();
-        // $history_status = BillingInfo::where('order_id', $order->id)->where('admin_product_approval_status', '!=', null)->first();
-        // $check_orders = OrderCancellation::where('order_id', $id)->where('check_status', 1)->with('purchased_items.product', 'purchased_items.variations', 'purchased_items.get_reason')->get();
-        // $check_refund = OrderCancellation::where('order_id', $id)->where('check_status', 2)->with('purchased_items.product', 'purchased_items.variations', 'purchased_items.get_reason')->get();
-
-        // // check single product checked admin approval
-        // $single_product_admin_approval_cancel_count = BillingInfo::where('order_id', $order->id)->where('admin_product_approval_status', 1)->get()->count();
-        // $single_product_admin_approval_refund_count = BillingInfo::where('order_id', $order->id)->where('admin_product_approval_status', 2)->get()->count();
-
-
         $order = Order::where('id', $id)->with('order_product.video', 'order_product.color_id', 'order_product.product', 'order_address.country', 'order_address.state', 'order_address.city')->withSum('order_product', 'quantity')->first();
 
         if (!$order) {

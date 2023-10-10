@@ -1,14 +1,11 @@
 <?php
 
-namespace App\Models\FrontendModels;
+namespace App\Models;
 
-use App\Models\BackendModels\Length;
-use App\Models\BackendModels\OrderAddress;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\BackendModels\Product;
+use App\Models\Product;
 use App\Models\BillingInfo;
-use App\Models\FrontendModels\UserAddress;
 use App\Models\User;
 
 class Order extends Model

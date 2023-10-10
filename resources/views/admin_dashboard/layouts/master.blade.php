@@ -1,6 +1,3 @@
-@php
-$favicon = App\Models\BackendModels\Logo::where("type", "Favicon")->first();
-@endphp
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,8 +12,8 @@ $favicon = App\Models\BackendModels\Logo::where("type", "Favicon")->first();
     <meta name="keywords"
         content="admin template, Cuba admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="pixelstrap">
-    <link rel="icon" href="{{url('public/logos/'.$favicon->image)}}" type="image/x-icon">
-    <link rel="shortcut icon" href="{{url('public/logos/'.$favicon->image)}}" type="image/x-icon">
+    <link rel="icon" href="{{asset('assets/images/icons/favicon.png')}}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{asset('assets/images/icons/favicon.png')}}" type="image/x-icon">
     <title>Admin Panel @yield('title')</title>
     <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2022.3.1109/styles/kendo.default-v2.min.css"/>
 

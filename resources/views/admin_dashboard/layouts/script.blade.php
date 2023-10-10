@@ -46,34 +46,6 @@
     });
 </script>
 
-<script>
-    ClassicEditor
-        .create(document.querySelector('.editor'))
-        .then(editor => {
-            console.log(editor);
-        })
-        .catch(error => {
-            // console.error( error );
-        });
-</script>
-<script>
-    .create(document.querySelector('.bottom'))
-        .then(bottom => {
-
-            console.log(bottom);
-
-        })
-        .catch(error => {});
-</script>
-<script>
-    .create(document.querySelector('.side'))
-        .then(side => {
-
-            console.log(side);
-
-        })
-        .catch(error => {});
-</script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script type="text/javascript">
@@ -127,18 +99,6 @@
     @endif
 </script>
 
-<script type="text/javascript">
-    document.getElementById('adminphone1').addEventListener('input', function(e) {
-        var x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
-        e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
-    });
-    </script>
-    <script type="text/javascript">
-        document.getElementById('adminphone2').addEventListener('input', function(e) {
-            var x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
-            e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
-        });
-        </script>
 
 @if ($errors->any())
     @foreach ($errors->all() as $error)

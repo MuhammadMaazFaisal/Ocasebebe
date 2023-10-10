@@ -13,8 +13,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h5>Users List </h5>
-                        <div class=""><a class="btn btn-gradient" data-bs-original-title="" title=""
-                                href="{{ route('user-create') }}">Add</a></div>
+                        
 
                     </div>
                     <div class="card-body">
@@ -31,11 +30,6 @@
                                                 aria-label="Details: activate to sort column ascending">Name</th>
                                             <th class="sorting" tabindex="0" aria-controls="basic-1"
                                                 aria-label="Details: activate to sort column ascending">Email</th>
-                                            <th class="sorting" tabindex="0" aria-controls="basic-1"
-                                                aria-label="Details: activate to sort column ascending">Status</th>
-                                            <th class="sorting" tabindex="0" aria-controls="basic-1" rowspan="1"
-                                                colspan="1" aria-label="Action: activate to sort column ascending"
-                                                style="width: 120.016px;">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -50,32 +44,6 @@
 
                                                 <td>
                                                     {{$value->email}}
-                                                </td>
-                                                <td>
-                                                    <a href="{{ route('user-status', ['id' => $value->id]) }}">
-                                                        @if ($value->status == 1)
-                                                            <button class="btn btn-info btn-sm" id="status"><i class="fa fa-thumbs-up"></i></button>
-                                                        @else
-                                                            <button class="btn btn-danger btn-sm" id="status"><i class="fa fa-thumbs-down"></i></button>
-                                                        @endif
-                                                    </a>
-                                                </td>
-                                                <td class="d-flex">
-
-                                                    <button class="btn btn-danger btn-xs"
-                                                        data-original-title="btn btn-danger btn-xs" onclick="confirmDelete('{{ $value->id }}')">Delete</button>
-                                                    <a href="{{ route('user-edit', $value->id) }}"> <button
-                                                            class="btn btn-success btn-xs add-margin-for-space" type="button"
-
-                                                            data-original-title="btn btn-danger btn-xs " title=""
-
-                                                            data-bs-original-title="">Edit</button></a>
-
-                                                             <a href="{{ route('user-view', $value->id) }}"> <button
-                                                            class="btn btn-success btn-xs" type="button"
-                                                            data-original-title="btn btn-danger btn-xs" title=""
-                                                             data-bs-original-title="">View</button></a>
-
                                                 </td>
                                             </tr>
                                         @endforeach

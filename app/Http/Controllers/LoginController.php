@@ -40,7 +40,7 @@ class LoginController extends Controller
     public function register(Request $request)
     {
         $user = new User();
-        $user->role = 1;
+        $user->role = 2;
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
         $user->save();
