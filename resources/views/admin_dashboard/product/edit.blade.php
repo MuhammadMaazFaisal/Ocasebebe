@@ -746,7 +746,7 @@
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label>Select Category.*</label>
-                                                <select id="parent_category_id" name="parent_category_id"
+                                                <select id="parent_category_id" name="category"
                                                     for="exampleFormControlInput10" class="form-control btn-square type">
                                                     <option value="" disabled selected>Choose Category</option>
                                                     <option value="Dummy Category">Dummy Category</option>

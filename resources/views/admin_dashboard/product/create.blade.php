@@ -693,8 +693,8 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="mb-3">
-                                                <label>SelectCategory.*</label>
-                                                <select id="parent_category_id" name="parent_category_id"
+                                                <label>Select Category.*</label>
+                                                <select id="parent_category_id" name="category"
                                                     for="exampleFormControlInput10" class="form-control btn-square type">
                                                     <option value="" disabled selected>Choose Category</option>
                                                     <option value="Dummy Category">Dummy Category</option>
@@ -714,7 +714,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="exampleFormControlInput10">Sale price.*</label>
+                                                <label for="exampleFormControlInput10">Sale price</label>
                                                 <input type="number" class="form-control salePrice"
                                                     placeholder="Sale price" id="sale_price" name="sale_price"
                                                     value="{{ old('sale_price') }}">
@@ -724,7 +724,7 @@
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="mb-3">
-                                                <label for="">Product Description</label>
+                                                <label for="">Product Description.*</label>
                                                 <textarea class="form-control editor" name="description" id="description" cols="30" rows="10">{{ old('description') }}</textarea>
                                             </div>
                                         </div>

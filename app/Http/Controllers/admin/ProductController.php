@@ -55,7 +55,7 @@ class ProductController extends Controller
 
         $validated = $request->validate([
             'product_name' => 'required',
-            'parent_category_id' => 'required',
+            'category' => 'required',
             'regular_price' => 'required',
             'description' => 'required',
         ]);
@@ -74,7 +74,7 @@ class ProductController extends Controller
 
         // return $request->all();
         $product = Product::find($id);
-        $product->category = $request->parent_category_id;
+        $product->category = $request->category;
         $product->product_name = $request->product_name;
         $product->price = $request->regular_price;
         $product->discount_price = $request->sale_price;
@@ -118,7 +118,7 @@ class ProductController extends Controller
         $validated = $request->validate([
             'image' => 'required',
             'product_name' => 'required|unique:products,product_name',
-            'parent_category_id' => 'required',
+            'category' => 'required',
             'regular_price' => 'required',
             'description' => 'required',
 
@@ -128,7 +128,7 @@ class ProductController extends Controller
 
         // return $request->all();
         $product = new Product();
-        $product->category = $request->parent_category_id;
+        $product->category = $request->category;
         $product->product_name = $request->product_name;
         $product->price = $request->regular_price;
         $product->discount_price = $request->sale_price;

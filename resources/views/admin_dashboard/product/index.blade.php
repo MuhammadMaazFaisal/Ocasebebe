@@ -5,7 +5,7 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5><u>Product</u></h5>
+                        <h5><u>Product Management</u></h5>
                         <div class=""><a class="btn btn-gradient" data-bs-original-title="" title=""
                                 href="{{ route('product.create') }}">Add</a></div>
 

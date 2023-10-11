@@ -12,7 +12,7 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5>Users List </h5>
+                        <h5>Users Management</h5>
                         
 
                     </div>
@@ -36,10 +36,10 @@
                                         @foreach ($users as $value)
                                             <tr role="row" class="odd">
                                                 <td>
-                                                   {{$value->id}}
+                                                    {{$loop->iteration}}
                                                 </td>
                                                 <td>
-                                                    {{$value->first_name ?? " "}} {{$value->last_name ?? " "}}
+                                                    {{$value->name ?? " "}}
                                                 </td>
 
                                                 <td>

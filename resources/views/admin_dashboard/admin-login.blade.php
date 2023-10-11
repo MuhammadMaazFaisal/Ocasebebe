@@ -135,7 +135,7 @@
                                     <input class="form-control" type="email" id="email" name="email"
                                         placeholder="Enter Admin Email">
                                     
-                                </div>
+                                </div> 
                                 @error('email')
                                 <div class="error">{{ $message }}</div>
                                 @enderror
