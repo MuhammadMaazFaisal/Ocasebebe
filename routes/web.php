@@ -7,6 +7,12 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\OrderManagementController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\ParentCategoryController;
+use App\Http\Controllers\Admin\VariantController;
+use App\Http\Controllers\Admin\AttributeValueControler;
+use App\Http\Controllers\Admin\LengthController;
+use App\Http\Controllers\CartController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -25,14 +31,38 @@ Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/register', [LoginController::class, 'register'])->name('register');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::get('admin', [AdminDashboardController::class, 'admin_login'])->name('admin.login');
+// Product routes
+Route::get('/product', function () {
+    return view('product');
+});
+Route::get('product-details/{id}', [WebsiteController::class, 'productdetails'])->name('product-details');
 
+// Cart routes
+Route::post('add-to-cart', [CartController::class, 'add_to_cart'])->name('add_to_cart');
+Route::get('add-quantity-cart-item', [CartController::class, 'add_quantity_cart_item'])->name('add_quantity_cart_item');
+Route::get('remove-quantity-cart-item', [CartController::class, 'remove_quantity_cart_item'])->name('remove_quantity_cart_item');
+Route::get('remove-cart-item', [CartController::class, 'remove_cart_item'])->name('remove_cart_item');
+Route::get('add-wishlist', [WebsiteController::class, 'add_wishlist'])->name('add_wishlist');
+Route::get('wishlist', [WebsiteController::class, 'wishlist'])->name('wishlist');
+Route::get('cart', [WebsiteController::class, 'add_cart'])->name('cart');
+Route::get('shipping-cart', [WebsiteController::class, 'shippingcart'])->name('shipping-cart');
+Route::post('cash_on_delivery', [WebsiteController::class, 'cash_on_delivery'])->name('cash_on_delivery');
+
+
+// Admin routes
+Route::get('admin', [AdminDashboardController::class, 'admin_login'])->name('admin.login');
 Route::get('/admin-logout', [AdminDashboardController::class, 'admin_logout'])->name("admin.logout");
 Route::post('admin-auth', [AdminDashboardController::class, 'admin_auth'])->name('admin.auth');
 Route::group(['middleware' =>  ['preventBackHistory', 'admin_middleware'], 'prefix' => 'admin'], function () {
 
     Route::get('dashboard', [AdminDashboardController::class, 'admin_dashboard'])->name('admin.dashboard');
 
+    // category routes
+    Route::group(['prefix' => 'category'], function () {
+        // Parent category routes
+        Route::resource('parent-category', ParentCategoryController::class);
+        Route::get('parent-category-status/{id}', [ParentCategoryController::class, 'status'])->name('parent-category-status');
+    });
 
     // Order management
     Route::group(['prefix' => 'orders'], function () {
@@ -49,6 +79,24 @@ Route::group(['middleware' =>  ['preventBackHistory', 'admin_middleware'], 'pref
     Route::get('product-status/{id}', [ProductController::class, 'status'])->name('product-status');
     Route::post('product/{id}', [ProductController::class, 'updateproductdata'])->name('update-product');
     Route::get('remove-image', [ProductController::class, 'remove_image'])->name('remove_image');
+
+    // product attributes
+    Route::resource('variants', VariantController::class);
+    Route::get('variants-status/{id}', [VariantController::class, 'status'])->name('variants-status');
+    Route::get('attribute-value/{id}', [AttributeValueControler::class, 'attributevalue'])->name('attribute-value');
+    Route::resource('attribute-value', AttributeValueControler::class);
+    Route::get('attribute-status/{id}', [AttributeValueControler::class, 'status'])->name('attribute-status');
+
+
+    //Length Management
+    Route::get('length', [LengthController::class, 'index'])->name('admin.length');
+    Route::get('create-length', [LengthController::class, 'create'])->name('create.length');
+    Route::post('create-length', [LengthController::class, 'store'])->name('store.length');
+    Route::get('edit-length/{id}', [LengthController::class, 'edit'])->name('edit.length');
+    Route::put('update-length/{id}', [LengthController::class, 'update'])->name('update.length');
+    Route::delete('delete-length/{id}', [LengthController::class, 'destroy'])->name('delete.length');
+    Route::get('length-status/{id}', [LengthController::class, 'status'])->name('length-status');
+    Route::get('length-stock/{id}', [LengthController::class, 'stock_status'])->name('length-stock_status');
 
     // User Management
     Route::get('user-index', [UserController::class, 'index'])->name('user-index');

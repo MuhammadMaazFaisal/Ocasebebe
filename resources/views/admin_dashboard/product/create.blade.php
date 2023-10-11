@@ -665,7 +665,7 @@
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="mb-3">
-                                                <label>Product Image.*</label>
+                                                <label>Product Image</label>
                                                 <input type="file" name="image" id="image" class="form-control"
                                                     onchange="loadFile(event)">
                                                 <img id="output" width="55px" class="mt-3" />
@@ -685,25 +685,86 @@
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="mb-3">
-                                                <label>Product Name.*</label>
+                                                <label>Product Name</label>
                                                 <input class="form-control" id="product_name" type="text"
                                                     placeholder="Enter Product Title" data-bs-original-title=""
                                                     title="" name="product_name" value="{{ old('product_name') }}">
                                             </div>
                                         </div>
+
                                         <div class="col-lg-6">
                                             <div class="mb-3">
-                                                <label>Select Category.*</label>
-                                                <select id="parent_category_id" name="category"
-                                                    for="exampleFormControlInput10" class="form-control btn-square type">
-                                                    <option value="" disabled selected>Choose Category</option>
-                                                    <option value="Dummy Category">Dummy Category</option>
-                                                  
+                                                <label>Product Color</label>
+                                                <select name="color[]" class="form-control js-example-basic-multiple"
+                                                    multiple>
+                                                    @if (count($attributes->get_attr) > 0)
+                                                        @foreach ($attributes->get_attr as $attribute)
+                                                            <option value="{{ $attribute->id }}"
+                                                                {{ collect(old('color'))->contains($attribute->id) ? 'selected' : '' }}>
+                                                                <div class="color_box m-1"
+                                                                    style="background-color: {{ $attribute->color_code }}">
+                                                                </div> {{ $attribute->attribute_value }}
+                                                            </option>
+                                                        @endforeach
+                                                    @endif
                                                 </select>
+                                                <input type="hidden" name="color_id" value="{{ $attributes->id }}">
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row mt-4 mb-4" id="discounted_id">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                <label>Select Parent Category.*</label>
+                                                <select id="parent_category_id" name="parent_category_id"
+                                                    for="exampleFormControlInput10" class="form-control btn-square type">
+                                                    <option value="" disabled selected>Choose Parent Category</option>
+                                                    @foreach ($parent_categories as $parents)
+                                                        <option id="parent_category_id" value="{{ $parents->id }}"
+                                                            class="form-control btn-square">
+                                                            {{ $parents->parent_category_name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        {{-- <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                <label>Length Size</label>
+                                                <select name="length_ids[]" class="form-control js-example-basic" multiple>
+                                                    @foreach ($length as $lengthname)
+                                                        <option value="{{ $lengthname->id }}">{{ $lengthname->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                                <input type="hidden" name="color_id" value="{{ $attributes->id }}">
+                                            </div>
+                                        </div> --}}
+
+                                        <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                <label>Length Size</label>
+                                                <select name="length_id[]" class="form-control js-example-basic" multiple>
+                                                    @foreach ($length as $lengthname)
+                                                        <option value="{{ $lengthname->id }}"
+                                                            class="form-control btn-square">{{ $lengthname->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                {{-- <input type="hidden" name="length_id" value="{{ $lengthname->id }}"> --}}
+                                            </div>
+                                        </div>
+                                        {{-- <div class="col-lg-6">
+                                            <div class="mb-3">
+                                                <label>Select Main Category.*</label>
+                                                <select id="main-category_id" for="exampleFormControlInput10"
+                                                    class="form-control btn-square type" name="main_category_id">
+
+                                                </select>
+                                            </div>
+                                        </div> --}}
+                                    </div>
+                                    <div class="row mb-4" id="discounted_id">
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="exampleFormControlInput10">Regular price.*</label>
@@ -714,7 +775,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="exampleFormControlInput10">Sale price</label>
+                                                <label for="exampleFormControlInput10">Sale price.*</label>
                                                 <input type="number" class="form-control salePrice"
                                                     placeholder="Sale price" id="sale_price" name="sale_price"
                                                     value="{{ old('sale_price') }}">
@@ -724,7 +785,7 @@
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="mb-3">
-                                                <label for="">Product Description.*</label>
+                                                <label for="">Product Description</label>
                                                 <textarea class="form-control editor" name="description" id="description" cols="30" rows="10">{{ old('description') }}</textarea>
                                             </div>
                                         </div>
@@ -760,9 +821,6 @@
             };
             reader.readAsDataURL(event.target.files[0]);
         };
-    </script>
-    <script>
-
 
 
         // discount date

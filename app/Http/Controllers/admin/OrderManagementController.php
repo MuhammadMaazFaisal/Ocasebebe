@@ -6,9 +6,9 @@ use App\Http\Requests\Configuration;
 use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Models\Order;
+use App\Models\Admin\Order;
 use Illuminate\Support\Facades\Mail;
-use App\Models\Product;
+use App\Models\Admin\Product;
 use App\Http\Controllers\Controller;
 
 

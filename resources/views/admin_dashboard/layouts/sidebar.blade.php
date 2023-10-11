@@ -15,7 +15,7 @@
                 {{-- <img class="img-fluid for-dark" src="{{ asset('assets/images/logo/logo_dark.png') }}" alt=""> --}}
             </a>
             <div class="back-btn"><i class="fa fa-angle-left"></i></div>
-           
+
         </div>
         <div class="logo-icon-wrapper"><a href="{{ route('admin.dashboard') }}"></a></div>
         <nav class="sidebar-main">
@@ -42,6 +42,29 @@
                         </a>
                     </li>
 
+                    {{-- Category Management --}}
+
+                    <li class="sidebar-list">
+                        <label class="badge badge-success"></label><a
+                            class="sidebar-link sidebar-title {{ Route::currentRouteName() == 'parent-category.index' ? 'active' : '' }} {{ Route::currentRouteName() == 'parent-category.edit' ? 'active' : '' }}
+                                {{ Route::currentRouteName() == 'main-category.index' ? 'active' : '' }} {{ Route::currentRouteName() == 'main-category.edit' ? 'active' : '' }}
+                                {{ Route::currentRouteName() == 'sub-category.index' ? 'active' : '' }} {{ Route::currentRouteName() == 'sub-category.edit' ? 'active' : '' }}"
+                            href="#">
+                            <span class="lan-3"><i class="fa fa-file-text-o fa-lg" aria-hidden="false"></i> Category
+                                Management</span>
+                            <div class="according-menu"><i
+                                    class="fa fa-angle-{{ request()->route()->getPrefix() == 'admin/category'? 'down': 'right' }}"></i>
+                            </div>
+                        </a>
+                        <ul class="sidebar-submenu"
+                            style="display:{{ request()->route()->getPrefix() == 'admin/category'? 'block;': 'none;' }}">
+                            <li>
+                                <a class="lan-4 {{ Route::currentRouteName() == 'parent-category.index' ? 'active' : '' }} {{ Route::currentRouteName() == 'parent-category.edit' ? 'active' : '' }}"
+                                    href="{{ route('parent-category.index') }}">Parent Category</a>
+                            </li>
+                        </ul>
+                    </li>
+
 
                     {{-- Product Management --}}
 
@@ -49,8 +72,35 @@
                         <label class="badge badge-success"></label><a
                             class="sidebar-link sidebar-title
                         {{ Route::currentRouteName() == 'product.index' ? 'active' : '' }} {{ Route::currentRouteName() == 'product.edit' ? 'active' : '' }} {{ Route::currentRouteName() == 'product.create' ? 'active' : '' }}"
-                            href="{{ route('product.index') }}"><span class="lan-3"><i class="fa fa-product-hunt fa-lg"
-                                    aria-hidden="true"></i> Product Management </span>
+                            href="{{ route('product.index') }}"><span class="lan-3"><i
+                                    class="fa fa-product-hunt fa-lg" aria-hidden="true"></i> Product Management </span>
+
+                        </a>
+
+                    </li>
+
+                    {{-- Attribute Management update work 13 --}}
+
+                    <li class="sidebar-list">
+                        <label class="badge badge-success"></label><a
+                            class="sidebar-link sidebar-title
+                    {{ Route::currentRouteName() == 'variants.index' ? 'active' : '' }} {{ Route::currentRouteName() == 'variants.edit' ? 'active' : '' }} {{ Route::currentRouteName() == 'variants.create' ? 'active' : '' }}
+                    {{ Route::currentRouteName() == 'attribute-value' ? 'active' : '' }} {{ Route::currentRouteName() == 'attribute-value.edit' ? 'active' : '' }}"
+                            href="{{ route('variants.index') }}"><span class="lan-3"><i class="fa fa-rss fa-lg"
+                                    aria-hidden="true"></i> Attribute Management </span>
+
+                        </a>
+
+                    </li>
+
+                    {{-- length management --}}
+
+                    <li class="sidebar-list">
+                        <label class="badge badge-success"></label><a
+                            class="sidebar-link sidebar-title
+                        {{ Route::currentRouteName() == 'admin.length' ? 'active' : '' }} {{ Route::currentRouteName() == 'edit.length' ? 'active' : '' }} {{ Route::currentRouteName() == 'create.length' ? 'active' : '' }}"
+                            href="{{ route('admin.length') }}"><span class="lan-3"><i class="fa fa-list-ol fa-lg"
+                                    aria-hidden="true"></i>Length Management </span>
 
                         </a>
 
@@ -79,7 +129,6 @@
                             </li>
                         </ul>
                     </li>
-                    {{-- end --}}
 
 
                     {{-- User  Management --}}

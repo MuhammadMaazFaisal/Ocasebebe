@@ -7,7 +7,13 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
-use App\Models\Product;
+use App\Models\Admin\Product;
+use App\Models\Admin\Length;
+use App\Models\Admin\Attribute;
+use App\Models\Admin\AttributeValue;
+use Illuminate\Support\Facades\Validator;
+use App\Models\Admin\ParentCategory;
+use App\Models\Admin\ProductAttribute;
 
 class ProductController extends Controller
 {
@@ -18,7 +24,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::latest()->get();
+        $products = Product::get();
+        $parent_categories = ParentCategory::get();
         return view('admin_dashboard.product.index', get_defined_vars());
     }
 
@@ -31,6 +38,9 @@ class ProductController extends Controller
     {
         $data = Product::get();
         $last_data_object = collect($data)->last();
+        $parent_categories = ParentCategory::get();
+        $attributes = Attribute::where('id', 1)->with('get_attr')->first();
+        $length = Length::where('status','1')->get();
 
         return view('admin_dashboard.product.create', get_defined_vars());
     }
@@ -45,19 +55,24 @@ class ProductController extends Controller
     public function edit($id)
     {
         $products = Product::where('id', $id)->first();
+        $parent_categories = ParentCategory::get();
+        $attribute_lists = AttributeValue::where('attribute_id', 1)->get();
+        $length = Length::where('status','1')->get();
 
         return view('admin_dashboard.product.edit', get_defined_vars());
     }
 
     public function updateproductdata(Request $request, $id)
     {
+
         $product_validation = Product::find($id);
 
         $validated = $request->validate([
             'product_name' => 'required',
-            'category' => 'required',
+            'parent_category_id' => 'required',
             'regular_price' => 'required',
             'description' => 'required',
+            'length_id' => 'required',['length_id.required'=>'length field is required']
         ]);
 
 
@@ -70,16 +85,17 @@ class ProductController extends Controller
 
 
 
-
-
         // return $request->all();
         $product = Product::find($id);
-        $product->category = $request->category;
+        $product->length_id = json_encode($request->length_id);
+        $product->parent_category_id = $request->parent_category_id;
         $product->product_name = $request->product_name;
         $product->price = $request->regular_price;
         $product->discount_price = $request->sale_price;
         $product->status = 1;
         $product->description = $request->description;
+
+
 
 
         // single image
@@ -102,6 +118,21 @@ class ProductController extends Controller
 
         $product->save();
 
+        if (!empty($request->color)) {
+            $attribute_value = AttributeValue::whereIn('id', $request->color)->get();
+            $attr_id =  $attribute_value->pluck('id');
+            $attr_value = $attribute_value->pluck('attribute_value');
+
+
+            $product_attribute = ProductAttribute::where('product_id', $product->id)->first();
+            $product_attribute->product_id = $product->id;
+            $product_attribute->product_attribute_id = 1;
+            $product_attribute->attribute_value_id = json_encode($attr_id);
+            $product_attribute->attribute_value = json_encode($attr_value);
+            $product_attribute->save();
+        }
+
+
         $notification = array('message' => 'Product added successfully! ', 'alert-type' => 'success');
         return redirect()->route('product.index')->with($notification);
 
@@ -117,18 +148,21 @@ class ProductController extends Controller
     {
         $validated = $request->validate([
             'image' => 'required',
+            'multiple_image' => 'required',
             'product_name' => 'required|unique:products,product_name',
-            'category' => 'required',
+            'parent_category_id' => 'required',
             'regular_price' => 'required',
             'description' => 'required',
+            'color' => 'required',
+            'length_id' => 'required',['length_id.required'=>'length field is required']
 
 
         ]);
 
-
         // return $request->all();
         $product = new Product();
-        $product->category = $request->category;
+        $product->length_id = json_encode($request->length_id);
+        $product->parent_category_id = $request->parent_category_id;
         $product->product_name = $request->product_name;
         $product->price = $request->regular_price;
         $product->discount_price = $request->sale_price;
@@ -157,6 +191,20 @@ class ProductController extends Controller
         }
         // $product->length
         $product->save();
+
+        if (!empty($request->color)) {
+            $attribute_value = AttributeValue::whereIn('id', $request->color)->get();
+            $attr_id =  $attribute_value->pluck('id');
+            $attr_value = $attribute_value->pluck('attribute_value');
+            $product_attribute = new ProductAttribute();
+            $product_attribute->product_id = $product->id;
+            $product_attribute->product_attribute_id = $request->color_id;
+            $product_attribute->attribute_value_id = json_encode($attr_id);
+            $product_attribute->attribute_value = json_encode($attr_value);
+            $product_attribute->save();
+            // }
+        }
+
 
         $notification = array('message' => 'Product added successfully! ', 'alert-type' => 'success');
         return redirect()->route('product.index')->with($notification);
@@ -506,6 +554,7 @@ class ProductController extends Controller
         File::delete(public_path('products/' . $image_delete->image));
         $product_delete  = Product::where('id', $id)->first();
         $product_delete->delete();
+        $product_delete = ProductAttribute::where('product_id', $product_delete->id)->delete();
         $notification = array('message' => 'Product Deleted Successfully ! ', 'alert-type' => 'success');
         return redirect()->route('product.index')->with($notification);
     }

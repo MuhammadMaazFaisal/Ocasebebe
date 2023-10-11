@@ -5,7 +5,7 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5><u>Product Management</u></h5>
+                        <h5><u>Product</u></h5>
                         <div class=""><a class="btn btn-gradient" data-bs-original-title="" title=""
                                 href="{{ route('product.create') }}">Add</a></div>
 
@@ -13,7 +13,7 @@
                     <div class="card-body">
                         <div class="table-responsive product-table">
                             <div id="basic-1_wrapper" class="dataTables_wrapper no-footer">
-                                <table class="display dataTable no-footer" id="basic-1"
+                                <table data-order='[[ 0, "desc" ]]' class="display dataTable no-footer" id="basic-1"
                                     role="grid" aria-describedby="basic-1_info">
                                     <thead>
                                         <tr role="row">
@@ -49,7 +49,11 @@
                                                     {{ $value->product_name ?? null }}
                                                 </td>
                                                 <td>
-                                                    {{ $value->category ?? null }}
+                                                    @foreach ($parent_categories as $parent_category)
+                                                        @if ($parent_category->id == $value->parent_category_id)
+                                                            {{ $parent_category->parent_category_name ?? null }}
+                                                        @endif
+                                                    @endforeach
                                                 </td>
                                                 {{-- <td>
                                                     {{ $value->get_main_category->main_category_name ?? 'N/A' }}
