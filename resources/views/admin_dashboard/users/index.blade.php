@@ -19,15 +19,13 @@
                     <div class="card-body">
                         <div class="table-responsive product-table">
                             <div id="basic-1_wrapper" class="dataTables_wrapper no-footer">
-                                <table data-order='[[ 0, "desc" ]]' class="display dataTable no-footer" id="basic-1" role="grid"
+                                <table class="display dataTable no-footer" id="basic-1" role="grid"
                                     aria-describedby="basic-1_info">
                                     <thead>
                                         <tr role="row">
                                             <th class="sorting_asc" tabindex="0" aria-controls="basic-1" rowspan="1"
                                                 colspan="1" aria-sort="ascending">
                                                 S.NO</th>
-                                            <th class="sorting" tabindex="0" aria-controls="basic-1"
-                                                aria-label="Details: activate to sort column ascending">Name</th>
                                             <th class="sorting" tabindex="0" aria-controls="basic-1"
                                                 aria-label="Details: activate to sort column ascending">Email</th>
                                         </tr>
@@ -38,10 +36,6 @@
                                                 <td>
                                                     {{$loop->iteration}}
                                                 </td>
-                                                <td>
-                                                    {{$value->name ?? " "}}
-                                                </td>
-
                                                 <td>
                                                     {{$value->email}}
                                                 </td>

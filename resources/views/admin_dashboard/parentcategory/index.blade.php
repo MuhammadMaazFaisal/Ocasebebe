@@ -13,7 +13,7 @@
                     <div class="card-body">
                         <div class="table-responsive product-table">
                             <div id="basic-1_wrapper" class="dataTables_wrapper no-footer">
-                                <table data-order='[[ 0, "desc" ]]' class="display dataTable no-footer" id="basic-1" role="grid"
+                                <table class="display dataTable no-footer" id="basic-1" role="grid"
                                     aria-describedby="basic-1_info">
                                     <thead>
                                         <tr role="row">
