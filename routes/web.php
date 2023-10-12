@@ -25,6 +25,8 @@ use App\Http\Controllers\CartController;
 |
 */
 
+// User routes
+
 Route::get('/', [WebsiteController::class, 'index'])->name('home');
 Route::get('/login', [LoginController::class, 'index']);
 Route::post('/login', [LoginController::class, 'login'])->name('login');
@@ -32,10 +34,27 @@ Route::post('/register', [LoginController::class, 'register'])->name('register')
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // Product routes
-Route::get('/product', function () {
-    return view('product');
-});
 Route::get('product-details/{id}', [WebsiteController::class, 'productdetails'])->name('product-details');
+
+// Pages routes
+Route::get ('who-we-are', function () {
+    return view('who-we-are');
+})->name('who-we-are');
+Route::get ('contact', function () {
+    return view('contact');
+})->name('contact');
+Route::get ('terms-and-conditions', function () {
+    return view('terms-and-conditions');
+})->name('terms-and-conditions');
+Route::get('payment-terms', function () {
+    return view('payment-terms');
+})->name('payment-terms');
+Route::get('delivery-policy', function () {
+    return view('delivery-policy');
+})->name('delivery-policy');
+Route::get('faq', function () {
+    return view('faq');
+})->name('faq');
 
 // Cart routes
 Route::post('add-to-cart', [CartController::class, 'add_to_cart'])->name('add_to_cart');

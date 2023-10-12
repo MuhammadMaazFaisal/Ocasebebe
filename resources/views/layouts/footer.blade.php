@@ -23,22 +23,18 @@
                     <div class="widget mx-5">
                         <h4 class="widget-title">INFORMATIONS LÉGALES</h4>
                         <ul class="links">
-                            <li><a href="#">Pourquoi nous choisir </a></li>
-                            <li><a href="#">Contactez-nous</a></li>
-                            <li><a href="#">Condition général d'utilisation</a></li>
-                            <li><a href="#">Modalité de paiement</a></li>
-                            <li><a href="#">Politique de livraison</a></li>
-                            <li><a href="#">FAQ</a></li>
+                            <li><a href="{{ route('who-we-are')}}">Pourquoi nous choisir </a></li>
+                            <li><a href="{{ route('contact')}}">Contactez-nous</a></li>
+                            <li><a href="{{ route('terms-and-conditions')}}">Condition général d'utilisation</a></li>
+                            <li><a href="{{ route('payment-terms')}}">Modalité de paiement</a></li>
+                            <li><a href="{{ route('delivery-policy')}}">Politique de livraison</a></li>
+                            <li><a href="{{ route('faq')}}">FAQ</a></li>
                         </ul>
                         <h4 class="widget-title">RETROUVEZ-NOUS SUR</h4>
                         <div class="social-icons">
-                            <a href="https://www.facebook.com/Ocasebebe"
-                                class="social-icon social-facebook icon-facebook" target="_blank" title="Facebook"></a>
-                            <a href="https://twitter.com/bebeocase" class="social-icon social-twitter icon-twitter"
-                                target="_blank" title="Twitter"></a>
-                            <a href="https://www.instagram.com/ocase_bebe_dakar/"
-                                class="social-icon social-instagram icon-instagram" target="_blank"
-                                title="Instagram"></a>
+                            <a href="https://www.facebook.com/Ocasebebe" class="social-icon social-facebook icon-facebook" target="_blank" title="Facebook"></a>
+                            <a href="https://twitter.com/bebeocase" class="social-icon social-twitter icon-twitter" target="_blank" title="Twitter"></a>
+                            <a href="https://www.instagram.com/ocase_bebe_dakar/" class="social-icon social-instagram icon-instagram" target="_blank" title="Instagram"></a>
                         </div>
                     </div>
                     <!-- End .widget -->
@@ -51,20 +47,16 @@
 
                         <ul class="contact-info">
                             <li>
-                                <i class="fab fa-whatsapp"></i> <span style="font-weight:700l"><a
-                                        href="tel:+221773908583">+221 77 390 85 83</a></span>
+                                <i class="fab fa-whatsapp"></i> <span style="font-weight:700l"><a href="tel:+221773908583">+221 77 390 85 83</a></span>
                             </li>
                             <li>
-                                <i class="fab fa-whatsapp"></i> <span style="font-weight:700l"><a
-                                        href="tel:+221772000839">+221 77 200 08 39</a></span>
+                                <i class="fab fa-whatsapp"></i> <span style="font-weight:700l"><a href="tel:+221772000839">+221 77 200 08 39</a></span>
                             </li>
                             <li>
-                                <i class="fab fa-whatsapp"></i> <span style="font-weight:700l"><a
-                                        href="tel:+221777306666">+221 77 730 66 66</a></span>
+                                <i class="fab fa-whatsapp"></i> <span style="font-weight:700l"><a href="tel:+221777306666">+221 77 730 66 66</a></span>
                             </li>
                             <li>
-                                <i class="fab fa-whatsapp"></i> <span style="font-weight:700l"><a
-                                        href="tel:+221763160539">+221 76 316 05 39</a></span>
+                                <i class="fab fa-whatsapp"></i> <span style="font-weight:700l"><a href="tel:+221763160539">+221 76 316 05 39</a></span>
                             </li>
                         </ul>
                         <h4 class="widget-title">SERVICE CLIENT</h4>
@@ -254,9 +246,8 @@
 <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('assets/js/optional/isotope.pkgd.min.js') }}"></script>
 <script src="{{ asset('assets/js/plugins.min.js') }}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
-    integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="{{ asset('assets/js/nouislider.min.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
 <!-- Main JS File -->
