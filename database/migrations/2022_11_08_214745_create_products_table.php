@@ -22,6 +22,7 @@ class CreateProductsTable extends Migration
             $table->string('discount_price');
             $table->string('image');
             $table->string('multiple_image')->nullable();
+            $table->text('short_description');
             $table->text('description');
             $table->integer('status')->comment('1=active,0=inactive');
             $table->timestamps();

@@ -71,6 +71,7 @@ class ProductController extends Controller
             'product_name' => 'required',
             'parent_category_id' => 'required',
             'regular_price' => 'required',
+            'short_description' => 'required',
             'description' => 'required',
             'length_id' => 'required',['length_id.required'=>'length field is required']
         ]);
@@ -84,8 +85,6 @@ class ProductController extends Controller
         }
 
 
-
-        // return $request->all();
         $product = Product::find($id);
         $product->length_id = json_encode($request->length_id);
         $product->parent_category_id = $request->parent_category_id;
@@ -93,6 +92,7 @@ class ProductController extends Controller
         $product->price = $request->regular_price;
         $product->discount_price = $request->sale_price;
         $product->status = 1;
+        $product->short_description = $request->short_description;
         $product->description = $request->description;
 
 
@@ -107,7 +107,7 @@ class ProductController extends Controller
 
 
         if ($request->hasfile('multiple_image')) {
-            $images_extract = [$product->image];
+            $images_extract = [];
             foreach ($request->file('multiple_image') as $key => $file) {
                 $name = time() . rand(1, 100) . '.' . $file->extension();
                 $file->move(public_path('products'), $name);
@@ -152,6 +152,7 @@ class ProductController extends Controller
             'product_name' => 'required|unique:products,product_name',
             'parent_category_id' => 'required',
             'regular_price' => 'required',
+            'short_description' => 'required',
             'description' => 'required',
             'color' => 'required',
             'length_id' => 'required',['length_id.required'=>'length field is required']
@@ -167,6 +168,7 @@ class ProductController extends Controller
         $product->price = $request->regular_price;
         $product->discount_price = $request->sale_price;
         $product->status = 1;
+        $product->short_description = $request->short_description;
         $product->description = $request->description;
 
 
@@ -181,7 +183,7 @@ class ProductController extends Controller
 
 
         if ($request->hasfile('multiple_image')) {
-            $images_extract = [$product->image];
+            $images_extract = [];
             foreach ($request->file('multiple_image') as $key => $file) {
                 $name = time() . rand(1, 100) . '.' . $file->extension();
                 $file->move(public_path('products'), $name);

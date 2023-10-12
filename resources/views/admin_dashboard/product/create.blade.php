@@ -728,19 +728,6 @@
                                                 </select>
                                             </div>
                                         </div>
-
-                                        {{-- <div class="col-lg-6">
-                                            <div class="mb-3">
-                                                <label>Length Size</label>
-                                                <select name="length_ids[]" class="form-control js-example-basic" multiple>
-                                                    @foreach ($length as $lengthname)
-                                                        <option value="{{ $lengthname->id }}">{{ $lengthname->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                                <input type="hidden" name="color_id" value="{{ $attributes->id }}">
-                                            </div>
-                                        </div> --}}
-
                                         <div class="col-lg-6">
                                             <div class="mb-3">
                                                 <label>Length Size</label>
@@ -750,19 +737,8 @@
                                                             class="form-control btn-square">{{ $lengthname->name }}
                                                         </option>
                                                     @endforeach
-                                                </select>
-                                                {{-- <input type="hidden" name="length_id" value="{{ $lengthname->id }}"> --}}
-                                            </div>
+                                                </select></div>
                                         </div>
-                                        {{-- <div class="col-lg-6">
-                                            <div class="mb-3">
-                                                <label>Select Main Category.*</label>
-                                                <select id="main-category_id" for="exampleFormControlInput10"
-                                                    class="form-control btn-square type" name="main_category_id">
-
-                                                </select>
-                                            </div>
-                                        </div> --}}
                                     </div>
                                     <div class="row mb-4" id="discounted_id">
                                         <div class="col-md-6">
@@ -779,6 +755,14 @@
                                                 <input type="number" class="form-control salePrice"
                                                     placeholder="Sale price" id="sale_price" name="sale_price"
                                                     value="{{ old('sale_price') }}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="mb-3">
+                                                <label for="">Short Description</label>
+                                                <textarea class="form-control" name="short_description" id="short_description" cols="30" rows="3">{{ old('short_description') }}</textarea>
                                             </div>
                                         </div>
                                     </div>

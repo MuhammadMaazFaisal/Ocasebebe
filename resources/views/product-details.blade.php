@@ -21,46 +21,30 @@
                     <div class="product-slider-container">
                         <div class="label-group">
                             <div class="product-label label-hot">HOT</div>
-                            {{-- @if ($product->discount_price)
+                            @if ($product->discount_price)
                                 <div class="product-label label-sale">
                                     {{ ($product->discount_price / $product->price) * 100 }}%
                                 </div>
-                            @endif --}}
+                            @endif
                         </div>
 
                         <div class="product-single-carousel owl-carousel owl-theme show-nav-hover">
                             <div class="product-item">
-                                <img class="product-single-image" src={{ asset('storage/' . $product->image) }}
-                                    data-zoom-image={{ asset('storage/' . $product->image) }} width="468" height="468"
+                                <img class="product-single-image" src=
+                                {{ asset('products/' . $product->image) }}
+                                    data-zoom-image=
+                                    {{ asset('products/' . $product->image) }} 
+                                    width="468" height="468"
                                     alt="product" />
                             </div>
-                            {{-- @foreach ($product->images as $image)
+                            
+                            @foreach (json_decode($product->multiple_image) as $image)
                                 <div class="product-item">
-                                    <img class="product-single-image" src={{ asset('storage/' . $image->image) }}
-                                        data-zoom-image={{ asset('storage/' . $image->image) }} width="468"
+                                    <img class="product-single-image" src={{ asset('products/' . $image) }}
+                                        data-zoom-image={{ asset('products/' . $image) }} width="468"
                                         height="468" alt="product" />
-                                </div> --}}
+                                </div>
                             @endforeach
-                            <div class="product-item">
-                                <img class="product-single-image" src="assets/images/products/zoom/bp2.png"
-                                    data-zoom-image="assets/images/products/zoom/bp2.png" width="468" height="468"
-                                    alt="product" />
-                            </div>
-                            <div class="product-item">
-                                <img class="product-single-image" src="assets/images/products/zoom/bp3.png"
-                                    data-zoom-image="assets/images/products/zoom/bp3.png" width="468" height="468"
-                                    alt="product" />
-                            </div>
-                            <div class="product-item">
-                                <img class="product-single-image" src="assets/images/products/zoom/bp4.png"
-                                    data-zoom-image="assets/images/products/zoom/bp4.png" width="468" height="468"
-                                    alt="product" />
-                            </div>
-                            <div class="product-item">
-                                <img class="product-single-image" src="assets/images/products/zoom/bp5.png"
-                                    data-zoom-image="assets/images/products/zoom/bp5.png" width="468" height="468"
-                                    alt="product" />
-                            </div>
                         </div>
                         <!-- End .product-single-carousel -->
                         <span class="prod-full-screen">
@@ -71,38 +55,24 @@
                     <div class="prod-thumbnail owl-dots">
 
 
-                        {{-- <div class="owl-dot">
-                            <img src={{ asset('storage/' . $product->image) }} width="110" height="110"
+                        <div class="owl-dot">
+                            <img src={{ asset('products/' . $product->image) }} width="110" height="110"
                                 alt="product-thumbnail" />
-                        </div> --}}
-                        {{-- @foreach ($product->images as $image)
+                        </div>
+                        @foreach (json_decode($product->multiple_image) as $image)
                             <div class="owl-dot">
-                                <img src={{ asset('storage/' . $image->image) }} width="110" height="110"
+                                <img src={{ asset('products/' . $image) }} width="110" height="110"
                                     alt="product-thumbnail" />
                             </div>
-                        @endforeach --}}
-                        <div class="owl-dot">
-                            <img src="assets/images/products/zoom/bp2.png" width="110" height="110"
-                                alt="product-thumbnail" />
-                        </div>
-                        <div class="owl-dot">
-                            <img src="assets/images/products/zoom/bp3.png" width="110" height="110"
-                                alt="product-thumbnail" />
-                        </div>
-                        <div class="owl-dot">
-                            <img src="assets/images/products/zoom/bp4.png" width="110" height="110"
-                                alt="product-thumbnail" />
-                        </div>
-                        <div class="owl-dot">
-                            <img src="assets/images/products/zoom/bp5.png" width="110" height="110"
-                                alt="product-thumbnail" />
-                        </div>
+                        @endforeach
                     </div>
                 </div>
                 <!-- End .product-single-gallery -->
 
                 <div class="col-lg-7 col-md-6 product-single-details">
-                    <h1 class="product-title">{{ $product->name }}</h1>
+                    <h1 class="product-title">
+                    {{ $product->name }}
+                    </h1>
 
                     <div class="product-nav">
                         <div class="product-prev">
@@ -112,7 +82,7 @@
                                 <span class="product-popup">
                                     <span class="box-content">
                                         <img alt="product" width="150" height="150"
-                                            src="assets/images/products/product-3.jpg" style="padding-top: 0px;">
+                                            src="{{asset('assets/images/products/product-3.jpg')}}" style="padding-top: 0px;">
 
                                         <span>Circled Ultimate 3D Speaker</span>
                                     </span>
@@ -127,7 +97,7 @@
                                 <span class="product-popup">
                                     <span class="box-content">
                                         <img alt="product" width="150" height="150"
-                                            src="assets/images/products/product-4.jpg" style="padding-top: 0px;">
+                                            src="{{asset('assets/images/products/product-4.jpg')}}" style="padding-top: 0px;">
 
                                         <span>Blue Backpack for the Young</span>
                                     </span>
@@ -151,53 +121,50 @@
                     <hr class="short-divider">
 
                     <div class="price-box">
-                        <span class="old-price">1999 FCFA </span>
-                        <span class="new-price">1699 FCFA </span>
+                    @if ($product->discount_price)
+                        <span class="old-price"> {{ $product->price }} FCFA </span>
+                        <span class="product-price"> {{ $product->discount_price }} FCFA </span>
+                    @else
+                        <span class="product-price"> {{ $product->price }} FCFA </span>
+                    @endif
                     </div>
                     <!-- End .price-box -->
 
                     <div class="product-desc">
                         <p>
-                            Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis
-                            egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec
-                            eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris
-                            placerat eleifend leo.
+                        {{ $product->short_description }}
                         </p>
                     </div>
                     <div class="product-filters-container custom-product-filters pt-0 pb-2 mb-0">
+                    @if (count(json_decode($product_attributes)) > 0)
                         <div class="product-single-filter">
                             <label>Color:</label>
 
                             <ul class="config-size-list config-color-list config-filter-list">
+                            
+                            @foreach (json_decode($product_attributes) as $attribute)
                                 <li class="">
                                     <a href="javascript:;" class="filter-color border-0"
-                                        style="background-color: rgb(1, 136, 204);">
+                                        style="background-color: {{ $attribute->color_code }};">
                                     </a>
                                 </li>
-
-                                <li class="">
-                                    <a href="javascript:;" class="filter-color border-0 initial disabled"
-                                        style="background-color: rgb(221, 181, 119);">
-                                    </a>
-                                </li>
+                            @endforeach
                             </ul>
                         </div>
-
+                    @endif
+                    @if (count(json_decode($lengthnames)) > 0)
                         <div class="product-single-filter">
                             <label>Size:</label>
 
                             <ul class="config-size-list">
+                            @foreach (json_decode($lengthnames) as $lengthname)
                                 <li><a href="javascript:;"
-                                        class="d-flex align-items-center justify-content-center">XL</a>
+                                        class="d-flex align-items-center justify-content-center">{{ $lengthname->name}}</a>
                                 </li>
-                                <li><a href="javascript:;"
-                                        class="d-flex align-items-center justify-content-center">L</a>
-                                </li>
-                                <li class=""><a href="javascript:;"
-                                        class="d-flex align-items-center justify-content-center">M</a>
-                                </li>
+                            @endforeach
                             </ul>
                         </div>
+                    @endif
 
                         <div class="product-single-filter">
                             <label></label>
@@ -214,7 +181,7 @@
                         </li>
 
                         <li>
-                            CATEGORY: <strong><a href="#" class="product-category">SHOES</a></strong>
+                            CATEGORY: <strong><a href="#" class="product-category">{{ $category->parent_category_name }}</a></strong>
                         </li>
 
                         <li>
@@ -339,21 +306,7 @@
                 <div class="tab-pane fade show active" id="product-desc-content" role="tabpanel"
                     aria-labelledby="product-tab-desc">
                     <div class="product-desc-content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore et dolore magna aliqua. Ut enim ad minim veniam, nostrud ipsum consectetur sed do,
-                            quis nostrud exercitation ullamco laboris
-                            nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-                            velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat.</p>
-                        <ul>
-                            <li>Any Product types that You want - Simple, Configurable
-                            </li>
-                            <li>Downloadable/Digital Products, Virtual Products
-                            </li>
-                            <li>Inventory Management with Backordered items
-                            </li>
-                        </ul>
-                        <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+                       {{ $product->description }}
                     </div>
                     <!-- End .product-desc-content -->
                 </div>
@@ -364,7 +317,7 @@
                     <div class="product-size-content">
                         <div class="row">
                             <div class="col-md-4">
-                                <img src="assets/images/products/single/body-shape.png" alt="body shape"
+                                <img src="{{asset('assets/images/products/single/body-shape.png')}}" alt="body shape"
                                     width="217" height="398">
                             </div>
                             <!-- End .col-md-4 -->
@@ -434,7 +387,7 @@
                         <div class="comment-list">
                             <div class="comments">
                                 <figure class="img-thumbnail">
-                                    <img src="assets/images/blog/author.jpg" alt="author" width="80"
+                                    <img src="{{asset('assets/images/blog/author.jpg')}}" alt="author" width="80"
                                         height="80">
                                 </figure>
 
@@ -542,19 +495,21 @@
         </div>
         <!-- End .product-single-tabs -->
 
+        @if (count($related_products) > 0)
         <div class="products-section pt-0">
             <h2 class="section-title">Related Products</h2>
 
             <div class="products-slider owl-carousel owl-theme dots-top dots-small">
+                @foreach ($related_products as $related_product)
                 <div class="product-default">
                     <figure>
                         <a href="product.html">
-                            <img src="assets/images/products/c1.png" width="280" height="280" alt="product">
-                            <img src="assets/images/products/c1.png" width="280" height="280" alt="product">
+                            <img src={{ asset('products/'. $related_product->image) }} width="280" height="280" alt="product">
+                            <img src={{ asset('products/'. $related_product->image) }} width="280" height="280" alt="product">
                         </a>
                         <div class="label-group">
                             <div class="product-label label-hot">HOT</div>
-                            <div class="product-label label-sale">-20%</div>
+                            <div class="product-label label-sale">{{ ($related_product->discount_price / $related_product->price) * 100 }}%</div>
                         </div>
                     </figure>
                     <div class="product-details">
@@ -574,8 +529,12 @@
                         </div>
                         <!-- End .product-container -->
                         <div class="price-box">
-                            <del class="old-price">59.00 FCFA </del>
-                            <span class="product-price">49.00 FCFA </span>
+                            @if($related_product->discount_price)
+                            <del class="old-price"> {{ $related_product->price }} FCFA </del>
+                            <span class="product-price"> {{ $related_product->discount_price }} FCFA </span>
+                            @else
+                            <span class="product-price"> {{ $related_product->price }} FCFA </span>
+                            @endif
                         </div>
                         <!-- End .price-box -->
                         <div class="product-action">
@@ -590,12 +549,13 @@
                     </div>
                     <!-- End .product-details -->
                 </div>
+                @endforeach
 
                 <div class="product-default">
                     <figure>
                         <a href="product.html">
-                            <img src="assets/images/products/c2.png" width="280" height="280" alt="product">
-                            <img src="assets/images/products/c2.png" width="280" height="280" alt="product">
+                            <img src="{{asset('assets/images/products/c2.png')}}" width="280" height="280" alt="product">
+                            <img src="{{asset('assets/images/products/c2.png')}}" width="280" height="280" alt="product">
                         </a>
                         <div class="label-group">
                             <div class="product-label label-hot">HOT</div>
@@ -639,8 +599,8 @@
                 <div class="product-default">
                     <figure>
                         <a href="product.html">
-                            <img src="assets/images/products/c3.png" width="280" height="280" alt="product">
-                            <img src="assets/images/products/c3.png" width="280" height="280" alt="product">
+                            <img src="{{asset('assets/images/products/c3.png')}}" width="280" height="280" alt="product">
+                            <img src="{{asset('assets/images/products/c3.png')}}" width="280" height="280" alt="product">
                         </a>
                         <div class="label-group">
                             <div class="product-label label-hot">HOT</div>
@@ -684,8 +644,8 @@
                 <div class="product-default">
                     <figure>
                         <a href="product.html">
-                            <img src="assets/images/products/c4.png" width="280" height="280" alt="product">
-                            <img src="assets/images/products/c4.png" width="280" height="280" alt="product">
+                            <img src="{{asset('assets/images/products/c4.png')}}" width="280" height="280" alt="product">
+                            <img src="{{asset('assets/images/products/c4.png')}}" width="280" height="280" alt="product">
                         </a>
                         <div class="label-group">
                             <div class="product-label label-hot">HOT</div>
@@ -729,8 +689,8 @@
                 <div class="product-default">
                     <figure>
                         <a href="product.html">
-                            <img src="assets/images/products/c5.png" width="280" height="280" alt="product">
-                            <img src="assets/images/products/c5.png" width="280" height="280" alt="product">
+                            <img src="{{asset('assets/images/products/c5.png')}}" width="280" height="280" alt="product">
+                            <img src="{{asset('assets/images/products/c5.png')}}" width="280" height="280" alt="product">
                         </a>
                         <div class="label-group">
                             <div class="product-label label-hot">HOT</div>
@@ -773,6 +733,7 @@
             </div>
             <!-- End .products-slider -->
         </div>
+        @endif
         <!-- End .products-section -->
         <!-- End .row -->
     </div>
