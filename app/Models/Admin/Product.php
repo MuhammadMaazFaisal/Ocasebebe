@@ -2,7 +2,7 @@
 
 namespace App\Models\Admin;
 
-use App\Models\Order;
+use App\Models\Admin\Order;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 

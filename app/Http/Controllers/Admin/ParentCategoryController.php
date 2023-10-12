@@ -8,6 +8,7 @@ use App\Http\Requests\EditParentCategory as RequestsEditParentCategory;
 use Illuminate\Http\Request;
 use App\Models\Admin\ParentCategory;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File;
 
 class ParentCategoryController extends Controller
 {
@@ -40,10 +41,19 @@ class ParentCategoryController extends Controller
      */
     public function store(RequestsParentCategory $request)
     {
-        // return $request->all();
+        $validated = $request->validate([
+            'image' => 'required',
+
+        ]);
+        
         $parent = $request->validated();
         $parent = new ParentCategory();
         $parent->parent_category_name = $request->parent_category_name;
+        if ($request->hasFile('image')) {
+            $filename = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('categories'), $filename);
+            $parent->image = $filename;
+        }
         $parent->status = 1;
         $parent->save();
         $notification = array('message' => 'Parent Category Created Successfully! ', 'alert-type' => 'success');
@@ -85,6 +95,11 @@ class ParentCategoryController extends Controller
         $parent = $request->validated();
         $parent = ParentCategory::find($id);
         $parent->parent_category_name = $request->parent_category_name;
+        if ($request->hasFile('image')) {
+            $filename = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('categories'), $filename);
+            $parent->image = $filename;
+        }
         $parent->status = 1;
         $parent->save();
         $notification = array('message' => 'Parent Category Updated Successfully! ', 'alert-type' => 'success');

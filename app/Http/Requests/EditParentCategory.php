@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Models\BackendModels\ParentCategory;
+use App\Models\Admin\ParentCategory;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 

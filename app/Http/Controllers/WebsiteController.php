@@ -29,6 +29,8 @@ use App\Models\ProductVariantion;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use App\Models\Admin\Review;
+
 
 class WebsiteController extends Controller
 {
@@ -38,10 +40,36 @@ class WebsiteController extends Controller
     public function index()
     {
         $now = Carbon::now();
-
-
-        // discount over if date expire
-        $discounted_products = Product::where('status', 1)->get();
+        $categories=ParentCategory::where('status',1)->get();
+        foreach ($categories as $category) {
+            $category['products'] = Product::where('parent_category_id', $category->id)->where('status', 1)->get();
+        }
+        $new_products = Product::where('status', 1)->orderBy('id', 'desc')->get()->take(8);
+        foreach ($new_products as $new_product) {
+            $new_product['avg_rating'] = Review::where('product_id', $new_product->id)->avg('rating');
+            $new_product['category'] = ParentCategory::where('id', $new_product->parent_category_id)->first();
+        }
+        $products=Product::where('status',1)->get();
+        foreach ($products as $product) {
+            $product['avg_rating'] = Review::where('product_id', $product->id)->avg('rating');
+            $product['category'] = ParentCategory::where('id', $product->parent_category_id)->first();
+        }
+        $sale_products = Product::where('status', 1)->where('discount_price', '!=', null)->orderBy('id', 'desc')->get()->take(3);
+        foreach ($sale_products as $sale_product) {
+            $sale_product['avg_rating'] = Review::where('product_id', $sale_product->id)->avg('rating');
+        }
+        $featured_products=Product::where('status', 1)->inRandomOrder()->take(3)->get();
+        foreach ($featured_products as $featured_product) {
+            $featured_product['avg_rating'] = Review::where('product_id', $featured_product->id)->avg('rating');
+        }
+        $recommended_products=Product::where('status', 1)->inRandomOrder()->take(3)->get();
+        foreach ($recommended_products as $recommended_product) {
+            $recommended_product['avg_rating'] = Review::where('product_id', $recommended_product->id)->avg('rating');
+        }
+        $bestselling_products=Product::where('status', 1)->inRandomOrder()->take(3)->get();
+        foreach ($bestselling_products as $bestselling_product) {
+            $bestselling_product['avg_rating'] = Review::where('product_id', $bestselling_product->id)->avg('rating');
+        }
 
         return view("index", get_defined_vars());
     }
@@ -314,18 +342,20 @@ class WebsiteController extends Controller
 
         $category=ParentCategory::where('id',$product->parent_category_id)->first();
         $related_products = Product::where('parent_category_id', $product->parent_category_id)->where('id', '!=', $product->id)->get()->take(4);
-
+        for ($i = 0; $i < count($related_products); $i++) {
+            $related_products[$i]['avg_rating'] = Review::where('product_id', $related_products[$i]->id)->avg('rating');
+        }
 
 
 
 
         // total count of person who add current item in cart
         // $people_add_item_in_carts = Cart::where('product_id', $productShow->id)->count();
-        // $reviews = Review::where('product_id', $productShow->id)->with('get_user')->where('status', 1)->get();
+        $reviews = Review::where('product_id', $product->id)->with('get_user')->where('status', 1)->get();
         // $ratings = Review::where('product_id', $productShow->id)->where('status', 1)->get();
         // $avg = $ratings->average('rating');
-        // $review_count = Review::where('product_id', $productShow->id)->count();
-        // $review_avg = Review::where('product_id', $productShow->id)->avg('rating');
+        $review_count = Review::where('product_id', $product->id)->count();
+        $review_avg = Review::where('product_id', $product->id)->avg('rating');
 
         // $review_avg = round($review_avg);
         // $is_buy_product = BillingInfo::where('user_id', Auth::id())->where('product_id', $productShow->id)->get();

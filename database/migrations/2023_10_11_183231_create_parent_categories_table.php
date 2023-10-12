@@ -16,6 +16,7 @@ class CreateParentCategoriesTable extends Migration
         Schema::create('parent_categories', function (Blueprint $table) {
             $table->id();
             $table->string('parent_category_name');
+            $table->string('image');
             $table->integer('status')->comment('1=active,0=inactive');
             $table->timestamps();
         });

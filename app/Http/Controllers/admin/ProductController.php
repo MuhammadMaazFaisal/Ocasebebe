@@ -55,6 +55,8 @@ class ProductController extends Controller
     public function edit($id)
     {
         $products = Product::where('id', $id)->first();
+        $products['product_attribute'] = ProductAttribute::where('product_id', $products->id)->first();
+       
         $parent_categories = ParentCategory::get();
         $attribute_lists = AttributeValue::where('attribute_id', 1)->get();
         $length = Length::where('status','1')->get();

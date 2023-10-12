@@ -12,7 +12,7 @@
 
         <div class="product-single-container product-single-default">
             <div class="cart-message d-none">
-                <strong class="single-cart-notice">“Men Black Sports Shoes”</strong>
+                <strong class="single-cart-notice">“{{ $product->product_name }}”</strong>
                 <span>has been added to your cart.</span>
             </div>
 
@@ -23,26 +23,23 @@
                             <div class="product-label label-hot">HOT</div>
                             @if ($product->discount_price)
                                 <div class="product-label label-sale">
-                                    {{ ($product->discount_price / $product->price) * 100 }}%
+                                    {{ (1 - $product->discount_price / $product->price) * 100 }}%
                                 </div>
                             @endif
                         </div>
 
                         <div class="product-single-carousel owl-carousel owl-theme show-nav-hover">
                             <div class="product-item">
-                                <img class="product-single-image" src=
-                                {{ asset('products/' . $product->image) }}
-                                    data-zoom-image=
-                                    {{ asset('products/' . $product->image) }} 
-                                    width="468" height="468"
-                                    alt="product" />
+                                <img class="product-single-image" src={{ asset('products/' . $product->image) }}
+                                    data-zoom-image={{ asset('products/' . $product->image) }} width="468"
+                                    height="468" alt="product" />
                             </div>
-                            
+
                             @foreach (json_decode($product->multiple_image) as $image)
                                 <div class="product-item">
                                     <img class="product-single-image" src={{ asset('products/' . $image) }}
-                                        data-zoom-image={{ asset('products/' . $image) }} width="468"
-                                        height="468" alt="product" />
+                                        data-zoom-image={{ asset('products/' . $image) }} width="468" height="468"
+                                        alt="product" />
                                 </div>
                             @endforeach
                         </div>
@@ -71,7 +68,7 @@
 
                 <div class="col-lg-7 col-md-6 product-single-details">
                     <h1 class="product-title">
-                    {{ $product->name }}
+                        {{ $product->name }}
                     </h1>
 
                     <div class="product-nav">
@@ -82,7 +79,8 @@
                                 <span class="product-popup">
                                     <span class="box-content">
                                         <img alt="product" width="150" height="150"
-                                            src="{{asset('assets/images/products/product-3.jpg')}}" style="padding-top: 0px;">
+                                            src="{{ asset('assets/images/products/product-3.jpg') }}"
+                                            style="padding-top: 0px;">
 
                                         <span>Circled Ultimate 3D Speaker</span>
                                     </span>
@@ -97,7 +95,8 @@
                                 <span class="product-popup">
                                     <span class="box-content">
                                         <img alt="product" width="150" height="150"
-                                            src="{{asset('assets/images/products/product-4.jpg')}}" style="padding-top: 0px;">
+                                            src="{{ asset('assets/images/products/product-4.jpg') }}"
+                                            style="padding-top: 0px;">
 
                                         <span>Blue Backpack for the Young</span>
                                     </span>
@@ -108,63 +107,63 @@
 
                     <div class="ratings-container">
                         <div class="product-ratings">
-                            <span class="ratings" style="width:60%"></span>
+                            <span class="ratings" style="width:{{ $review_avg * 20 }}%"></span>
                             <!-- End .ratings -->
                             <span class="tooltiptext tooltip-top"></span>
                         </div>
                         <!-- End .product-ratings -->
 
-                        <a href="#" class="rating-link">( 6 Reviews )</a>
+                        <a href="#" class="rating-link">( {{ $review_count }} Reviews )</a>
                     </div>
                     <!-- End .ratings-container -->
 
                     <hr class="short-divider">
 
                     <div class="price-box">
-                    @if ($product->discount_price)
-                        <span class="old-price"> {{ $product->price }} FCFA </span>
-                        <span class="product-price"> {{ $product->discount_price }} FCFA </span>
-                    @else
-                        <span class="product-price"> {{ $product->price }} FCFA </span>
-                    @endif
+                        @if ($product->discount_price)
+                            <span class="old-price"> {{ $product->price }} FCFA </span>
+                            <span class="product-price"> {{ $product->discount_price }} FCFA </span>
+                        @else
+                            <span class="product-price"> {{ $product->price }} FCFA </span>
+                        @endif
                     </div>
                     <!-- End .price-box -->
 
                     <div class="product-desc">
                         <p>
-                        {{ $product->short_description }}
+                            {{ $product->short_description }}
                         </p>
                     </div>
                     <div class="product-filters-container custom-product-filters pt-0 pb-2 mb-0">
-                    @if (count(json_decode($product_attributes)) > 0)
-                        <div class="product-single-filter">
-                            <label>Color:</label>
+                        @if (count(json_decode($product_attributes)) > 0)
+                            <div class="product-single-filter">
+                                <label>Color:</label>
 
-                            <ul class="config-size-list config-color-list config-filter-list">
-                            
-                            @foreach (json_decode($product_attributes) as $attribute)
-                                <li class="">
-                                    <a href="javascript:;" class="filter-color border-0"
-                                        style="background-color: {{ $attribute->color_code }};">
-                                    </a>
-                                </li>
-                            @endforeach
-                            </ul>
-                        </div>
-                    @endif
-                    @if (count(json_decode($lengthnames)) > 0)
-                        <div class="product-single-filter">
-                            <label>Size:</label>
+                                <ul class="config-size-list config-color-list config-filter-list">
 
-                            <ul class="config-size-list">
-                            @foreach (json_decode($lengthnames) as $lengthname)
-                                <li><a href="javascript:;"
-                                        class="d-flex align-items-center justify-content-center">{{ $lengthname->name}}</a>
-                                </li>
-                            @endforeach
-                            </ul>
-                        </div>
-                    @endif
+                                    @foreach (json_decode($product_attributes) as $attribute)
+                                        <li class="">
+                                            <a href="javascript:;" class="filter-color border-0"
+                                                style="background-color: {{ $attribute->color_code }};">
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                        @if (count(json_decode($lengthnames)) > 0)
+                            <div class="product-single-filter">
+                                <label>Size:</label>
+
+                                <ul class="config-size-list">
+                                    @foreach (json_decode($lengthnames) as $lengthname)
+                                        <li><a href="javascript:;"
+                                                class="d-flex align-items-center justify-content-center">{{ $lengthname->name }}</a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
 
                         <div class="product-single-filter">
                             <label></label>
@@ -181,7 +180,8 @@
                         </li>
 
                         <li>
-                            CATEGORY: <strong><a href="#" class="product-category">{{ $category->parent_category_name }}</a></strong>
+                            CATEGORY: <strong><a href="#"
+                                    class="product-category">{{ $category->parent_category_name }}</a></strong>
                         </li>
 
                         <li>
@@ -293,7 +293,8 @@
 
                 <li class="nav-item">
                     <a class="nav-link" id="product-tab-reviews" data-toggle="tab" href="#product-reviews-content"
-                        role="tab" aria-controls="product-reviews-content" aria-selected="false">Reviews (1)</a>
+                        role="tab" aria-controls="product-reviews-content" aria-selected="false">Reviews
+                        ({{ $review_count }})</a>
                 </li>
 
                 <li class="nav-item">
@@ -306,7 +307,7 @@
                 <div class="tab-pane fade show active" id="product-desc-content" role="tabpanel"
                     aria-labelledby="product-tab-desc">
                     <div class="product-desc-content">
-                       {{ $product->description }}
+                        {{ $product->description }}
                     </div>
                     <!-- End .product-desc-content -->
                 </div>
@@ -317,8 +318,8 @@
                     <div class="product-size-content">
                         <div class="row">
                             <div class="col-md-4">
-                                <img src="{{asset('assets/images/products/single/body-shape.png')}}" alt="body shape"
-                                    width="217" height="398">
+                                <img src="{{ asset('assets/images/products/single/body-shape.png') }}"
+                                    alt="body shape" width="217" height="398">
                             </div>
                             <!-- End .col-md-4 -->
 
@@ -382,38 +383,41 @@
                 <div class="tab-pane fade" id="product-reviews-content" role="tabpanel"
                     aria-labelledby="product-tab-reviews">
                     <div class="product-reviews-content">
-                        <h3 class="reviews-title">1 review for Men Black Sports Shoes</h3>
+                        <h3 class="reviews-title">1 review for {{ $product->product_name }}</h3>
 
                         <div class="comment-list">
-                            <div class="comments">
-                                <figure class="img-thumbnail">
-                                    <img src="{{asset('assets/images/blog/author.jpg')}}" alt="author" width="80"
-                                        height="80">
-                                </figure>
+                            @foreach ($reviews as $review)
+                                <div class="comments my-5">
+                                    <figure class="img-thumbnail mt-1">
+                                        <img src="{{ asset('assets/images/blog/user.png') }}" alt="author"
+                                            width="60" height="60">
+                                    </figure>
 
-                                <div class="comment-block">
-                                    <div class="comment-header">
-                                        <div class="comment-arrow"></div>
+                                    <div class="comment-block">
+                                        <div class="comment-header">
+                                            <div class="comment-arrow"></div>
 
-                                        <div class="ratings-container float-sm-right">
-                                            <div class="product-ratings">
-                                                <span class="ratings" style="width:60%"></span>
-                                                <!-- End .ratings -->
-                                                <span class="tooltiptext tooltip-top"></span>
+                                            <div class="ratings-container float-sm-right">
+                                                <div class="product-ratings">
+                                                    <span class="ratings"
+                                                        style="width:{{ $review->rating * 20 }}%"></span>
+                                                    <!-- End .ratings -->
+                                                    <span class="tooltiptext tooltip-top"></span>
+                                                </div>
+                                                <!-- End .product-ratings -->
                                             </div>
-                                            <!-- End .product-ratings -->
+
+                                            <span class="comment-by">
+                                                <strong>{{ $review->get_user->email }}</strong>
+                                            </span>
                                         </div>
 
-                                        <span class="comment-by">
-                                            <strong>Joe Doe</strong> – April 12, 2018
-                                        </span>
-                                    </div>
-
-                                    <div class="comment-content">
-                                        <p>Excellent.</p>
+                                        <div class="comment-content">
+                                            <p>{{ $review->comments }}</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endforeach
                         </div>
 
                         <div class="divider"></div>
@@ -496,243 +500,68 @@
         <!-- End .product-single-tabs -->
 
         @if (count($related_products) > 0)
-        <div class="products-section pt-0">
-            <h2 class="section-title">Related Products</h2>
+            <div class="products-section pt-0">
+                <h2 class="section-title">Related Products</h2>
 
-            <div class="products-slider owl-carousel owl-theme dots-top dots-small">
-                @foreach ($related_products as $related_product)
-                <div class="product-default">
-                    <figure>
-                        <a href="product.html">
-                            <img src={{ asset('products/'. $related_product->image) }} width="280" height="280" alt="product">
-                            <img src={{ asset('products/'. $related_product->image) }} width="280" height="280" alt="product">
-                        </a>
-                        <div class="label-group">
-                            <div class="product-label label-hot">HOT</div>
-                            <div class="product-label label-sale">{{ ($related_product->discount_price / $related_product->price) * 100 }}%</div>
-                        </div>
-                    </figure>
-                    <div class="product-details">
-                        <div class="category-list">
-                            <a href="category.html" class="product-category">Category</a>
-                        </div>
-                        <h3 class="product-title">
-                            <a href="product.html">Ultimate 3D Bluetooth Speaker</a>
-                        </h3>
-                        <div class="ratings-container">
-                            <div class="product-ratings">
-                                <span class="ratings" style="width:80%"></span>
-                                <!-- End .ratings -->
-                                <span class="tooltiptext tooltip-top"></span>
+                <div class="products-slider owl-carousel owl-theme dots-top dots-small">
+                    @foreach ($related_products as $related_product)
+                        <div class="product-default">
+                            <figure>
+                                <a href="product.html">
+                                    <img src={{ asset('products/' . $related_product->image) }} width="280"
+                                        height="280" alt="product">
+                                    <img src={{ asset('products/' . $related_product->image) }} width="280"
+                                        height="280" alt="product">
+                                </a>
+                                <div class="label-group">
+                                    <div class="product-label label-hot">HOT</div>
+                                    <div class="product-label label-sale">
+                                        {{ (1 - $related_product->discount_price / $related_product->price) * 100 }}%
+                                    </div>
+                                </div>
+                            </figure>
+                            <div class="product-details">
+                                <div class="category-list">
+                                    <a href="category.html" class="product-category">Category</a>
+                                </div>
+                                <h3 class="product-title">
+                                    <a href="product.html">{{ $related_product->product_name }}</a>
+                                </h3>
+                                <div class="ratings-container">
+                                    <div class="product-ratings">
+                                        <span class="ratings"
+                                            style="width:{{ $related_product->avg_rating * 20 }}%"></span>
+                                        <!-- End .ratings -->
+                                        <span class="tooltiptext tooltip-top"></span>
+                                    </div>
+                                    <!-- End .product-ratings -->
+                                </div>
+                                <!-- End .product-container -->
+                                <div class="price-box">
+                                    @if ($related_product->discount_price)
+                                        <del class="old-price"> {{ $related_product->price }} FCFA </del>
+                                        <span class="product-price"> {{ $related_product->discount_price }} FCFA
+                                        </span>
+                                    @else
+                                        <span class="product-price"> {{ $related_product->price }} FCFA </span>
+                                    @endif
+                                </div>
+                                <!-- End .price-box -->
+                                <div class="product-action">
+                                    <a href="wishlist.html" title="Wishlist" class="btn-icon-wish"><i
+                                            class="icon-heart"></i></a>
+                                    <a href="product.html" class="btn-icon btn-add-cart"><i
+                                            class="fa fa-arrow-right"></i><span>SELECT
+                                            OPTIONS</span></a>
+                                    <a href="{{ route('product.details', ['id' => $related_product->id]) }}"
+                                        class="btn-quickview"><i class="fas fa-external-link-alt"></i></a>
+                                </div>
                             </div>
-                            <!-- End .product-ratings -->
+                            <!-- End .product-details -->
                         </div>
-                        <!-- End .product-container -->
-                        <div class="price-box">
-                            @if($related_product->discount_price)
-                            <del class="old-price"> {{ $related_product->price }} FCFA </del>
-                            <span class="product-price"> {{ $related_product->discount_price }} FCFA </span>
-                            @else
-                            <span class="product-price"> {{ $related_product->price }} FCFA </span>
-                            @endif
-                        </div>
-                        <!-- End .price-box -->
-                        <div class="product-action">
-                            <a href="wishlist.html" title="Wishlist" class="btn-icon-wish"><i
-                                    class="icon-heart"></i></a>
-                            <a href="product.html" class="btn-icon btn-add-cart"><i
-                                    class="fa fa-arrow-right"></i><span>SELECT
-                                    OPTIONS</span></a>
-                            <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View"><i
-                                    class="fas fa-external-link-alt"></i></a>
-                        </div>
-                    </div>
-                    <!-- End .product-details -->
+                    @endforeach
+                    <!-- End .products-slider -->
                 </div>
-                @endforeach
-
-                <div class="product-default">
-                    <figure>
-                        <a href="product.html">
-                            <img src="{{asset('assets/images/products/c2.png')}}" width="280" height="280" alt="product">
-                            <img src="{{asset('assets/images/products/c2.png')}}" width="280" height="280" alt="product">
-                        </a>
-                        <div class="label-group">
-                            <div class="product-label label-hot">HOT</div>
-                            <div class="product-label label-sale">-20%</div>
-                        </div>
-                    </figure>
-                    <div class="product-details">
-                        <div class="category-list">
-                            <a href="category.html" class="product-category">Category</a>
-                        </div>
-                        <h3 class="product-title">
-                            <a href="product.html">Circled Ultimate 3D Speaker</a>
-                        </h3>
-                        <div class="ratings-container">
-                            <div class="product-ratings">
-                                <span class="ratings" style="width:80%"></span>
-                                <!-- End .ratings -->
-                                <span class="tooltiptext tooltip-top"></span>
-                            </div>
-                            <!-- End .product-ratings -->
-                        </div>
-                        <!-- End .product-container -->
-                        <div class="price-box">
-                            <del class="old-price">59.00 FCFA </del>
-                            <span class="product-price">49.00 FCFA </span>
-                        </div>
-                        <!-- End .price-box -->
-                        <div class="product-action">
-                            <a href="wishlist.html" title="Wishlist" class="btn-icon-wish"><i
-                                    class="icon-heart"></i></a>
-                            <a href="product.html" class="btn-icon btn-add-cart"><i
-                                    class="fa fa-arrow-right"></i><span>SELECT
-                                    OPTIONS</span></a>
-                            <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View"><i
-                                    class="fas fa-external-link-alt"></i></a>
-                        </div>
-                    </div>
-                    <!-- End .product-details -->
-                </div>
-
-                <div class="product-default">
-                    <figure>
-                        <a href="product.html">
-                            <img src="{{asset('assets/images/products/c3.png')}}" width="280" height="280" alt="product">
-                            <img src="{{asset('assets/images/products/c3.png')}}" width="280" height="280" alt="product">
-                        </a>
-                        <div class="label-group">
-                            <div class="product-label label-hot">HOT</div>
-                            <div class="product-label label-sale">-20%</div>
-                        </div>
-                    </figure>
-                    <div class="product-details">
-                        <div class="category-list">
-                            <a href="category.html" class="product-category">Category</a>
-                        </div>
-                        <h3 class="product-title">
-                            <a href="product.html">Brown-Black Men Casual Glasses</a>
-                        </h3>
-                        <div class="ratings-container">
-                            <div class="product-ratings">
-                                <span class="ratings" style="width:80%"></span>
-                                <!-- End .ratings -->
-                                <span class="tooltiptext tooltip-top"></span>
-                            </div>
-                            <!-- End .product-ratings -->
-                        </div>
-                        <!-- End .product-container -->
-                        <div class="price-box">
-                            <del class="old-price">59.00 FCFA </del>
-                            <span class="product-price">49.00 FCFA </span>
-                        </div>
-                        <!-- End .price-box -->
-                        <div class="product-action">
-                            <a href="wishlist.html" title="Wishlist" class="btn-icon-wish"><i
-                                    class="icon-heart"></i></a>
-                            <a href="product.html" class="btn-icon btn-add-cart"><i
-                                    class="fa fa-arrow-right"></i><span>SELECT
-                                    OPTIONS</span></a>
-                            <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View"><i
-                                    class="fas fa-external-link-alt"></i></a>
-                        </div>
-                    </div>
-                    <!-- End .product-details -->
-                </div>
-
-                <div class="product-default">
-                    <figure>
-                        <a href="product.html">
-                            <img src="{{asset('assets/images/products/c4.png')}}" width="280" height="280" alt="product">
-                            <img src="{{asset('assets/images/products/c4.png')}}" width="280" height="280" alt="product">
-                        </a>
-                        <div class="label-group">
-                            <div class="product-label label-hot">HOT</div>
-                            <div class="product-label label-sale">-20%</div>
-                        </div>
-                    </figure>
-                    <div class="product-details">
-                        <div class="category-list">
-                            <a href="category.html" class="product-category">Category</a>
-                        </div>
-                        <h3 class="product-title">
-                            <a href="product.html">Men Black Gentle Belt</a>
-                        </h3>
-                        <div class="ratings-container">
-                            <div class="product-ratings">
-                                <span class="ratings" style="width:80%"></span>
-                                <!-- End .ratings -->
-                                <span class="tooltiptext tooltip-top"></span>
-                            </div>
-                            <!-- End .product-ratings -->
-                        </div>
-                        <!-- End .product-container -->
-                        <div class="price-box">
-                            <del class="old-price">59.00 FCFA </del>
-                            <span class="product-price">49.00 FCFA </span>
-                        </div>
-                        <!-- End .price-box -->
-                        <div class="product-action">
-                            <a href="wishlist.html" title="Wishlist" class="btn-icon-wish"><i
-                                    class="icon-heart"></i></a>
-                            <a href="product.html" class="btn-icon btn-add-cart"><i
-                                    class="fa fa-arrow-right"></i><span>SELECT
-                                    OPTIONS</span></a>
-                            <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View"><i
-                                    class="fas fa-external-link-alt"></i></a>
-                        </div>
-                    </div>
-                    <!-- End .product-details -->
-                </div>
-
-                <div class="product-default">
-                    <figure>
-                        <a href="product.html">
-                            <img src="{{asset('assets/images/products/c5.png')}}" width="280" height="280" alt="product">
-                            <img src="{{asset('assets/images/products/c5.png')}}" width="280" height="280" alt="product">
-                        </a>
-                        <div class="label-group">
-                            <div class="product-label label-hot">HOT</div>
-                            <div class="product-label label-sale">-20%</div>
-                        </div>
-                    </figure>
-                    <div class="product-details">
-                        <div class="category-list">
-                            <a href="category.html" class="product-category">Category</a>
-                        </div>
-                        <h3 class="product-title">
-                            <a href="product.html">Blue Backpack for the Young - S</a>
-                        </h3>
-                        <div class="ratings-container">
-                            <div class="product-ratings">
-                                <span class="ratings" style="width:80%"></span>
-                                <!-- End .ratings -->
-                                <span class="tooltiptext tooltip-top"></span>
-                            </div>
-                            <!-- End .product-ratings -->
-                        </div>
-                        <!-- End .product-container -->
-                        <div class="price-box">
-                            <del class="old-price">59.00 FCFA </del>
-                            <span class="product-price">49.00 FCFA </span>
-                        </div>
-                        <!-- End .price-box -->
-                        <div class="product-action">
-                            <a href="wishlist.html" title="Wishlist" class="btn-icon-wish"><i
-                                    class="icon-heart"></i></a>
-                            <a href="product.html" class="btn-icon btn-add-cart"><i
-                                    class="fa fa-arrow-right"></i><span>SELECT
-                                    OPTIONS</span></a>
-                            <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View"><i
-                                    class="fas fa-external-link-alt"></i></a>
-                        </div>
-                    </div>
-                    <!-- End .product-details -->
-                </div>
-            </div>
-            <!-- End .products-slider -->
-        </div>
         @endif
         <!-- End .products-section -->
         <!-- End .row -->

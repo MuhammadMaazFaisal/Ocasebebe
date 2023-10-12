@@ -130,6 +130,17 @@
                         </ul>
                     </li>
 
+                     {{-- Review Management --}}
+                     <li class="sidebar-list">
+                        <label class="badge badge-success"></label><a
+                            class="sidebar-link sidebar-title
+                    {{ Route::currentRouteName() == 'reviews' ? 'active' : '' }}
+                    {{ Route::currentRouteName() == 'reviews-detail' ? 'active' : '' }}"
+                            href="{{ route('reviews') }}"><span class="lan-3"><i class="fa fa-comments fa-lg"
+                                    aria-hidden="true"></i>Reviews Management </span>
+                        </a>
+                    </li>
+
 
                     {{-- User  Management --}}
                     <li class="sidebar-list">

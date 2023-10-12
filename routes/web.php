@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\VariantController;
 use App\Http\Controllers\Admin\AttributeValueControler;
 use App\Http\Controllers\Admin\LengthController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\Admin\ReviewController;
 
 
 /*
@@ -28,13 +29,13 @@ use App\Http\Controllers\CartController;
 // User routes
 
 Route::get('/', [WebsiteController::class, 'index'])->name('home');
-Route::get('/login', [LoginController::class, 'index']);
-Route::post('/login', [LoginController::class, 'login'])->name('login');
+Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
 Route::post('/register', [LoginController::class, 'register'])->name('register');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // Product routes
-Route::get('product-details/{id}', [WebsiteController::class, 'productdetails'])->name('product-details');
+Route::get('product-details/{id}', [WebsiteController::class, 'productdetails'])->name('product.details');
 
 // Pages routes
 Route::get ('who-we-are', function () {
@@ -72,6 +73,7 @@ Route::post('cash_on_delivery', [WebsiteController::class, 'cash_on_delivery'])-
 Route::get('admin', [AdminDashboardController::class, 'admin_login'])->name('admin.login');
 Route::get('/admin-logout', [AdminDashboardController::class, 'admin_logout'])->name("admin.logout");
 Route::post('admin-auth', [AdminDashboardController::class, 'admin_auth'])->name('admin.auth');
+
 Route::group(['middleware' =>  ['preventBackHistory', 'admin_middleware'], 'prefix' => 'admin'], function () {
 
     Route::get('dashboard', [AdminDashboardController::class, 'admin_dashboard'])->name('admin.dashboard');
@@ -89,7 +91,6 @@ Route::group(['middleware' =>  ['preventBackHistory', 'admin_middleware'], 'pref
         Route::post('order-status/{id}', [OrderManagementController::class, 'order_status'])->name('order.status');
         Route::get('invoice/{id}', [OrderManagementController::class, 'invoice_index'])->name('invoice.index');
     });
-
     Route::get('order_invoice', [OrderManagementController::class, 'orderinvoice'])->name('order_invoice');
     Route::post('send-invoice', [OrderManagementController::class, 'send_invoice'])->name('send_invoice');
 
@@ -126,4 +127,12 @@ Route::group(['middleware' =>  ['preventBackHistory', 'admin_middleware'], 'pref
     Route::get('user-delete', [UserController::class, 'delete'])->name('user-delete');
     Route::get('user-status/{id}', [UserController::class, 'status'])->name('user-status');
     Route::get('user-view/{id}', [UserController::class, 'show'])->name('user-view');
+
+     // Review Routes
+     Route::get('reviews', [ReviewController::class, 'index'])->name('reviews');
+     Route::get('reviews-detail/{id}', [ReviewController::class, 'details'])->name('reviews-detail');
+     Route::get('reviews-status/{id}', [ReviewController::class, 'status'])->name('reviews-status');
+     Route::post('review-toggle', [ReviewController::class, 'reviewtoggle'])->name('review-toggle');
+     Route::post('review-delete/{id}', [ReviewController::class, 'deletereview'])->name('review-delete');
+ 
 });
