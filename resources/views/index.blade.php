@@ -347,7 +347,7 @@
                                                     <a href="#" class="btn-icon-wish" title="wishlist"><i
                                                             class="icon-heart"></i></a>
                                                     <a href="#" class="btn-icon btn-add-cart"><i
-                                                            class="fa fa-arrow-right"></i><span>Add to cart</span></a>
+                                                            class="fa fa-arrow-right"></i><span>View</span></a>
                                                     <a href="#" class="btn-quickview" title="Quick View"><i
                                                             class="fas fa-external-link-alt"></i></a>
                                                 </div>
@@ -390,7 +390,7 @@
                                                     <a href="#" class="btn-icon-wish" title="wishlist"><i
                                                             class="icon-heart"></i></a>
                                                     <a href="#" class="btn-icon btn-add-cart"><i
-                                                            class="fa fa-arrow-right"></i><span>Add to cart</span></a>
+                                                            class="fa fa-arrow-right"></i><span>View</span></a>
                                                     <a href="#" class="btn-quickview" title="Quick View"><i
                                                             class="fas fa-external-link-alt"></i></a>
                                                 </div>
@@ -433,7 +433,7 @@
                                                     <a href="#" class="btn-icon-wish" title="wishlist"><i
                                                             class="icon-heart"></i></a>
                                                     <a href="#" class="btn-icon btn-add-cart"><i
-                                                            class="fa fa-arrow-right"></i><span>Add to cart</span></a>
+                                                            class="fa fa-arrow-right"></i><span>View</span></a>
                                                     <a href="#" class="btn-quickview" title="Quick View"><i
                                                             class="fas fa-external-link-alt"></i></a>
                                                 </div>
@@ -476,7 +476,7 @@
                                                     <a href="#" class="btn-icon-wish" title="wishlist"><i
                                                             class="icon-heart"></i></a>
                                                     <a href="#" class="btn-icon btn-add-cart"><i
-                                                            class="fa fa-arrow-right"></i><span>Add to cart</span></a>
+                                                            class="fa fa-arrow-right"></i><span>View</span></a>
                                                     <a href="#" class="btn-quickview" title="Quick View"><i
                                                             class="fas fa-external-link-alt"></i></a>
                                                 </div>
@@ -519,7 +519,7 @@
                                                     <a href="#" class="btn-icon-wish" title="wishlist"><i
                                                             class="icon-heart"></i></a>
                                                     <a href="#" class="btn-icon btn-add-cart"><i
-                                                            class="fa fa-arrow-right"></i><span>Add to cart</span></a>
+                                                            class="fa fa-arrow-right"></i><span>View</span></a>
                                                     <a href="#" class="btn-quickview" title="Quick View"><i
                                                             class="fas fa-external-link-alt"></i></a>
                                                 </div>
@@ -562,7 +562,7 @@
                                                     <a href="#" class="btn-icon-wish" title="wishlist"><i
                                                             class="icon-heart"></i></a>
                                                     <a href="#" class="btn-icon btn-add-cart"><i
-                                                            class="fa fa-arrow-right"></i><span>Add to cart</span></a>
+                                                            class="fa fa-arrow-right"></i><span>View</span></a>
                                                     <a href="#" class="btn-quickview" title="Quick View"><i
                                                             class="fas fa-external-link-alt"></i></a>
                                                 </div>
@@ -605,7 +605,7 @@
                                                     <a href="#" class="btn-icon-wish" title="wishlist"><i
                                                             class="icon-heart"></i></a>
                                                     <a href="#" class="btn-icon btn-add-cart"><i
-                                                            class="fa fa-arrow-right"></i><span>Add to cart</span></a>
+                                                            class="fa fa-arrow-right"></i><span>View</span></a>
                                                     <a href="#" class="btn-quickview" title="Quick View"><i
                                                             class="fas fa-external-link-alt"></i></a>
                                                 </div>
@@ -648,7 +648,7 @@
                                                     <a href="#" class="btn-icon-wish" title="wishlist"><i
                                                             class="icon-heart"></i></a>
                                                     <a href="#" class="btn-icon btn-add-cart"><i
-                                                            class="fa fa-arrow-right"></i><span>Add to cart</span></a>
+                                                            class="fa fa-arrow-right"></i><span>View</span></a>
                                                     <a href="#" class="btn-quickview" title="Quick View"><i
                                                             class="fas fa-external-link-alt"></i></a>
                                                 </div>
@@ -696,7 +696,7 @@
                                                     <a href="#" class="btn-icon-wish" title="wishlist"><i
                                                             class="icon-heart"></i></a>
                                                     <a href="#" class="btn-icon btn-add-cart"><i
-                                                            class="fa fa-arrow-right"></i><span>Add to cart</span></a>
+                                                            class="fa fa-arrow-right"></i><span>View</span></a>
                                                     <a href="#" class="btn-quickview" title="Quick View"><i
                                                             class="fas fa-external-link-alt"></i></a>
                                                 </div>
@@ -739,7 +739,7 @@
                                                     <a href="#" class="btn-icon-wish" title="wishlist"><i
                                                             class="icon-heart"></i></a>
                                                     <a href="#" class="btn-icon btn-add-cart"><i
-                                                            class="fa fa-arrow-right"></i><span>Add to cart</span></a>
+                                                            class="fa fa-arrow-right"></i><span>View</span></a>
                                                     <a href="#" class="btn-quickview" title="Quick View"><i
                                                             class="fas fa-external-link-alt"></i></a>
                                                 </div>
@@ -782,7 +782,7 @@
                                                     <a href="#" class="btn-icon-wish" title="wishlist"><i
                                                             class="icon-heart"></i></a>
                                                     <a href="#" class="btn-icon btn-add-cart"><i
-                                                            class="fa fa-arrow-right"></i><span>Add to cart</span></a>
+                                                            class="fa fa-arrow-right"></i><span>View</span></a>
                                                     <a href="#" class="btn-quickview" title="Quick View"><i
                                                             class="fas fa-external-link-alt"></i></a>
                                                 </div>
@@ -825,7 +825,7 @@
                                                     <a href="#" class="btn-icon-wish" title="wishlist"><i
                                                             class="icon-heart"></i></a>
                                                     <a href="#" class="btn-icon btn-add-cart"><i
-                                                            class="fa fa-arrow-right"></i><span>Add to cart</span></a>
+                                                            class="fa fa-arrow-right"></i><span>View</span></a>
                                                     <a href="#" class="btn-quickview" title="Quick View"><i
                                                             class="fas fa-external-link-alt"></i></a>
                                                 </div>
@@ -868,7 +868,7 @@
                                                     <a href="#" class="btn-icon-wish" title="wishlist"><i
                                                             class="icon-heart"></i></a>
                                                     <a href="#" class="btn-icon btn-add-cart"><i
-                                                            class="fa fa-arrow-right"></i><span>Add to cart</span></a>
+                                                            class="fa fa-arrow-right"></i><span>View</span></a>
                                                     <a href="#" class="btn-quickview" title="Quick View"><i
                                                             class="fas fa-external-link-alt"></i></a>
                                                 </div>
@@ -911,7 +911,7 @@
                                                     <a href="#" class="btn-icon-wish" title="wishlist"><i
                                                             class="icon-heart"></i></a>
                                                     <a href="#" class="btn-icon btn-add-cart"><i
-                                                            class="fa fa-arrow-right"></i><span>Add to cart</span></a>
+                                                            class="fa fa-arrow-right"></i><span>View</span></a>
                                                     <a href="#" class="btn-quickview" title="Quick View"><i
                                                             class="fas fa-external-link-alt"></i></a>
                                                 </div>
@@ -954,7 +954,7 @@
                                                     <a href="#" class="btn-icon-wish" title="wishlist"><i
                                                             class="icon-heart"></i></a>
                                                     <a href="#" class="btn-icon btn-add-cart"><i
-                                                            class="fa fa-arrow-right"></i><span>Add to cart</span></a>
+                                                            class="fa fa-arrow-right"></i><span>View</span></a>
                                                     <a href="#" class="btn-quickview" title="Quick View"><i
                                                             class="fas fa-external-link-alt"></i></a>
                                                 </div>
@@ -997,7 +997,7 @@
                                                     <a href="#" class="btn-icon-wish" title="wishlist"><i
                                                             class="icon-heart"></i></a>
                                                     <a href="#" class="btn-icon btn-add-cart"><i
-                                                            class="fa fa-arrow-right"></i><span>Add to cart</span></a>
+                                                            class="fa fa-arrow-right"></i><span>View</span></a>
                                                     <a href="#" class="btn-quickview" title="Quick View"><i
                                                             class="fas fa-external-link-alt"></i></a>
                                                 </div>
@@ -1045,7 +1045,7 @@
                                                     <a href="#" class="btn-icon-wish" title="wishlist"><i
                                                             class="icon-heart"></i></a>
                                                     <a href="#" class="btn-icon btn-add-cart"><i
-                                                            class="fa fa-arrow-right"></i><span>Add to cart</span></a>
+                                                            class="fa fa-arrow-right"></i><span>View</span></a>
                                                     <a href="#" class="btn-quickview" title="Quick View"><i
                                                             class="fas fa-external-link-alt"></i></a>
                                                 </div>
@@ -1088,7 +1088,7 @@
                                                     <a href="#" class="btn-icon-wish" title="wishlist"><i
                                                             class="icon-heart"></i></a>
                                                     <a href="#" class="btn-icon btn-add-cart"><i
-                                                            class="fa fa-arrow-right"></i><span>Add to cart</span></a>
+                                                            class="fa fa-arrow-right"></i><span>View</span></a>
                                                     <a href="#" class="btn-quickview" title="Quick View"><i
                                                             class="fas fa-external-link-alt"></i></a>
                                                 </div>
@@ -1131,7 +1131,7 @@
                                                     <a href="#" class="btn-icon-wish" title="wishlist"><i
                                                             class="icon-heart"></i></a>
                                                     <a href="#" class="btn-icon btn-add-cart"><i
-                                                            class="fa fa-arrow-right"></i><span>Add to cart</span></a>
+                                                            class="fa fa-arrow-right"></i><span>View</span></a>
                                                     <a href="#" class="btn-quickview" title="Quick View"><i
                                                             class="fas fa-external-link-alt"></i></a>
                                                 </div>
@@ -1174,7 +1174,7 @@
                                                     <a href="#" class="btn-icon-wish" title="wishlist"><i
                                                             class="icon-heart"></i></a>
                                                     <a href="#" class="btn-icon btn-add-cart"><i
-                                                            class="fa fa-arrow-right"></i><span>Add to cart</span></a>
+                                                            class="fa fa-arrow-right"></i><span>View</span></a>
                                                     <a href="#" class="btn-quickview" title="Quick View"><i
                                                             class="fas fa-external-link-alt"></i></a>
                                                 </div>
@@ -1217,7 +1217,7 @@
                                                     <a href="#" class="btn-icon-wish" title="wishlist"><i
                                                             class="icon-heart"></i></a>
                                                     <a href="#" class="btn-icon btn-add-cart"><i
-                                                            class="fa fa-arrow-right"></i><span>Add to cart</span></a>
+                                                            class="fa fa-arrow-right"></i><span>View</span></a>
                                                     <a href="#" class="btn-quickview" title="Quick View"><i
                                                             class="fas fa-external-link-alt"></i></a>
                                                 </div>
@@ -1260,7 +1260,7 @@
                                                     <a href="#" class="btn-icon-wish" title="wishlist"><i
                                                             class="icon-heart"></i></a>
                                                     <a href="#" class="btn-icon btn-add-cart"><i
-                                                            class="fa fa-arrow-right"></i><span>Add to cart</span></a>
+                                                            class="fa fa-arrow-right"></i><span>View</span></a>
                                                     <a href="#" class="btn-quickview" title="Quick View"><i
                                                             class="fas fa-external-link-alt"></i></a>
                                                 </div>
@@ -1303,7 +1303,7 @@
                                                     <a href="#" class="btn-icon-wish" title="wishlist"><i
                                                             class="icon-heart"></i></a>
                                                     <a href="#" class="btn-icon btn-add-cart"><i
-                                                            class="fa fa-arrow-right"></i><span>Add to cart</span></a>
+                                                            class="fa fa-arrow-right"></i><span>View</span></a>
                                                     <a href="#" class="btn-quickview" title="Quick View"><i
                                                             class="fas fa-external-link-alt"></i></a>
                                                 </div>
@@ -1346,7 +1346,7 @@
                                                     <a href="#" class="btn-icon-wish" title="wishlist"><i
                                                             class="icon-heart"></i></a>
                                                     <a href="#" class="btn-icon btn-add-cart"><i
-                                                            class="fa fa-arrow-right"></i><span>Add to cart</span></a>
+                                                            class="fa fa-arrow-right"></i><span>View</span></a>
                                                     <a href="#" class="btn-quickview" title="Quick View"><i
                                                             class="fas fa-external-link-alt"></i></a>
                                                 </div>
@@ -1394,7 +1394,7 @@
                                                     <a href="#" class="btn-icon-wish" title="wishlist"><i
                                                             class="icon-heart"></i></a>
                                                     <a href="#" class="btn-icon btn-add-cart"><i
-                                                            class="fa fa-arrow-right"></i><span>Add to cart</span></a>
+                                                            class="fa fa-arrow-right"></i><span>View</span></a>
                                                     <a href="#" class="btn-quickview" title="Quick View"><i
                                                             class="fas fa-external-link-alt"></i></a>
                                                 </div>
@@ -1437,7 +1437,7 @@
                                                     <a href="#" class="btn-icon-wish" title="wishlist"><i
                                                             class="icon-heart"></i></a>
                                                     <a href="#" class="btn-icon btn-add-cart"><i
-                                                            class="fa fa-arrow-right"></i><span>Add to cart</span></a>
+                                                            class="fa fa-arrow-right"></i><span>View</span></a>
                                                     <a href="#" class="btn-quickview" title="Quick View"><i
                                                             class="fas fa-external-link-alt"></i></a>
                                                 </div>
@@ -1480,7 +1480,7 @@
                                                     <a href="#" class="btn-icon-wish" title="wishlist"><i
                                                             class="icon-heart"></i></a>
                                                     <a href="#" class="btn-icon btn-add-cart"><i
-                                                            class="fa fa-arrow-right"></i><span>Add to cart</span></a>
+                                                            class="fa fa-arrow-right"></i><span>View</span></a>
                                                     <a href="#" class="btn-quickview" title="Quick View"><i
                                                             class="fas fa-external-link-alt"></i></a>
                                                 </div>
@@ -1523,7 +1523,7 @@
                                                     <a href="#" class="btn-icon-wish" title="wishlist"><i
                                                             class="icon-heart"></i></a>
                                                     <a href="#" class="btn-icon btn-add-cart"><i
-                                                            class="fa fa-arrow-right"></i><span>Add to cart</span></a>
+                                                            class="fa fa-arrow-right"></i><span>View</span></a>
                                                     <a href="#" class="btn-quickview" title="Quick View"><i
                                                             class="fas fa-external-link-alt"></i></a>
                                                 </div>
@@ -1566,7 +1566,7 @@
                                                     <a href="#" class="btn-icon-wish" title="wishlist"><i
                                                             class="icon-heart"></i></a>
                                                     <a href="#" class="btn-icon btn-add-cart"><i
-                                                            class="fa fa-arrow-right"></i><span>Add to cart</span></a>
+                                                            class="fa fa-arrow-right"></i><span>View</span></a>
                                                     <a href="#" class="btn-quickview" title="Quick View"><i
                                                             class="fas fa-external-link-alt"></i></a>
                                                 </div>
@@ -1609,7 +1609,7 @@
                                                     <a href="#" class="btn-icon-wish" title="wishlist"><i
                                                             class="icon-heart"></i></a>
                                                     <a href="#" class="btn-icon btn-add-cart"><i
-                                                            class="fa fa-arrow-right"></i><span>Add to cart</span></a>
+                                                            class="fa fa-arrow-right"></i><span>View</span></a>
                                                     <a href="#" class="btn-quickview" title="Quick View"><i
                                                             class="fas fa-external-link-alt"></i></a>
                                                 </div>
@@ -1652,7 +1652,7 @@
                                                     <a href="#" class="btn-icon-wish" title="wishlist"><i
                                                             class="icon-heart"></i></a>
                                                     <a href="#" class="btn-icon btn-add-cart"><i
-                                                            class="fa fa-arrow-right"></i><span>Add to cart</span></a>
+                                                            class="fa fa-arrow-right"></i><span>View</span></a>
                                                     <a href="#" class="btn-quickview" title="Quick View"><i
                                                             class="fas fa-external-link-alt"></i></a>
                                                 </div>
@@ -1695,7 +1695,7 @@
                                                     <a href="#" class="btn-icon-wish" title="wishlist"><i
                                                             class="icon-heart"></i></a>
                                                     <a href="#" class="btn-icon btn-add-cart"><i
-                                                            class="fa fa-arrow-right"></i><span>Add to cart</span></a>
+                                                            class="fa fa-arrow-right"></i><span>View</span></a>
                                                     <a href="#" class="btn-quickview" title="Quick View"><i
                                                             class="fas fa-external-link-alt"></i></a>
                                                 </div>
@@ -1809,14 +1809,22 @@
                             </div>
                             <!-- End .product-container -->
                             <div class="price-box">
-                                <span class="product-price">{{ $new_product->discount_price }} CFA</span>
+                                <span class="product-price">
+                                    @if ($new_product->discount_price == null)
+                                        {{ $new_product->price }}
+                                    @else
+                                        {{ $new_product->discount_price }}
+                                    @endif
+                                    CFA
+                                </span>
                             </div>
                             <!-- End .price-box -->
                             <div class="product-action">
-                                <a href="#" class="btn-icon-wish" title="wishlist"><i
-                                        class="icon-heart"></i></a>
-                                <a href="#" class="btn-icon btn-add-cart"><i
-                                        class="fa fa-arrow-right"></i><span>Add to cart</span></a>
+                                <a href="#" onclick="addWishlistItem({{ $new_product->id }})"
+                                    class="btn-icon-wish" title="wishlist"><i class="icon-heart"></i></a>
+                                <a href="{{ route('product.details', ['id' => $new_product->id]) }}"
+                                    class="btn-icon btn-add-cart"><i
+                                        class="fa fa-arrow-right"></i><span>View</span></a>
                                 <a href="{{ route('product.details', ['id' => $new_product->id]) }}"
                                     class="btn-quickview" title="Quick View"><i
                                         class="fas fa-external-link-alt"></i></a>
@@ -1941,7 +1949,7 @@
 
     <section class="blog-section pb-0">
         <div class="container">
-            <h2 class="section-title heading-border border-0 appear-animate" data-animation-name="fadeInUp">
+            {{-- <h2 class="section-title heading-border border-0 appear-animate" data-animation-name="fadeInUp">
                 Articles récents </h2>
 
             <div class="owl-carousel owl-theme appear-animate" data-animation-name="fadeIn"
@@ -2080,9 +2088,9 @@
                     <!-- End .post-body -->
                 </article>
                 <!-- End .post -->
-            </div>
-
-            <hr class="mt-0 m-b-5">
+            </div> --}}
+            {{-- 
+            <hr class="mt-0 m-b-5"> --}}
 
             <div class="brands-slider owl-carousel owl-theme images-center appear-animate"
                 data-animation-name="fadeIn" data-animation-duration="500" data-owl-options="{
@@ -2145,7 +2153,14 @@
                                 <!-- End .product-container -->
 
                                 <div class="price-box">
-                                    <span class="product-price">{{ $product->discount_price }} CFA</span>
+                                    <span class="product-price">
+                                        @if ($new_product->discount_price == null)
+                                            {{ $new_product->price }}
+                                        @else
+                                            {{ $new_product->discount_price }}
+                                        @endif
+                                        CFA
+                                    </span>
                                 </div>
                                 <!-- End .price-box -->
                             </div>
@@ -2187,7 +2202,14 @@
                                 <!-- End .product-container -->
 
                                 <div class="price-box">
-                                    <span class="product-price">{{ $product->discount_price }} CFA</span>
+                                    <span class="product-price">
+                                        @if ($new_product->discount_price == null)
+                                            {{ $new_product->price }}
+                                        @else
+                                            {{ $new_product->discount_price }}
+                                        @endif
+                                        CFA
+                                    </span>
                                 </div>
                                 <!-- End .price-box -->
                             </div>
@@ -2229,7 +2251,14 @@
                                 <!-- End .product-container -->
 
                                 <div class="price-box">
-                                    <span class="product-price">{{ $product->discount_price }} CFA</span>
+                                    <span class="product-price">
+                                        @if ($new_product->discount_price == null)
+                                            {{ $new_product->price }}
+                                        @else
+                                            {{ $new_product->discount_price }}
+                                        @endif
+                                        CFA
+                                    </span>
                                 </div>
                                 <!-- End .price-box -->
                             </div>
@@ -2271,7 +2300,14 @@
                                 <!-- End .product-container -->
 
                                 <div class="price-box">
-                                    <span class="product-price">{{ $product->discount_price }} CFA</span>
+                                    <span class="product-price">
+                                        @if ($new_product->discount_price == null)
+                                            {{ $new_product->price }}
+                                        @else
+                                            {{ $new_product->discount_price }}
+                                        @endif
+                                        CFA
+                                    </span>
                                 </div>
                                 <!-- End .price-box -->
                             </div>

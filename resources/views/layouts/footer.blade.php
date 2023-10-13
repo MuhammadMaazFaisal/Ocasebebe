@@ -23,18 +23,22 @@
                     <div class="widget mx-5">
                         <h4 class="widget-title">INFORMATIONS LÉGALES</h4>
                         <ul class="links">
-                            <li><a href="{{ route('who-we-are')}}">Pourquoi nous choisir </a></li>
-                            <li><a href="{{ route('contact')}}">Contactez-nous</a></li>
-                            <li><a href="{{ route('terms-and-conditions')}}">Condition général d'utilisation</a></li>
-                            <li><a href="{{ route('payment-terms')}}">Modalité de paiement</a></li>
-                            <li><a href="{{ route('delivery-policy')}}">Politique de livraison</a></li>
-                            <li><a href="{{ route('faq')}}">FAQ</a></li>
+                            <li><a href="{{ route('who-we-are') }}">Pourquoi nous choisir </a></li>
+                            <li><a href="{{ route('contact') }}">Contactez-nous</a></li>
+                            <li><a href="{{ route('terms-and-conditions') }}">Condition général d'utilisation</a></li>
+                            <li><a href="{{ route('payment-terms') }}">Modalité de paiement</a></li>
+                            <li><a href="{{ route('delivery-policy') }}">Politique de livraison</a></li>
+                            <li><a href="{{ route('faq') }}">FAQ</a></li>
                         </ul>
                         <h4 class="widget-title">RETROUVEZ-NOUS SUR</h4>
                         <div class="social-icons">
-                            <a href="https://www.facebook.com/Ocasebebe" class="social-icon social-facebook icon-facebook" target="_blank" title="Facebook"></a>
-                            <a href="https://twitter.com/bebeocase" class="social-icon social-twitter icon-twitter" target="_blank" title="Twitter"></a>
-                            <a href="https://www.instagram.com/ocase_bebe_dakar/" class="social-icon social-instagram icon-instagram" target="_blank" title="Instagram"></a>
+                            <a href="https://www.facebook.com/Ocasebebe"
+                                class="social-icon social-facebook icon-facebook" target="_blank" title="Facebook"></a>
+                            <a href="https://twitter.com/bebeocase" class="social-icon social-twitter icon-twitter"
+                                target="_blank" title="Twitter"></a>
+                            <a href="https://www.instagram.com/ocase_bebe_dakar/"
+                                class="social-icon social-instagram icon-instagram" target="_blank"
+                                title="Instagram"></a>
                         </div>
                     </div>
                     <!-- End .widget -->
@@ -47,16 +51,20 @@
 
                         <ul class="contact-info">
                             <li>
-                                <i class="fab fa-whatsapp"></i> <span style="font-weight:700l"><a href="tel:+221773908583">+221 77 390 85 83</a></span>
+                                <i class="fab fa-whatsapp"></i> <span style="font-weight:700l"><a
+                                        href="tel:+221773908583">+221 77 390 85 83</a></span>
                             </li>
                             <li>
-                                <i class="fab fa-whatsapp"></i> <span style="font-weight:700l"><a href="tel:+221772000839">+221 77 200 08 39</a></span>
+                                <i class="fab fa-whatsapp"></i> <span style="font-weight:700l"><a
+                                        href="tel:+221772000839">+221 77 200 08 39</a></span>
                             </li>
                             <li>
-                                <i class="fab fa-whatsapp"></i> <span style="font-weight:700l"><a href="tel:+221777306666">+221 77 730 66 66</a></span>
+                                <i class="fab fa-whatsapp"></i> <span style="font-weight:700l"><a
+                                        href="tel:+221777306666">+221 77 730 66 66</a></span>
                             </li>
                             <li>
-                                <i class="fab fa-whatsapp"></i> <span style="font-weight:700l"><a href="tel:+221763160539">+221 76 316 05 39</a></span>
+                                <i class="fab fa-whatsapp"></i> <span style="font-weight:700l"><a
+                                        href="tel:+221763160539">+221 76 316 05 39</a></span>
                             </li>
                         </ul>
                         <h4 class="widget-title">SERVICE CLIENT</h4>
@@ -247,11 +255,151 @@
 <script src="{{ asset('assets/js/optional/isotope.pkgd.min.js') }}"></script>
 <script src="{{ asset('assets/js/plugins.min.js') }}"></script>
 <script src="{{ asset('assets/js/nouislider.min.js') }}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
+    integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
 <!-- Main JS File -->
 <script src="{{ asset('assets/js/main.min.js') }}"></script>
+
+<script>
+    function addWishlistItem(product_id) {
+        $.ajax({
+            url: "{{ route('add_wishlist') }}",
+            type: "GET",
+            data: {
+                _token: '{{ csrf_token() }}',
+                id: product_id,
+            },
+            success: function(response) {
+                if (response.status == 200) {
+                    swal({
+                        title: "Success!",
+                        text: response.message,
+                        icon: "success",
+                        button: "OK",
+                    });
+                } else {
+                    swal({
+                        title: "Error!",
+                        text: response.message,
+                        icon: "error",
+                        button: "OK",
+                    });
+                }
+            }
+        });
+    }
+
+    $("#add-btn").on("click", function() {
+
+
+        let color_ul = document.querySelector('.config-color-list');
+        var color = '';
+        for (let i = 0; i < color_ul.children.length; i++) {
+            if (color_ul.children[i].classList.contains('active')) {
+                color = color_ul.children[i].getAttribute('data-id');
+            }
+        }
+        let length_ul = document.querySelector('.config-lengths');
+        var length = '';
+        for (let i = 0; i < length_ul.children.length; i++) {
+            if (length_ul.children[i].classList.contains('active')) {
+                length = length_ul.children[i].getAttribute('data-id');
+            }
+        }
+        console.log($(".horizontal-quantity")[0].value);
+        var quantity = $(".horizontal-quantity")[0].value;
+
+        $.ajax({
+            url: "{{ route('add_to_cart') }}",
+            type: "POST",
+            data: {
+                _token: '{{ csrf_token() }}',
+                id: '{{ $product->id }}',
+                quantity: quantity,
+                color_id: color,
+                length: length
+            },
+
+            success: function(response) {
+                if (response.status == 403) {
+                    swal({
+                        title: "Warning!",
+                        text: response.message,
+                        icon: "warning",
+                        button: "OK",
+                    });
+                    return false;
+                }
+
+                if (response.status == 501) {
+                    swal({
+                        title: "Warning!",
+                        text: response.message,
+                        icon: "warning",
+                        button: "OK",
+                    });
+                    return false;
+                }
+
+                if (response.status == 200) {
+                    swal({
+                        title: "Success!",
+                        text: response.message,
+                        icon: "success",
+                        button: "OK",
+                    }).then(function() {
+                        location.reload();
+                    });
+
+                } else {
+                    swal({
+                        title: "Cart",
+                        text: response.message,
+                        icon: "error",
+                        button: "OK",
+                    });
+                }
+            }
+        });
+    });
+
+
+    function delete_Item(cart_id) {
+        $.ajax({
+            url: "{{ route('remove_cart_item') }}",
+            type: "GET",
+            data: {
+                _token: '{{ csrf_token() }}',
+                cart_id: cart_id,
+            },
+            success: function(response) {
+
+                if (response.status == 200) {
+                    swal({
+                        title: "Success!",
+                        text: response.message,
+                        icon: "success",
+                        button: "OK",
+                    }).then(function() {
+                        location.reload();
+                    });
+
+                } else {
+                    swal({
+                        title: "Error!",
+                        text: "Something went wrong",
+                        icon: "error",
+                        button: "OK",
+                    });
+                }
+            }
+        });
+
+    }
+</script>
 </body>
 
 </html>

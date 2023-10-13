@@ -95,7 +95,7 @@
                                 role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                 data-display="static">
                                 <i class="minicart-icon"></i>
-                                <span class="cart-count badge-circle">3</span>
+                                <span class="cart-count badge-circle">{{ getcartcount() }}</span>
                             </a>
 
                             <div class="cart-overlay"></div>
@@ -106,77 +106,45 @@
                                 <div class="dropdownmenu-wrapper custom-scrollbar">
                                     <div class="dropdown-cart-header">Shopping Cart</div>
                                     <!-- End .dropdown-cart-header -->
+                                    @php
+                                        $cart_products = getcartproducts();
+                                    @endphp
+
 
                                     <div class="dropdown-cart-products">
-                                        <div class="product">
-                                            <div class="product-details">
-                                                <h4 class="product-title">
-                                                    <a href="#">Ultimate 3D Bluetooth Speaker</a>
-                                                </h4>
+                                        @foreach ($cart_products as $cart_product)
+                                            <div class="product">
+                                                <div class="product-details">
+                                                    <h4 class="product-title">
+                                                        <a href="{{ route('product.details', $cart_product->id) }}">
+                                                            {{ $cart_product->name }}
+                                                    </h4>
 
-                                                <span class="cart-product-info">
-                                                    <span class="cart-product-qty">1</span> × $99.00
-                                                </span>
+                                                    <span class="cart-product-info">
+                                                        <span
+                                                            class="cart-product-qty">{{ $cart_product->quantity }}</span>
+                                                        ×
+                                                        @if ($cart_product->discount_price == null)
+                                                            {{ $cart_product->price }}
+                                                        @else
+                                                            {{ $cart_product->discount_price }}
+                                                        @endif
+                                                    </span>
+                                                </div>
+                                                <!-- End .product-details -->
+
+                                                <figure class="product-image-container">
+                                                    <a href="#" class="product-image">
+                                                        <img src="{{ asset('products/' . $cart_product->image) }}"
+                                                            alt="product" width="80" height="80">
+                                                    </a>
+
+                                                    <a href="#" onclick="delete_Item({{ $cart_product->id }})"
+                                                        class="btn-remove" title="Remove Product"><span>×</span></a>
+                                                </figure>
                                             </div>
-                                            <!-- End .product-details -->
-
-                                            <figure class="product-image-container">
-                                                <a href="#" class="product-image">
-                                                    <img src="{{ asset('assets/images/products/product-1.jpg') }}"
-                                                        alt="product" width="80" height="80">
-                                                </a>
-
-                                                <a href="#" class="btn-remove"
-                                                    title="Remove Product"><span>×</span></a>
-                                            </figure>
-                                        </div>
+                                        @endforeach
                                         <!-- End .product -->
-
-                                        <div class="product">
-                                            <div class="product-details">
-                                                <h4 class="product-title">
-                                                    <a href="#">Brown Women Casual HandBag</a>
-                                                </h4>
-
-                                                <span class="cart-product-info">
-                                                    <span class="cart-product-qty">1</span> × $35.00
-                                                </span>
-                                            </div>
-                                            <!-- End .product-details -->
-
-                                            <figure class="product-image-container">
-                                                <a href="#" class="product-image">
-                                                    <img src="{{ asset('assets/images/products/product-2.jpg') }}"
-                                                        alt="product" width="80" height="80">
-                                                </a>
-
-                                                <a href="#" class="btn-remove"
-                                                    title="Remove Product"><span>×</span></a>
-                                            </figure>
-                                        </div>
-                                        <!-- End .product -->
-
-                                        <div class="product">
-                                            <div class="product-details">
-                                                <h4 class="product-title">
-                                                    <a href="#">Circled Ultimate 3D Speaker</a>
-                                                </h4>
-
-                                                <span class="cart-product-info">
-                                                    <span class="cart-product-qty">1</span> × $35.00
-                                                </span>
-                                            </div>
-                                            <!-- End .product-details -->
-
-                                            <figure class="product-image-container">
-                                                <a href="#" class="product-image">
-                                                    <img src="{{ asset('assets/images/products/product-3.jpg') }}"
-                                                        alt="product" width="80" height="80">
-                                                </a>
-                                                <a href="#" class="btn-remove"
-                                                    title="Remove Product"><span>×</span></a>
-                                            </figure>
-                                        </div>
                                         <!-- End .product -->
                                     </div>
                                     <!-- End .cart-product -->
@@ -184,7 +152,7 @@
                                     <div class="dropdown-cart-total">
                                         <span>SUBTOTAL:</span>
 
-                                        <span class="cart-total-price float-right">$134.00</span>
+                                        <span class="cart-total-price float-right">${{ getcarttotal() }}</span>
                                     </div>
                                     <!-- End .dropdown-cart-total -->
 

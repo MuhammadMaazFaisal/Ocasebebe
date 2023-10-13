@@ -14,6 +14,7 @@ namespace Symfony\Component\Console\Helper;
 use Symfony\Component\Console\Formatter\OutputFormatterInterface;
 use Symfony\Component\String\UnicodeString;
 
+
 /**
  * Helper is the base class for all helper classes.
  *
@@ -130,7 +131,7 @@ abstract class Helper implements HelperInterface
                         return $format[1];
                     }
 
-                    return floor($secs / $format[2]).' '.$format[1];
+                    return floor($secs / $format[2]) . ' ' . $format[1];
                 }
             }
         }

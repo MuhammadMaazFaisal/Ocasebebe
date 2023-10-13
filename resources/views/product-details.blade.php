@@ -71,7 +71,7 @@
                         {{ $product->name }}
                     </h1>
 
-                    <div class="product-nav">
+                    {{-- <div class="product-nav">
                         <div class="product-prev">
                             <a href="#">
                                 <span class="product-link"></span>
@@ -103,7 +103,7 @@
                                 </span>
                             </a>
                         </div>
-                    </div>
+                    </div> --}}
 
                     <div class="ratings-container">
                         <div class="product-ratings">
@@ -142,7 +142,7 @@
                                 <ul class="config-size-list config-color-list config-filter-list">
 
                                     @foreach (json_decode($product_attributes) as $attribute)
-                                        <li class="">
+                                        <li class="" data-id="{{ $attribute->id }}">
                                             <a href="javascript:;" class="filter-color border-0"
                                                 style="background-color: {{ $attribute->color_code }};">
                                             </a>
@@ -155,9 +155,9 @@
                             <div class="product-single-filter">
                                 <label>Size:</label>
 
-                                <ul class="config-size-list">
+                                <ul class="config-size-list config-lengths">
                                     @foreach (json_decode($lengthnames) as $lengthname)
-                                        <li><a href="javascript:;"
+                                        <li data-id="{{ $lengthname->id }}"><a href="javascript:;"
                                                 class="d-flex align-items-center justify-content-center">{{ $lengthname->name }}</a>
                                         </li>
                                     @endforeach
@@ -200,7 +200,8 @@
                         </div>
                         <!-- End .product-single-qty -->
 
-                        <a href="javascript:;" class="btn btn-dark add-cart mr-2" title="Add to Cart">Add to
+                        <a href="javascript:;" id="add-btn" class="btn btn-dark add-cart mr-2" title="Add to Cart">Add
+                            to
                             Cart</a>
                         <a href="cart.html" class="btn btn-gray view-cart d-none">View cart</a>
                         <div class="login-form-container">

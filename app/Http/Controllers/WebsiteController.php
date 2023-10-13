@@ -15,17 +15,14 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Admin\Product;
 use App\Models\Admin\Length;
-use App\Models\Admin\Wishlist;
+use App\Models\Wishlist;
 use Illuminate\Support\Facades\Session;
-use App\Models\Admin\PageContent;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
 use App\Models\Admin\AttributeValue;
 use App\Models\Admin\ParentCategory;
-use App\Models\Admin\TermsCondition;
 use App\Models\Admin\Order;
 use App\Models\Admin\ProductAttribute;
-use App\Models\ProductVariantion;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -801,22 +798,9 @@ class WebsiteController extends Controller
             }
 
 
-
-            $color_id = null;
-            $color_code = null;
-            if ($request->color_id) {
-                $color_attribute = AttributeValue::find($request->color_id);
-                $color_id = $color_attribute->id;
-                $color_code = $color_attribute->color_code;
-            }
-
-
             $wishlist = new Wishlist();
             $wishlist->user_id = Auth::id();
             $wishlist->product_id = $product->id;
-            $wishlist->slug = $product->slug;
-            $wishlist->attribute = $color_id;
-            $wishlist->attribute_value = $color_code;
             $wishlist->save();
 
             $wishlist_item_counts = Wishlist::where('user_id', Auth::id())->count();

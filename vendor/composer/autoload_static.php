@@ -36,6 +36,7 @@ class ComposerStaticInite4ddb719776c83fae85c68c81f31145e
         'c72349b1fe8d0deeedd3a52e8aa814d8' => __DIR__ . '/..' . '/mockery/mockery/library/helpers.php',
         'ce9671a430e4846b44e1c68c7611f9f5' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery.php',
         'ec07570ca5a812141189b1fa81503674' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
+        'b4e3f29b106af37a2bb239f73cdf68c7' => __DIR__ . '/../..' . '/app/helpers.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -509,6 +510,7 @@ class ComposerStaticInite4ddb719776c83fae85c68c81f31145e
         'App\\Http\\Controllers\\Admin\\OrderManagementController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/OrderManagementController.php',
         'App\\Http\\Controllers\\Admin\\ParentCategoryController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/ParentCategoryController.php',
         'App\\Http\\Controllers\\Admin\\ProductController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/ProductController.php',
+        'App\\Http\\Controllers\\Admin\\ReviewController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/ReviewController.php',
         'App\\Http\\Controllers\\Admin\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/UserController.php',
         'App\\Http\\Controllers\\Admin\\VariantController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/VariantController.php',
         'App\\Http\\Controllers\\CartController' => __DIR__ . '/../..' . '/app/Http/Controllers/CartController.php',
@@ -538,8 +540,11 @@ class ComposerStaticInite4ddb719776c83fae85c68c81f31145e
         'App\\Models\\Admin\\ParentCategory' => __DIR__ . '/../..' . '/app/Models/Admin/ParentCategory.php',
         'App\\Models\\Admin\\Product' => __DIR__ . '/../..' . '/app/Models/Admin/Product.php',
         'App\\Models\\Admin\\ProductAttribute' => __DIR__ . '/../..' . '/app/Models/Admin/ProductAttribute.php',
+        'App\\Models\\Admin\\Review' => __DIR__ . '/../..' . '/app/Models/Admin/Review.php',
         'App\\Models\\Admin\\Variant' => __DIR__ . '/../..' . '/app/Models/Admin/Variant.php',
+        'App\\Models\\Cart' => __DIR__ . '/../..' . '/app/Models/Cart.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
+        'App\\Models\\Wishlist' => __DIR__ . '/../..' . '/app/Models/Wishlist.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',

@@ -5,118 +5,50 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\AttributeValue;
 use App\Models\Admin\Product;
-use App\Models\FrontendModels\Cart;
 use App\Models\Admin\Order;
-use App\Models\FrontendModels\Wishlist;
+use App\Models\Wishlist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use App\Models\Cart;
 
 class CartController extends Controller
 {
 
     public function add_to_cart(Request $request)
     {
-        // dd($request->all());
-        if (Auth::user()->is_guest == 1) {
-            $alread_in_carts = Cart::where('user_id', Auth::id())->where('product_id', $request->id)->where('video_id', $request->video_id)->where('education_id', $request->education_id)
-                ->where('session', Session::getId())->get();
-            if (count($alread_in_carts) > 0) {
-                return response()->json([
-                    'status' => 404,
-                    'message' => "Sorry!, You can't add, This item already added to cart !"
-                ]);
-            }
-            $addcart = new Cart();
-            $addcart->user_id = Auth::user()->id;
-            $addcart->product_id = $request->id;
-            $addcart->quantity =  $request->quantity;
-            $addcart->color_id =  $request->color_id;
-            $addcart->price =  $request->price;
-            $addcart->length =  $request->length;
-            $addcart->video_id = $request->video_id;
-            $addcart->education_id = $request->education_id;
-            $addcart->type = $request->type;
-            $addcart->session = Session::getId();
-            // $addcart->video_price = $request->video_price;
 
-
-            $addcart->save();
-
-            $cart_counts = Cart::where('user_id', Auth::user()->id)->where('session', Session::getId())->count();
-
-            // dd($cart_counts);
-            $data = [
-                'status' => 200,
-                'message' => 'Product Added To Cart!',
-                'cart_swal', true,
-                'cart_counts' => $cart_counts
-            ];
-        } else {
-            $alread_in_carts = Cart::where('user_id', Auth::id())->where('product_id', $request->id)->where('video_id', $request->video_id)->where('education_id', $request->education_id)->get();
-            if (count($alread_in_carts) > 0) {
-                return response()->json([
-                    'status' => 404,
-                    'message' => "Sorry!, You can't add, This item already added to cart !"
-                ]);
-            }
-            $addcart = new Cart();
-            $addcart->user_id = Auth::user()->id;
-            $addcart->product_id = $request->id;
-            $addcart->quantity =  $request->quantity;
-            $addcart->color_id =  $request->color_id;
-            $addcart->price =  $request->price;
-            $addcart->length =  $request->length;
-            $addcart->video_id = $request->video_id;
-            $addcart->education_id = $request->education_id;
-            $addcart->type = $request->type;
-            // $addcart->video_price = $request->video_price;
-
-
-            $addcart->save();
-
-            $cart_counts = Cart::where('user_id', Auth::user()->id)->count();
-
-            // dd($cart_counts);
-            $data = [
-                'status' => 200,
-                'message' => 'Product Added To Cart!',
-                'cart_swal', true,
-                'cart_counts' => $cart_counts
-            ];
+        $alread_in_carts = Cart::where('user_id', Auth::id())->where('product_id', $request->id)->get();
+        if (count($alread_in_carts) > 0) {
+            return response()->json([
+                'status' => 404,
+                'message' => "Sorry!, You can't add, This item already added to cart !"
+            ]);
         }
+        $product = Product::find($request->id);
+        if ($product->discount_price == null) {
+            $price = $product->price;
+        } else {
+            $price = $product->discount_price;
+        };
+        $addcart = new Cart();
+        $addcart->user_id = Auth::user()->id;
+        $addcart->product_id = $request->id;
+        $addcart->quantity =  $request->quantity;
+        $addcart->attribute_id =  $request->color_id;
+        $addcart->price =  $price;
+        $addcart->length_id =  $request->length;
+        $addcart->save();
 
-        // if request from whishlist
-        // if($request->wishlist_request || $request->user_dashboard_request){
-        //     $cart_counts = Cart::where('user_id', Auth::user()->id)->count();
-        //     $wishlist_items = Wishlist::where('user_id', Auth::user()->id)->with('product')->get();
-        //     $total_item_in_wishlist = count($wishlist_items);
-        //     $total_price = 0;
-        //     $total_price_after_coupon_apply = 0;
+        $cart_counts = Cart::where('user_id', Auth::user()->id)->count();
 
-        //     if (count($wishlist_items) > 0) {
-        //         foreach ($wishlist_items as $wishlist_item) {
+        $data = [
+            'status' => 200,
+            'message' => 'Product Added To Cart!',
+            'cart_swal', true,
+            'cart_counts' => $cart_counts
+        ];
 
-        //             // check discount and calculate total price
-        //             if (!empty($wishlist_item->discount)) {
-        //                 $total_price += ($wishlist_item->quantity * $wishlist_item->discounted_price);
-        //             } else {
-        //                 $total_price += ($wishlist_item->quantity * $wishlist_item->price);
-        //             }
-        //         }
-        //     }
-
-        //     // cart counts
-        //     $item_count_in_cart = Cart::where('user_id', Auth::id())->count();
-
-        //     if(empty($wishlist_items)){
-        //        $wishlist_items = [];
-        //     }
-
-        //     $data['html'] = $request->wishlist_request ? view('website.common.wishlist-items', get_defined_vars())->render() : view('user_dashboard.wishlist', get_defined_vars())->render();
-        //     $data['total_item_in_wishlist'] = $total_item_in_wishlist;
-        //     $data['item_count_in_cart'] = $item_count_in_cart;
-        // }
 
         return response()->json($data);
     }
@@ -128,7 +60,7 @@ class CartController extends Controller
             return redirect()->route('user.sign_in')->with($notification);
         }
         if (Auth::user()->is_guest == 1) {
-            $cart_items = Cart::where('user_id', Auth::user()->id)->with('product')->where('session', Session::getId())->get(); 
+            $cart_items = Cart::where('user_id', Auth::user()->id)->with('product')->where('session', Session::getId())->get();
         } else {
             $cart_items = Cart::where('user_id', Auth::user()->id)->with('product')->get();
         }
@@ -441,38 +373,9 @@ class CartController extends Controller
     {
         $remove_cart_item = Cart::find($request->cart_id);
         $remove_cart_item->delete();
-
-        if (Auth::user()->is_guest == 1) {
-            $cart_items = Cart::where('user_id', Auth::user()->id)->where('session', Session::getId())->with('product')->get();
-        } else {
-            $cart_items = Cart::where('user_id', Auth::user()->id)->with('product')->get();
-        }
-        $total_item_in_cart = count($cart_items);
-        $total_price = 0;
-        $total_price_after_coupon_apply = 0;
-
-        if (count($cart_items) > 0) {
-            foreach ($cart_items as $cart_item) {
-                // check discount and calculate total price
-                // if (!empty($cart_item->product->discount)) {
-                //     $total_price += ($cart_item->quantity * $cart_item->product->discounted_price);
-                // } else {
-                //     $total_price += ($cart_item->quantity * $cart_item->product->price);
-                // }
-
-                if (!empty($cart_item->type == 2)) {
-                    $total_price += $cart_item->price;
-                } else {
-
-                    if (!empty($cart_item->product->discount)) {
-                        $total_price += ($cart_item->quantity * $cart_item->product->discounted_price);
-                    } else {
-                        $total_price += ($cart_item->quantity * $cart_item->product->price);
-                    }
-                }
-            }
-        }
-
-        return response()->json(['status' => 200, 'html' => view('website.common.cart-items', get_defined_vars())->render(), 'item_in_cart' => $total_item_in_cart]);
+        return response()->json([
+            'status' => 200,
+            'message' => 'Item removed from cart successfully !',
+        ]);
     }
 }
