@@ -88,7 +88,7 @@
                         </div>
                         <!-- End .header-search -->
 
-                        <a href="#" class="header-icon" title="wishlist"><i class="icon-wishlist-2"></i></a>
+                        <a href="{{ route('wishlist') }}" class="header-icon" title="wishlist"><i class="icon-wishlist-2"></i></a>
 
                         <div class="dropdown cart-dropdown">
                             <a href="#" title="Cart" class="dropdown-toggle dropdown-arrow cart-toggle"
@@ -117,7 +117,7 @@
                                                 <div class="product-details">
                                                     <h4 class="product-title">
                                                         <a href="{{ route('product.details', $cart_product->id) }}">
-                                                            {{ $cart_product->name }}
+                                                            {{ $cart_product->product->product_name }}
                                                     </h4>
 
                                                     <span class="cart-product-info">
@@ -125,9 +125,9 @@
                                                             class="cart-product-qty">{{ $cart_product->quantity }}</span>
                                                         ×
                                                         @if ($cart_product->discount_price == null)
-                                                            {{ $cart_product->price }}
+                                                            {{ $cart_product->product->price }}
                                                         @else
-                                                            {{ $cart_product->discount_price }}
+                                                            {{ $cart_product->product->discount_price }}
                                                         @endif
                                                     </span>
                                                 </div>
@@ -135,7 +135,7 @@
 
                                                 <figure class="product-image-container">
                                                     <a href="#" class="product-image">
-                                                        <img src="{{ asset('products/' . $cart_product->image) }}"
+                                                        <img src="{{ asset('products/' . $cart_product->product->image) }}"
                                                             alt="product" width="80" height="80">
                                                     </a>
 
@@ -157,9 +157,9 @@
                                     <!-- End .dropdown-cart-total -->
 
                                     <div class="dropdown-cart-action">
-                                        <a href="#" class="btn btn-gray btn-block view-cart">View
+                                        <a href="{{ route('cart') }}" class="btn btn-gray btn-block view-cart">View
                                             Cart</a>
-                                        <a href="#" class="btn btn-dark btn-block">Checkout</a>
+                                        <a href="{{ route('cart') }}" class="btn btn-dark btn-block">Checkout</a>
                                     </div>
                                     <!-- End .dropdown-cart-total -->
                                 </div>
@@ -180,75 +180,75 @@
                     <nav class="main-nav w-100">
                         <ul class="menu">
                             <li class="active">
-                                <a href="#">Tous nos articles</a>
+                                <a href="{{route('category', 5)}}">Tous nos articles</a>
                             </li>
                             <li>
                                 <a href="#">Puériculture</a>
                                 <ul>
-                                    <li><a href="#">Balancelles</a></li>
-                                    <li><a href="#">Berceau</a></li>
-                                    <li><a href="#">Siège auto & Poussette</a></li>
-                                    <li><a href="#">Transats</a></li>
+                                    <li><a href="{{route('category', 1)}}">Balancelles</a></li>
+                                    <li><a href="{{route('category', 2)}}">Berceau</a></li>
+                                    <li><a href="{{route('category', 3)}}">Siège auto & Poussette</a></li>
+                                    <li><a href="{{route('category', 4)}}">Transats</a></li>
                                 </ul>
                             </li>
                             <li>
                                 <a href="#">Vêtement</a>
                                 <ul>
-                                    <li><a href="#">Vêtement fille</a></li>
-                                    <li><a href="#">Vêtement garçon</a></li>
-                                    <li><a href="#">Bonnet chaussette</a></li>
+                                    <li><a href="{{route('category', 6)}}">Vêtement fille</a></li>
+                                    <li><a href="{{route('category', 7)}}">Vêtement garçon</a></li>
+                                    <li><a href="{{route('category', 8)}}">Bonnet chaussette</a></li>
                                 </ul>
                             </li>
                             <li>
                                 <a href="#">Chaussures</a>
                                 <ul>
-                                    <li><a href="#">Chaussure fille</a></li>
-                                    <li><a href="#">Chaussure garçon</a></li>
+                                    <li><a href="{{route('category', 9)}}">Chaussure fille</a></li>
+                                    <li><a href="{{route('category', 10)}}">Chaussure garçon</a></li>
                                 </ul>
                             </li>
                             <li>
                                 <a href="#">Repas Bébé</a>
                                 <ul>
-                                    <li><a href="#">Bavoirs</a></li>
-                                    <li><a href="#">Biberons et accessoires</a></li>
-                                    <li><a href="#">Chaises Hautes</a></li>
-                                    <li><a href="#">Sucettes</a></li>
-                                    <li><a href="#">Stérilisateurs</a></li>
+                                    <li><a href="{{route('category', 11)}}">Bavoirs</a></li>
+                                    <li><a href="{{route('category', 12)}}">Biberons et accessoires</a></li>
+                                    <li><a href="{{route('category', 13)}}">Chaises Hautes</a></li>
+                                    <li><a href="{{route('category', 14)}}">Sucettes</a></li>
+                                    <li><a href="{{route('category', 15)}}">Stérilisateurs</a></li>
                                 </ul>
                             </li>
                             <li>
                                 <a href="#">Hygiènes et soins</a>
                                 <ul>
-                                    <li><a href="#">Couches</a></li>
-                                    <li><a href="#">Lingettes</a></li>
-                                    <li><a href="#">Matelas et Table à Langer</a></li>
-                                    <li><a href="#">Sacs à langer</a></li>
-                                    <li><a href="#">Soins de la peau</a></li>
-                                    <li><a href="#">Baignoires</a></li>
-                                    <li><a href="#">Pots et Réducteurs</a></li>
+                                    <li><a href="{{route('category', 16)}}">Couches</a></li>
+                                    <li><a href="{{route('category', 17)}}">Lingettes</a></li>
+                                    <li><a href="{{route('category', 18)}}">Matelas et Table à Langer</a></li>
+                                    <li><a href="{{route('category', 19)}}">Sacs à langer</a></li>
+                                    <li><a href="{{route('category', 20)}}">Soins de la peau</a></li>
+                                    <li><a href="{{route('category', 21)}}">Baignoires</a></li>
+                                    <li><a href="{{route('category', 22)}}">Pots et Réducteurs</a></li>
                                 </ul>
                             </li>
                             <li>
                                 <a href="#">Jouet et Cadeaux</a>
                                 <ul>
-                                    <li><a href="#">Cadeaux de naissance</a></li>
-                                    <li><a href="#">Doudous et Peluches</a></li>
-                                    <li><a href="#">Tapis d’éveil</a></li>
-                                    <li><a href="#">Youpalas</a></li>
+                                    <li><a href="{{route('category', 23)}}">Cadeaux de naissance</a></li>
+                                    <li><a href="{{route('category', 24)}}">Doudous et Peluches</a></li>
+                                    <li><a href="{{route('category', 25)}}">Tapis d’éveil</a></li>
+                                    <li><a href="{{route('category', 26)}}">Youpalas</a></li>
                                 </ul>
                             </li>
                             <li>
                                 <a href="#">Univers Maman</a>
                                 <ul>
-                                    <li><a href="#">Accessoires bébés</a></li>
-                                    <li><a href="#">Portes Bébé</a></li>
-                                    <li><a href="#">Slip jetable</a></li>
-                                    <li><a href="#">Serviette maternité</a></li>
-                                    <li><a href="#">Tire-lait</a></li>
+                                    <li><a href="{{route('category', 27)}}">Accessoires bébés</a></li>
+                                    <li><a href="{{route('category', 28)}}">Portes Bébé</a></li>
+                                    <li><a href="{{route('category', 29)}}">Slip jetable</a></li>
+                                    <li><a href="{{route('category', 30)}}">Serviette maternité</a></li>
+                                    <li><a href="{{route('category', 31)}}">Tire-lait</a></li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="#">Plus</a>
+                                <a href="{{route('category', 32)}}">Plus</a>
                             </li>
 
                         </ul>

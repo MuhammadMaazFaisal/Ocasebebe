@@ -311,13 +311,14 @@
         }
         console.log($(".horizontal-quantity")[0].value);
         var quantity = $(".horizontal-quantity")[0].value;
+        var product_id = @if(isset($product)) "{{ $product->id }}" @else 0 @endif; 
 
         $.ajax({
             url: "{{ route('add_to_cart') }}",
             type: "POST",
             data: {
                 _token: '{{ csrf_token() }}',
-                id: '{{ $product->id }}',
+                id: product_id, 
                 quantity: quantity,
                 color_id: color,
                 length: length

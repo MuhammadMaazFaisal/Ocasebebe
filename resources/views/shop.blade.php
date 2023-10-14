@@ -1,9 +1,15 @@
 @include('layouts.head')
 @include('layouts.navbar')
+<style>
+    .bg-color {
+        background-color: #f38181;
+    }
+
+</style>
 
 <main class="main">
     <div class="category-banner-container bg-gray">
-        <div class="category-banner banner text-uppercase" style="background: no-repeat 60%/cover url('assets/images/demoes/demo4/slider/slide-3.jpg');">
+        <div class="category-banner banner text-uppercase" style="background: no-repeat 60%/cover url('{{asset('assets/images/demoes/demo4/slider/slide-3.jpg')}}');">
             <div class="container position-relative">
                 <div class="row">
                     <div class="pl-lg-5 pb-5 pb-md-0 col-sm-5 col-xl-4 col-lg-4 offset-1">
@@ -101,33 +107,33 @@
                 </nav>
 
                 <div class="row">
+                    @foreach($products as $product)
                     <div class="col-6 col-sm-4">
                         <div class="product-default">
                             <figure>
                                 <a href="product.html">
-                                    <img src="assets/images/products/bp1.png" width="280" height="280" alt="product" />
-                                    <img src="assets/images/products/bp1.png" width="280" height="280" alt="product" />
+                                    <img src="{{asset('products/'.$product->image)}}" width="280" height="280" alt="product" />
+                                    <img src="{{asset('products/'.$product->image)}}" width="280" height="280" alt="product" />
                                 </a>
 
                                 <div class="label-group">
                                     <div class="product-label label-hot">HOT</div>
-                                    <div class="product-label label-sale">-20%</div>
+                                    <div class="product-label label-sale">{{($product->discount_price*100)/$product->price}}%</div>
                                 </div>
                             </figure>
 
                             <div class="product-details">
                                 <div class="category-wrap">
                                     <div class="category-list">
-                                        <a href="category.html" class="product-category">category</a>
+                                        <a href="{{route('category',$product->parent_category_id)}}" class="product-category">{{$product->category_name}}</a>
                                     </div>
                                 </div>
 
-                                <h3 class="product-title"> <a href="product.html">Ultimate 3D Bluetooth
-                                        Speaker</a> </h3>
+                                <h3 class="product-title"> <a href="{{route('product.details',$product->id)}}">{{$product->name}}</a></h3>
 
                                 <div class="ratings-container">
                                     <div class="product-ratings">
-                                        <span class="ratings" style="width:100%"></span>
+                                        <span class="ratings" style="width:{{$product->avg_rating *20}}%"></span>
                                         <!-- End .ratings -->
                                         <span class="tooltiptext tooltip-top"></span>
                                     </div>
@@ -136,23 +142,28 @@
                                 <!-- End .product-container -->
 
                                 <div class="price-box">
-                                    <span class="old-price">90.00 CFA</span>
-                                    <span class="product-price">70.00 CFA</span>
+                                    @if($product->discount_price)
+                                    <span class="old-price">{{$product->price}} CFA</span>
+                                    <span class="product-price">{{$product->discount_price}} CFA</span>
+                                    @else
+                                    <span class="product-price">{{$product->price}} CFA</span>
+                                    @endif
                                 </div>
                                 <!-- End .price-box -->
 
                                 <div class="product-action">
-                                    <a href="wishlist.html" class="btn-icon-wish" title="wishlist"><i class="icon-heart"></i></a>
-                                    <a href="product.html" class="btn-icon btn-add-cart"><i class="fa fa-arrow-right"></i><span>SELECT
+                                    <a href="{{route('add_wishlist',$product->id)}}" onclick="addWishlistItem({{$product->id}})"  class="btn-icon-wish" title="wishlist"><i class="icon-heart"></i></a>
+                                    <a href="{{route('product.details',$product->id)}}"  class="btn-icon btn-add-cart"><i class="fa fa-arrow-right"></i><span>SELECT
                                             OPTIONS</span></a>
-                                    <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View"><i class="fas fa-external-link-alt"></i></a>
+                                    <a href="{{route('product.details',$product->id)}}" class="btn-quickview" title="Quick View"><i class="fas fa-external-link-alt"></i></a>
                                 </div>
                             </div>
                             <!-- End .product-details -->
                         </div>
                     </div>
+                    @endforeach
                     <!-- End .col-sm-4 -->
-
+{{-- 
                     <div class="col-6 col-sm-4">
                         <div class="product-default">
                             <figure>
@@ -689,7 +700,7 @@
                             </div>
                             <!-- End .product-details -->
                         </div>
-                    </div>
+                    </div> --}}
                     <!-- End .col-sm-4 -->
                 </div>
                 <!-- End .row -->
@@ -730,78 +741,136 @@
             <div class="sidebar-overlay"></div>
             <aside class="sidebar-shop col-lg-3 order-lg-first mobile-sidebar">
                 <div class="sidebar-wrapper">
-                    <div class="widget">
-                        <h3 class="widget-title">
-                            <a data-toggle="collapse" href="#widget-body-2" role="button" aria-expanded="true" aria-controls="widget-body-2">Categories</a>
-                        </h3>
+                    <form action="#">
+                        <div class="widget">
+                            <h3 class="widget-title">
+                                <a data-toggle="collapse" href="#widget-body-2" role="button" aria-expanded="true" aria-controls="widget-body-2">Categories</a>
+                            </h3>
 
-                        <div class="collapse show" id="widget-body-2">
-                            <div class="widget-body">
-                                <ul class="cat-list">
-                                    <li>
-                                        <a href="#widget-category-1" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="widget-category-1">
-                                            Accessories<span class="products-count">(3)</span>
-                                            <span class="toggle"></span>
-                                        </a>
-                                        <div class="collapse show" id="widget-category-1">
-                                            <ul class="cat-sublist">
-                                                <li>Caps<span class="products-count">(1)</span></li>
-                                                <li>Watches<span class="products-count">(2)</span></li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a href="#widget-category-2" class="collapsed" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="widget-category-2">
-                                            Dress<span class="products-count">(4)</span>
-                                            <span class="toggle"></span>
-                                        </a>
-                                        <div class="collapse" id="widget-category-2">
-                                            <ul class="cat-sublist">
-                                                <li>Clothing<span class="products-count">(4)</span></li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a href="#widget-category-3" class="collapsed" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="widget-category-3">
-                                            Electronics<span class="products-count">(2)</span>
-                                            <span class="toggle"></span>
-                                        </a>
-                                        <div class="collapse" id="widget-category-3">
-                                            <ul class="cat-sublist">
-                                                <li>Headphone<span class="products-count">(1)</span></li>
-                                                <li>Watch<span class="products-count">(1)</span></li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a href="#widget-category-4" class="collapsed" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="widget-category-4">
-                                            Fashion<span class="products-count">(6)</span>
-                                            <span class="toggle"></span>
-                                        </a>
-                                        <div class="collapse" id="widget-category-4">
-                                            <ul class="cat-sublist">
-                                                <li>Shoes<span class="products-count">(4)</span></li>
-                                                <li>Bag<span class="products-count">(2)</span></li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li><a href="#">Music<span class="products-count">(2)</span></a></li>
-                                </ul>
+                            <div class="collapse show" id="widget-body-2">
+                                <div class="widget-body">
+                                    <ul class="cat-list">
+                                        <li>
+                                            <a href="#widget-category-1" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="widget-category-1">
+                                                Puériculture
+                                                <span class="toggle"></span>
+                                            </a>
+                                            <div class="collapse show" id="widget-category-1">
+                                                <ul class="cat-sublist">
+                                                    <li><a href="{{route('category', 1)}}">Balancelles</a></li>
+                                                    <li><a href="{{route('category', 2)}}">Berceau</a></li>
+                                                    <li><a href="{{route('category', 3)}}">Siège auto & Poussette</a></li>
+                                                    <li><a href="{{route('category', 4)}}">Transats</a></li>
+
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <a href="#widget-category-2" class="collapsed" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="widget-category-2">
+                                                Vêtement
+                                                <span class="toggle"></span>
+                                            </a>
+                                            <div class="collapse" id="widget-category-2">
+                                                <ul class="cat-sublist">
+                                                    <li><a href="{{route('category', 6)}}">Vêtement fille</a></li>
+                                                    <li><a href="{{route('category', 7)}}">Vêtement garçon</a></li>
+                                                    <li><a href="{{route('category', 8)}}">Bonnet chaussette</a></li>
+
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <a href="#widget-category-3" class="collapsed" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="widget-category-3">
+                                                Chaussures
+                                                <span class="toggle"></span>
+                                            </a>
+                                            <div class="collapse" id="widget-category-3">
+                                                <ul class="cat-sublist">
+                                                    <li><a href="{{route('category', 9)}}">Chaussure fille</a></li>
+                                                    <li><a href="{{route('category', 10)}}">Chaussure garçon</a></li>
+
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <a href="#widget-category-4" class="collapsed" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="widget-category-4">
+                                                Repas Bébé
+                                                <span class="toggle"></span>
+                                            </a>
+                                            <div class="collapse" id="widget-category-4">
+                                                <ul class="cat-sublist">
+                                                    <li><a href="{{route('category', 11)}}">Bavoirs</a></li>
+                                                    <li><a href="{{route('category', 12)}}">Biberons et accessoires</a></li>
+                                                    <li><a href="{{route('category', 13)}}">Chaises Hautes</a></li>
+                                                    <li><a href="{{route('category', 14)}}">Sucettes</a></li>
+                                                    <li><a href="{{route('category', 15)}}">Stérilisateurs</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <a href="#widget-category-5" class="collapsed" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="widget-category-5">
+                                                Hygiènes et soins
+                                                <span class="toggle"></span>
+                                            </a>
+                                            <div class="collapse" id="widget-category-5">
+                                                <ul class="cat-sublist">
+                                                    <li><a href="{{route('category', 16)}}">Couches</a></li>
+                                                    <li><a href="{{route('category', 17)}}">Lingettes</a></li>
+                                                    <li><a href="{{route('category', 18)}}">Matelas et Table à Langer</a></li>
+                                                    <li><a href="{{route('category', 19)}}">Sacs à langer</a></li>
+                                                    <li><a href="{{route('category', 20)}}">Soins de la peau</a></li>
+                                                    <li><a href="{{route('category', 21)}}">Baignoires</a></li>
+                                                    <li><a href="{{route('category', 22)}}">Pots et Réducteurs</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <a href="#widget-category-6" class="collapsed" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="widget-category-6">
+                                                Jouet et Cadeaux
+                                                <span class="toggle"></span>
+                                            </a>
+                                            <div class="collapse" id="widget-category-6">
+                                                <ul class="cat-sublist">
+                                                    <li><a href="{{route('category', 23)}}">Cadeaux de naissance</a></li>
+                                                    <li><a href="{{route('category', 24)}}">Doudous et Peluches</a></li>
+                                                    <li><a href="{{route('category', 25)}}">Tapis d’éveil</a></li>
+                                                    <li><a href="{{route('category', 26)}}">Youpalas</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <a href="#widget-category-7" class="collapsed" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="widget-category-7">
+                                                Univers Maman
+                                                <span class="toggle"></span>
+                                            </a>
+                                            <div class="collapse" id="widget-category-7">
+                                                <ul class="cat-sublist">
+                                                    <li><a href="{{route('category', 27)}}">Accessoires bébés</a></li>
+                                                    <li><a href="{{route('category', 28)}}">Portes Bébé</a></li>
+                                                    <li><a href="{{route('category', 29)}}">Slip jetable</a></li>
+                                                    <li><a href="{{route('category', 30)}}">Serviette maternité</a></li>
+                                                    <li><a href="{{route('category', 31)}}">Tire-lait</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li><a href="{{route('category', 5)}}">Tous nos articles</a></li>
+                                        <li><a href="{{route('category', 32)}}">Plus</a></li>
+                                    </ul>
+                                </div>
+                                <!-- End .widget-body -->
                             </div>
-                            <!-- End .widget-body -->
+                            <!-- End .collapse -->
                         </div>
-                        <!-- End .collapse -->
-                    </div>
-                    <!-- End .widget -->
+                        <!-- End .widget -->
 
-                    <div class="widget">
-                        <h3 class="widget-title">
-                            <a data-toggle="collapse" href="#widget-body-3" role="button" aria-expanded="true" aria-controls="widget-body-3">Price</a>
-                        </h3>
+                        <div class="widget">
+                            <h3 class="widget-title">
+                                <a data-toggle="collapse" href="#widget-body-3" role="button" aria-expanded="true" aria-controls="widget-body-3">Price</a>
+                            </h3>
 
-                        <div class="collapse show" id="widget-body-3">
-                            <div class="widget-body pb-0">
-                                <form action="#">
+                            <div class="collapse show" id="widget-body-3">
+                                <div class="widget-body pb-0">
+
                                     <div class="price-slider-wrapper">
                                         <div id="price-slider"></div>
                                         <!-- End #price-slider -->
@@ -815,67 +884,68 @@
                                         </div>
                                         <!-- End .filter-price-text -->
 
-                                        <button type="submit" class="btn btn-primary">Filter</button>
+
                                     </div>
                                     <!-- End .filter-price-action -->
-                                </form>
+
+                                </div>
+                                <!-- End .widget-body -->
                             </div>
-                            <!-- End .widget-body -->
+                            <!-- End .collapse -->
                         </div>
-                        <!-- End .collapse -->
-                    </div>
-                    <!-- End .widget -->
+                        <!-- End .widget -->
 
-                    <div class="widget widget-color">
-                        <h3 class="widget-title">
-                            <a data-toggle="collapse" href="#widget-body-4" role="button" aria-expanded="true" aria-controls="widget-body-4">Color</a>
-                        </h3>
+                        <div class="widget widget-color">
+                            <h3 class="widget-title">
+                                <a data-toggle="collapse" href="#widget-body-4" role="button" aria-expanded="true" aria-controls="widget-body-4">Color</a>
+                            </h3>
 
-                        <div class="collapse show" id="widget-body-4">
-                            <div class="widget-body pb-0">
-                                <ul class="config-swatch-list">
-                                    <li class="active">
-                                        <a href="#" style="background-color: #000;"></a>
-                                    </li>
-                                    <li>
-                                        <a href="#" style="background-color: #0188cc;"></a>
-                                    </li>
-                                    <li>
-                                        <a href="#" style="background-color: #81d742;"></a>
-                                    </li>
-                                    <li>
-                                        <a href="#" style="background-color: #6085a5;"></a>
-                                    </li>
-                                    <li>
-                                        <a href="#" style="background-color: #ab6e6e;"></a>
-                                    </li>
-                                </ul>
+                            <div class="collapse show" id="widget-body-4">
+                                <div class="widget-body pb-0">
+                                    <ul class="config-swatch-list">
+                                        @foreach($attributes as $attribute)
+                                        <li class="color-btn" data-id="{{$attribute->id}}">
+                                            <a style="background-color: {{$attribute->color_code}};"></a>
+                                        </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                                <!-- End .widget-body -->
                             </div>
-                            <!-- End .widget-body -->
+                            <!-- End .collapse -->
                         </div>
-                        <!-- End .collapse -->
-                    </div>
-                    <!-- End .widget -->
+                        <!-- End .widget -->
 
-                    <div class="widget widget-size">
-                        <h3 class="widget-title">
-                            <a data-toggle="collapse" href="#widget-body-5" role="button" aria-expanded="true" aria-controls="widget-body-5">Sizes</a>
-                        </h3>
+                        <div class="widget widget-size">
+                            <h3 class="widget-title">
+                                <a data-toggle="collapse" href="#widget-body-5" role="button" aria-expanded="true" aria-controls="widget-body-5">Sizes</a>
+                            </h3>
 
-                        <div class="collapse show" id="widget-body-5">
-                            <div class="widget-body pb-0">
-                                <ul class="config-size-list">
-                                    <li class="active"><a href="#">XL</a></li>
-                                    <li><a href="#">L</a></li>
-                                    <li><a href="#">M</a></li>
-                                    <li><a href="#">S</a></li>
-                                </ul>
+                            <div class="collapse show" id="widget-body-5">
+                                <div class="widget-body pb-0">
+                                    <ul class="config-size-list">
+                                        @foreach($lengths as $length)
+                                        <li class="size-btn" data-id="{{$length->id}}">
+                                            <a>{{$length->name}}</a>
+                                        </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                                <!-- End .widget-body -->
                             </div>
-                            <!-- End .widget-body -->
+                            <!-- End .collapse -->
+
                         </div>
-                        <!-- End .collapse -->
-                    </div>
-                    <!-- End .widget -->
+                        <!-- End .widget -->
+                        <div class="container my-3 d-flex" style="
+                            justify-content: center;
+                            padding: 10px 52px;
+                        ">
+                            <button type="submit" class="px-5 btn btn-primary">Filter</button>
+                        </div>
+                    </form>
+
+
 
                     <div class="widget widget-featured">
                         <h3 class="widget-title">Featured</h3>
@@ -1072,3 +1142,27 @@
 </main>
 <!-- End .main -->
 @include('layouts.footer')
+<script>
+    var color = document.querySelectorAll('.color-btn');
+    for (let i = 0; i < color.length; i++) {
+        color[i].addEventListener('click', function(e) {
+            e.preventDefault();
+            color.forEach(function(e) {
+                e.classList.remove('active');
+            })
+            color[i].classList.toggle('active');
+        })
+    }
+    var size = document.querySelectorAll('.size-btn');
+    for (let i = 0; i < size.length; i++) {
+        size[i].addEventListener('click', function(e) {
+            e.preventDefault();
+            size.forEach(function(e) {
+                e.classList.remove('active');
+            })
+            size[i].classList.toggle('active');
+            size[i].classList.add('bg-color');
+        })
+    }
+
+</script>

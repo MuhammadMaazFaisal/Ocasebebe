@@ -28,84 +28,49 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach($cart_items as $cart_item)
                             <tr class="product-row">
                                 <td>
                                     <figure class="product-image-container">
-                                        <a href="product.html" class="product-image">
-                                            <img src="assets/images/products/c1.png" alt="product">
+                                        <a href="{{route('product.details',$cart_item->product->id)}}" class="product-image">
+                                            <img src="{{asset('products/'.$cart_item->product->image)}}" alt="product">
                                         </a>
 
-                                        <a href="#" class="btn-remove icon-cancel" title="Remove Product"></a>
+                                        <a href="#" onclick="delete_Item({{$cart_item->product_id}})" class="btn-remove icon-cancel" title="Remove Product"></a>
                                     </figure>
                                 </td>
                                 <td class="product-col">
                                     <h5 class="product-title">
-                                        <a href="product.html">Ultimate 3D Bluetooth Speaker</a>
+                                        <a href="{{route('product.details',$cart_item->product->id)}}">{{$cart_item->product->product_name}}</a>
                                     </h5>
                                 </td>
-                                <td>17.90 CFA</td>
+                                <td>
+                                    @if($cart_item->product->discount_price)
+                                    {{$cart_item->product->discount_price}}
+                                    @else
+                                    {{$cart_item->product->price}}
+                                    @endif
+                                    CFA</td>
                                 <td>
                                     <div class="product-single-qty">
-                                        <input class="horizontal-quantity form-control" type="text">
+                                        <input class="horizontal-quantity form-control" type="text" value="{{$cart_item->quantity}}" data-id="{{$cart_item->product_id}}">
                                     </div><!-- End .product-single-qty -->
                                 </td>
-                                <td class="text-right"><span class="subtotal-price">17.90 CFA</span></td>
+                                <td class="text-right"><span class="subtotal-price">
+                                        @if($cart_item->product->discount_price)
+                                        {{$cart_item->product->discount_price * $cart_item->quantity}}
+                                        @else
+                                        {{$cart_item->product->price * $cart_item->quantity}}
+                                        @endif CFA</span></td>
                             </tr>
-
-                            <tr class="product-row">
-                                <td>
-                                    <figure class="product-image-container">
-                                        <a href="product.html" class="product-image">
-                                            <img src="assets/images/products/c2.png" alt="product">
-                                        </a>
-
-                                        <a href="#" class="btn-remove icon-cancel" title="Remove Product"></a>
-                                    </figure>
-                                </td>
-                                <td class="product-col">
-                                    <h5 class="product-title">
-                                        <a href="product.html">Ultimate 3D Bluetooth Speaker</a>
-                                    </h5>
-                                </td>
-                                <td>17.90 CFA</td>
-                                <td>
-                                    <div class="product-single-qty">
-                                        <input class="horizontal-quantity form-control" type="text">
-                                    </div><!-- End .product-single-qty -->
-                                </td>
-                                <td class="text-right"><span class="subtotal-price">17.90 CFA</span></td>
-                            </tr>
-
-                            <tr class="product-row">
-                                <td>
-                                    <figure class="product-image-container">
-                                        <a href="product.html" class="product-image">
-                                            <img src="assets/images/products/c3.png" alt="product">
-                                        </a>
-
-                                        <a href="#" class="btn-remove icon-cancel" title="Remove Product"></a>
-                                    </figure>
-                                </td>
-                                <td class="product-col">
-                                    <h5 class="product-title">
-                                        <a href="product.html">Ultimate 3D Bluetooth Speaker</a>
-                                    </h5>
-                                </td>
-                                <td>17.90 CFA</td>
-                                <td>
-                                    <div class="product-single-qty">
-                                        <input class="horizontal-quantity form-control" type="text">
-                                    </div><!-- End .product-single-qty -->
-                                </td>
-                                <td class="text-right"><span class="subtotal-price">17.90 CFA</span></td>
-                            </tr>
+                            @endforeach
                         </tbody>
 
 
                         <tfoot>
                             <tr>
                                 <td colspan="5" class="clearfix">
-                                    <div class="float-left">
+                                    {{-- <div class="float-left">
                                         <div class="cart-discount">
                                             <form action="#">
                                                 <div class="input-group">
@@ -123,7 +88,7 @@
                                         <button type="submit" class="btn btn-shop btn-update-cart">
                                             Update Cart
                                         </button>
-                                    </div><!-- End .float-right -->
+                                    </div><!-- End .float-right --> --}}
                                 </td>
                             </tr>
                         </tfoot>
@@ -139,8 +104,7 @@
                         <tbody>
                             <tr>
                                 <td>Subtotal</td>
-                                <td>17.90 CFA</td>
-                            </tr>
+                                <td>{{$total_price}} CFA</td>
 
                             <tr>
                                 <td colspan="2" class="text-left">
@@ -202,7 +166,7 @@
                         <tfoot>
                             <tr>
                                 <td>Total</td>
-                                <td>17.90 CFA</td>
+                                <td>{{$total_price}} CFA</td>
                             </tr>
                         </tfoot>
                     </table>
@@ -220,3 +184,25 @@
 </main><!-- End .main -->
 
 @include('layouts.footer')
+<script>
+    var quantity = document.getElementsByClassName('horizontal-quantity');
+    for (let i = 0; i < quantity.length; i++) {
+        quantity[i].addEventListener('change', function() {
+            var id = this.getAttribute('data-id');
+            var quantity = this.value;
+            $.ajax({
+                url: "{{route('quantity_cart_item')}}",
+                method: "post",
+                data: {
+                    id: id,
+                    quantity: quantity,
+                    _token: "{{csrf_token()}}"
+                },
+                success: function(data) {
+                    console.log(data);
+                }
+            })
+        })
+    }
+
+    <script>

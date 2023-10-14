@@ -677,56 +677,20 @@ class WebsiteController extends Controller
             $notification = array('login' => 'Please Login first !', 'alert-type' => 'success');
             return back()->with($notification);
         }
-        if (Auth::user()->is_guest == 1) {
-            $cart_items = Cart::where('user_id', Auth::user()->id)->where('session', Session::getId())->with('product', 'attributeValue', 'lengthvalue', 'video', 'education')->get();
-        } else {
-            $cart_items = Cart::where('user_id', Auth::user()->id)->with('product', 'attributeValue', 'lengthvalue', 'video', 'education')->get();
-        }
-        //   return $cart_items[2]['product'];
-        // dd($cart_items);
+        $cart_items = Cart::where('user_id', Auth::id())->get();
         $cart_items;
         $total_item_in_cart = count($cart_items);
-        // $cart_item->pluck('');
         $total_price = 0;
-        $total_price_after_coupon_apply = 0;
         if (count($cart_items) > 0) {
-            foreach ($cart_items as $cart_product) {
-
-                // foreach ($cart_product->product as $value) {
-                // check discount and calculate total price
-                //  return   $cart_product->product;
-                // dd('stop');
-                // dd($cart_product);
-                // dd($cart_items);
-
-
-                if (!empty($cart_product['type'] == 1 || $cart_product['type'] == 2 || $cart_product['type'] == 3)) {
-                    // if (!empty($cart_product->type ==2 )) {
-                    $total_price += $cart_product->price;
+            foreach ($cart_items as $cart_item) {
+                if ($cart_item->discount_price != null) {
+                    $total_price += ($cart_item->quantity * $cart_item->discount_price);
                 } else {
-
-                    if (!empty($cart_product->product->discount)) {
-                        $total_price += ($cart_product['quantity'] * $cart_product['price']);
-                    } else {
-                        $total_price += ($cart_product['quantity'] * $cart_product['price']);
-                    }
+                    $total_price += ($cart_item->quantity * $cart_item->price);
                 }
             }
         }
-        // }
-        // $cart_items = json_encode($cart_items);
-
-        $after_coupon_apply_total_price = $total_price;
-        // total price
-        $coupon_data = [];
-        if (Session::has('coupon_data')) {
-            $coupon_data = Session::get('coupon_data');
-            // dd($coupon_data['after_coupon_apply_total_price']);
-            $after_coupon_apply_total_price = $coupon_data['after_coupon_apply_total_price'];
-        }
-        // return $cart_items->all();
-        //  return $total_price;
-        return view("website.add-cart", get_defined_vars());
+        return view("cart", get_defined_vars());
     }
 
     public function wishlist()
@@ -746,22 +710,9 @@ class WebsiteController extends Controller
 
         $wishlist_items = Wishlist::where('user_id', Auth::user()->id)->with('product')->get();
         $total_item_in_wishlist = count($wishlist_items);
-        $total_price = 0;
-        $total_price_after_coupon_apply = 0;
 
-        if (count($wishlist_items) > 0) {
-            foreach ($wishlist_items as $wishlist_item) {
-                // check discount and calculate total price
-                if (!empty($wishlist_item->discount)) {
-                    $total_price += ($wishlist_item->quantity * $wishlist_item->discounted_price);
-                } else {
-                    $total_price += ($wishlist_item->quantity * $wishlist_item->price);
-                }
-            }
-        }
 
-        // return $wishlist_items;
-        return view("website.wishlist", get_defined_vars());
+        return view("wishlist", get_defined_vars());
     }
 
     public function add_wishlist(Request $request)
@@ -820,34 +771,13 @@ class WebsiteController extends Controller
         }
     }
 
-    public function remove_wishlist_item(Request $request)
+    public function remove_wishlist(Request $request, $id)
     {
-
-        // dd($request->all());
-        $remove_wishlist_item = Wishlist::find($request->wishlist_id);
+        $remove_wishlist_item = Wishlist::where('product_id', $id)->first();
         $remove_wishlist_item->delete();
 
 
-
-        $wishlist_items = Wishlist::where('user_id', Auth::user()->id)->with('product')->get();
-        $total_item_in_wishlist = count($wishlist_items);
-        $total_price = 0;
-        $total_price_after_coupon_apply = 0;
-
-        if (count($wishlist_items) > 0) {
-            foreach ($wishlist_items as $wishlist_item) {
-
-                // check discount and calculate total price
-                if (!empty($wishlist_item->discount)) {
-                    $total_price += ($wishlist_item->quantity * $wishlist_item->discounted_price);
-                } else {
-                    $total_price += ($wishlist_item->quantity * $wishlist_item->price);
-                }
-            }
-        }
-
-
-        return response()->json(['status' => 200,]);
+        return redirect()->route('wishlist');
     }
 
     public function shop(Request $request, $slug = null)
@@ -1124,19 +1054,17 @@ class WebsiteController extends Controller
         return view('website.products', get_defined_vars());
     }
     // get products according to category in navbar
-    public function get_category_products(Request $request, $slug)
+    public function get_category_products(Request $request, $id)
     {
-        $parent_category = ParentCategory::where('slug', $request->slug)->first();
-        if (!empty($parent_category->id)) {
-            $products =
-                Product::where('status', 1)->where('parent_category_id', $parent_category->id)->with('get_ratings')->withAvg('get_ratings', 'rating')->get();
+        $parent_category = ParentCategory::where('id', $request->id)->first();
+        $products = Product::where('status', 1)->where('parent_category_id', $request->id)->get();
+        foreach ($products as $product) {
+            $product->avg_rating = Review::where('product_id', $product->id)->avg('rating');
+            $product->category_name = $parent_category->name;
         }
-        $main_category = MainCategory::where('slug', $request->slug)->first();
-        if (!empty($main_category->id)) {
-            $products =
-                Product::where('main_category_id', $main_category->id)->with('get_ratings')->withAvg('get_ratings', 'rating')->get();
-        }
-        return view('website.products', get_defined_vars());
+        $attributes = AttributeValue::all();
+        $lengths = Length::all();
+        return view('shop', get_defined_vars());
     }
 
     public function state(Request $request)

@@ -2,9 +2,9 @@
 
 @section('content')
 @section('css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/animate.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/chartist.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/date-picker.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/animate.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/chartist.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/css/vendors/date-picker.css') }}">
 @endsection
 <div class="container">
     <div class="row">
@@ -24,14 +24,12 @@
 
 
 
-                                <svg version="1.1" id="Layer_1" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"
-                                    xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 50 50"
-                                    style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                                <svg version="1.1" id="Layer_1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
                                     <style type="text/css">
                                         .st0 {
                                             fill: #FFFFFF;
                                         }
+
                                     </style>
                                     <g>
                                         <path class="st0" d="M10.63,30.23c1.38,0.13,2.66,0.26,4.12,0.4c0.95-1.76,1.15-3.9,1.47-6c0.43-2.74,0.72-5.52,1.3-8.23
@@ -57,8 +55,7 @@
   c1.98-0.02,3.96-0.03,5.94,0c0.92,0.01,1.26-0.36,1.25-1.28c-0.03-5.69-0.02-11.38,0-17.07c0-0.91-0.3-1.31-1.24-1.29
   c-1.94,0.04-3.88,0.04-5.82,0c-0.99-0.02-1.33,0.36-1.32,1.34C1.12,32.73,1.09,35.56,1.09,38.38z" />
                                         <g>
-                                            <path class="st0"
-                                                d="M29.23,16.55v0.5c0.33,0.03,0.61,0.1,0.85,0.2c0.24,0.1,0.44,0.26,0.62,0.46c0.14,0.16,0.25,0.32,0.32,0.48
+                                            <path class="st0" d="M29.23,16.55v0.5c0.33,0.03,0.61,0.1,0.85,0.2c0.24,0.1,0.44,0.26,0.62,0.46c0.14,0.16,0.25,0.32,0.32,0.48
    c0.08,0.17,0.11,0.32,0.11,0.46c0,0.15-0.06,0.29-0.17,0.4c-0.11,0.11-0.25,0.17-0.41,0.17c-0.3,0-0.5-0.16-0.59-0.49
    c-0.1-0.38-0.35-0.64-0.73-0.77v1.92c0.38,0.1,0.69,0.2,0.91,0.29c0.23,0.09,0.43,0.21,0.61,0.37c0.19,0.17,0.34,0.37,0.44,0.61
    c0.1,0.24,0.15,0.49,0.15,0.77c0,0.35-0.08,0.68-0.25,0.99c-0.16,0.31-0.41,0.56-0.73,0.75c-0.32,0.19-0.7,0.31-1.14,0.35v1.15
@@ -77,19 +74,17 @@
 
                             <div class="media-body"><span class="m-0">Earning</span>
                                 <h4 class="mb-0 counter">
-                                    {{-- ${{ $earning }} --}}
+                                   $ {{getearnings()}}
                                 </h4>
 
 
                                 <!-- Generator: Adobe Illustrator 27.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-                                <svg version="1.1" id="Layer_1" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"
-                                    xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 50 50"
-                                    style="enable-background:new 0 0 50 50;" xml:space="preserve" class="icon-bg">
+                                <svg version="1.1" id="Layer_1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve" class="icon-bg">
                                     <style type="text/css">
                                         .st0 {
                                             fill: #FFFFFF;
                                         }
+
                                     </style>
                                     <g>
                                         <path class="st0" d="M10.63,30.23c1.38,0.13,2.66,0.26,4.12,0.4c0.95-1.76,1.15-3.9,1.47-6c0.43-2.74,0.72-5.52,1.3-8.23
@@ -115,8 +110,7 @@
   c1.98-0.02,3.96-0.03,5.94,0c0.92,0.01,1.26-0.36,1.25-1.28c-0.03-5.69-0.02-11.38,0-17.07c0-0.91-0.3-1.31-1.24-1.29
   c-1.94,0.04-3.88,0.04-5.82,0c-0.99-0.02-1.33,0.36-1.32,1.34C1.12,32.73,1.09,35.56,1.09,38.38z" />
                                         <g>
-                                            <path class="st0"
-                                                d="M29.23,16.55v0.5c0.33,0.03,0.61,0.1,0.85,0.2c0.24,0.1,0.44,0.26,0.62,0.46c0.14,0.16,0.25,0.32,0.32,0.48
+                                            <path class="st0" d="M29.23,16.55v0.5c0.33,0.03,0.61,0.1,0.85,0.2c0.24,0.1,0.44,0.26,0.62,0.46c0.14,0.16,0.25,0.32,0.32,0.48
    c0.08,0.17,0.11,0.32,0.11,0.46c0,0.15-0.06,0.29-0.17,0.4c-0.11,0.11-0.25,0.17-0.41,0.17c-0.3,0-0.5-0.16-0.59-0.49
    c-0.1-0.38-0.35-0.64-0.73-0.77v1.92c0.38,0.1,0.69,0.2,0.91,0.29c0.23,0.09,0.43,0.21,0.61,0.37c0.19,0.17,0.34,0.37,0.44,0.61
    c0.1,0.24,0.15,0.49,0.15,0.77c0,0.35-0.08,0.68-0.25,0.99c-0.16,0.31-0.41,0.56-0.73,0.75c-0.32,0.19-0.7,0.31-1.14,0.35v1.15
@@ -147,23 +141,18 @@
                     <div class="bg-secondary b-r-4 card-body">
                         <div class="media static-top-widget">
                             <div class="align-self-center text-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-bag">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-bag">
                                     <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
                                     <line x1="3" y1="6" x2="21" y2="6"></line>
                                     <path d="M16 10a4 4 0 0 1-8 0"></path>
                                 </svg>
                             </div>
                             <div class="media-body"><span class="m-0">Product
-                                    {{-- {{ $products > 1 ? 's' : '' }} --}}
+
                                 </span>
                                 <h4 class="mb-0 counter">
-                                    {{-- {{ $products }} --}}
-                                </h4><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"
-                                    class="feather feather-shopping-bag icon-bg">
+                                    {{gettotalproducts()}}
+                                </h4><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-bag icon-bg">
                                     <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
                                     <line x1="3" y1="6" x2="21" y2="6"></line>
                                     <path d="M16 10a4 4 0 0 1-8 0"></path>
@@ -187,15 +176,12 @@
 
 
                                 <!-- Generator: Adobe Illustrator 27.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-                                <svg version="1.1" id="Layer_1" fill="none" stroke="currentColor"
-                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                    xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                    x="0px" y="0px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;"
-                                    xml:space="preserve">
+                                <svg version="1.1" id="Layer_1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
                                     <style type="text/css">
                                         .st0 {
                                             fill: #FFFFFF;
                                         }
+
                                     </style>
                                     <g>
                                         <path class="st0" d="M45.71,26.88c0,4.56,0.01,9.12,0,13.69c-0.01,4.66-2.99,7.99-7.6,8.53c-2.32,0.27-4.65,0.12-6.97,0.13
@@ -216,8 +202,7 @@
                                         <path class="st0" d="M27.93,28.78c-2.71,0-5.43,0.01-8.14-0.01c-0.43,0-0.88-0.03-1.3-0.13c-0.41-0.1-0.68-0.43-0.71-0.85
   c-0.03-0.48,0.21-0.88,0.68-1c0.46-0.12,0.95-0.18,1.42-0.18c5.38-0.01,10.77-0.02,16.15,0c0.87,0,2.14-0.21,2.15,1.08
   c0.02,1.33-1.24,1.08-2.12,1.08C33.36,28.8,30.64,28.78,27.93,28.78z" />
-                                        <path class="st0"
-                                            d="M28.02,38.01c-2.84,0-5.69,0-8.53,0c-0.77,0-1.64-0.01-1.68-1.01c-0.04-1,0.86-1.13,1.61-1.13
+                                        <path class="st0" d="M28.02,38.01c-2.84,0-5.69,0-8.53,0c-0.77,0-1.64-0.01-1.68-1.01c-0.04-1,0.86-1.13,1.61-1.13
   c5.78-0.02,11.55-0.02,17.33,0c0.72,0,1.51,0.18,1.48,1.11c-0.03,0.91-0.79,1.03-1.54,1.03C33.79,38.01,30.91,38.01,28.02,38.01z" />
                                         <circle class="st0" cx="13.31" cy="18.61" r="0.92" />
                                         <circle class="st0" cx="13.31" cy="27.69" r="0.92" />
@@ -231,19 +216,16 @@
                                     {{-- {{ $orders_count > 1 ? 's' : '' }} --}}
                                 </span>
                                 <h4 class="mb-0 counter">
-                                    {{-- {{ $orders_count }} --}}
+                                    {{gettotalorders()}}
                                 </h4>
 
                                 <!-- Generator: Adobe Illustrator 27.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-                                <svg version="1.1" id="Layer_1" fill="none" stroke="currentColor"
-                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                    class="feather feather-message-circle icon-bg" xmlns="http://www.w3.org/2000/svg"
-                                    xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 50 50"
-                                    style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                                <svg version="1.1" id="Layer_1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-circle icon-bg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
                                     <style type="text/css">
                                         .st0 {
                                             fill: #FFFFFF;
                                         }
+
                                     </style>
                                     <g>
                                         <path class="st0" d="M45.71,26.88c0,4.56,0.01,9.12,0,13.69c-0.01,4.66-2.99,7.99-7.6,8.53c-2.32,0.27-4.65,0.12-6.97,0.13
@@ -253,21 +235,18 @@
                                     c3.25-0.03,6.07-2.7,6.02-6.33c-0.12-9.08-0.04-18.16-0.04-27.24c0-4.3-1.81-6.36-6.06-6.92c-0.56-0.07-1.14-0.09-1.7-0.11
                                     c-0.69-0.02-1.26-0.21-1.26-1.01c0-0.71,0.53-0.94,1.15-1.01c6.58-0.66,10.3,4.21,10.09,8.78C45.54,17.75,45.71,22.32,45.71,26.88z
                                     " />
-                                        <path class="st0"
-                                            d="M25.6,0.75c1.23,0,2.45-0.05,3.68,0.01c1.84,0.08,2.98,1.15,3.29,2.97c0.05,0.3,0.1,0.61,0.12,0.91
+                                        <path class="st0" d="M25.6,0.75c1.23,0,2.45-0.05,3.68,0.01c1.84,0.08,2.98,1.15,3.29,2.97c0.05,0.3,0.1,0.61,0.12,0.91
                                     c0.31,4.27-0.98,5.67-5.24,5.67c-1.66,0-3.33,0.03-4.99-0.01c-2.64-0.07-3.89-1.4-4-4.01c-0.14-3.53,0.32-5.9,5.44-5.56
                                     c0.57,0.04,1.14,0.01,1.71,0.01C25.6,0.74,25.6,0.74,25.6,0.75z M25.57,8.11C25.57,8.12,25.57,8.12,25.57,8.11
                                     c0.52,0.01,1.05,0.01,1.57,0.01c3.45,0,3.51-0.09,3.4-3.52c-0.04-1.14-0.49-1.7-1.66-1.68c-1.62,0.02-3.24,0.01-4.86,0
                                     c-3.56-0.02-3.44-0.23-3.36,3.75c0.02,0.96,0.53,1.44,1.49,1.44C23.29,8.12,24.43,8.11,25.57,8.11z" />
-                                        <path class="st0"
-                                            d="M28,19.55c-2.67,0-5.35,0-8.02,0c-0.35,0-0.7,0.01-1.05-0.03c-0.62-0.07-1.13-0.35-1.15-1.04
+                                        <path class="st0" d="M28,19.55c-2.67,0-5.35,0-8.02,0c-0.35,0-0.7,0.01-1.05-0.03c-0.62-0.07-1.13-0.35-1.15-1.04
                                     c-0.02-0.69,0.48-0.99,1.1-1.08c0.3-0.04,0.61-0.04,0.92-0.04c5.48,0,10.96,0,16.43,0c0.04,0,0.09,0,0.13,0
                                     c0.83,0.04,1.87-0.04,1.85,1.13c-0.02,1.07-1,1.05-1.8,1.05C33.61,19.55,30.8,19.55,28,19.55z" />
                                         <path class="st0" d="M27.93,28.78c-2.71,0-5.43,0.01-8.14-0.01c-0.43,0-0.88-0.03-1.3-0.13c-0.41-0.1-0.68-0.43-0.71-0.85
                                     c-0.03-0.48,0.21-0.88,0.68-1c0.46-0.12,0.95-0.18,1.42-0.18c5.38-0.01,10.77-0.02,16.15,0c0.87,0,2.14-0.21,2.15,1.08
                                     c0.02,1.33-1.24,1.08-2.12,1.08C33.36,28.8,30.64,28.78,27.93,28.78z" />
-                                        <path class="st0"
-                                            d="M28.02,38.01c-2.84,0-5.69,0-8.53,0c-0.77,0-1.64-0.01-1.68-1.01c-0.04-1,0.86-1.13,1.61-1.13
+                                        <path class="st0" d="M28.02,38.01c-2.84,0-5.69,0-8.53,0c-0.77,0-1.64-0.01-1.68-1.01c-0.04-1,0.86-1.13,1.61-1.13
                                     c5.78-0.02,11.55-0.02,17.33,0c0.72,0,1.51,0.18,1.48,1.11c-0.03,0.91-0.79,1.03-1.54,1.03C33.79,38.01,30.91,38.01,28.02,38.01z" />
                                         <circle class="st0" cx="13.31" cy="18.61" r="0.92" />
                                         <circle class="st0" cx="13.31" cy="27.69" r="0.92" />
@@ -289,24 +268,18 @@
                 <div class="card o-hidden">
                     <div class="bg-primary b-r-4 card-body">
                         <div class="media static-top-widget">
-                            <div class="align-self-center text-center"><svg xmlns="http://www.w3.org/2000/svg"
-                                    width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-user-plus">
+                            <div class="align-self-center text-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-plus">
                                     <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                                     <circle cx="8.5" cy="7" r="4"></circle>
                                     <line x1="20" y1="8" x2="20" y2="14"></line>
                                     <line x1="23" y1="11" x2="17" y2="11"></line>
                                 </svg></div>
-                            <div class="media-body"><span class="m-0">Customer
+                            <div class="media-body"><span class="m-0">User
                                     {{-- {{ $users > 1 ? 's' : '' }} --}}
                                 </span>
                                 <h4 class="mb-0 counter">
-                                    {{-- {{ $users }} --}}
-                                </h4><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"
-                                    class="feather feather-user-plus icon-bg">
+                                    {{gettotalusers()}}
+                                </h4><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-plus icon-bg">
                                     <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                                     <circle cx="8.5" cy="7" r="4"></circle>
                                     <line x1="20" y1="8" x2="20" y2="14"></line>
@@ -331,7 +304,9 @@
 
 
 <script type="text/javascript">
-    var session_layout = '{{ session()->get('layout') }}';
+    var session_layout = '{{ session()->get('
+    layout ') }}';
+
 </script>
 @endsection
 

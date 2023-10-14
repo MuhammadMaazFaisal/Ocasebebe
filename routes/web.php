@@ -37,6 +37,9 @@ Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 // Product routes
 Route::get('product-details/{id}', [WebsiteController::class, 'productdetails'])->name('product.details');
 
+// Category routes
+Route::get('category/{id}', [WebsiteController::class, 'get_category_products'])->name('category');
+
 // Pages routes
 Route::get ('who-we-are', function () {
     return view('who-we-are');
@@ -59,10 +62,11 @@ Route::get('faq', function () {
 
 // Cart routes
 Route::post('add-to-cart', [CartController::class, 'add_to_cart'])->name('add_to_cart');
-Route::get('add-quantity-cart-item', [CartController::class, 'add_quantity_cart_item'])->name('add_quantity_cart_item');
+Route::get('add-quantity-cart-item', [CartController::class, 'add_quantity_cart_item'])->name('quantity_cart_item');
 Route::get('remove-quantity-cart-item', [CartController::class, 'remove_quantity_cart_item'])->name('remove_quantity_cart_item');
 Route::get('remove-cart-item', [CartController::class, 'remove_cart_item'])->name('remove_cart_item');
 Route::get('add-wishlist', [WebsiteController::class, 'add_wishlist'])->name('add_wishlist');
+Route::get('remove-wishlist/{id}', [WebsiteController::class, 'remove_wishlist'])->name('remove_wishlist');
 Route::get('wishlist', [WebsiteController::class, 'wishlist'])->name('wishlist');
 Route::get('cart', [WebsiteController::class, 'add_cart'])->name('cart');
 Route::get('shipping-cart', [WebsiteController::class, 'shippingcart'])->name('shipping-cart');
