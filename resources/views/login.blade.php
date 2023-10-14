@@ -110,7 +110,7 @@
                             icon: "success",
                             button: "OK",
                         }).then(function() {
-                            window.location.reload();
+                            window.location.href = "{{route('home')}}";
                         });
                     } else {
                         swal({

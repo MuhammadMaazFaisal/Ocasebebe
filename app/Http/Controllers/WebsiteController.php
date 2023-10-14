@@ -27,6 +27,7 @@ use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use App\Models\Admin\Review;
+use App\Models\Admin\OrderDetails;
 
 
 class WebsiteController extends Controller
@@ -37,7 +38,7 @@ class WebsiteController extends Controller
     public function index()
     {
         $now = Carbon::now();
-        $categories=ParentCategory::where('status',1)->get();
+        $categories = ParentCategory::where('status', 1)->get();
         foreach ($categories as $category) {
             $category['products'] = Product::where('parent_category_id', $category->id)->where('status', 1)->get();
         }
@@ -46,7 +47,7 @@ class WebsiteController extends Controller
             $new_product['avg_rating'] = Review::where('product_id', $new_product->id)->avg('rating');
             $new_product['category'] = ParentCategory::where('id', $new_product->parent_category_id)->first();
         }
-        $products=Product::where('status',1)->get();
+        $products = Product::where('status', 1)->get();
         foreach ($products as $product) {
             $product['avg_rating'] = Review::where('product_id', $product->id)->avg('rating');
             $product['category'] = ParentCategory::where('id', $product->parent_category_id)->first();
@@ -55,15 +56,15 @@ class WebsiteController extends Controller
         foreach ($sale_products as $sale_product) {
             $sale_product['avg_rating'] = Review::where('product_id', $sale_product->id)->avg('rating');
         }
-        $featured_products=Product::where('status', 1)->inRandomOrder()->take(3)->get();
+        $featured_products = Product::where('status', 1)->inRandomOrder()->take(3)->get();
         foreach ($featured_products as $featured_product) {
             $featured_product['avg_rating'] = Review::where('product_id', $featured_product->id)->avg('rating');
         }
-        $recommended_products=Product::where('status', 1)->inRandomOrder()->take(3)->get();
+        $recommended_products = Product::where('status', 1)->inRandomOrder()->take(3)->get();
         foreach ($recommended_products as $recommended_product) {
             $recommended_product['avg_rating'] = Review::where('product_id', $recommended_product->id)->avg('rating');
         }
-        $bestselling_products=Product::where('status', 1)->inRandomOrder()->take(3)->get();
+        $bestselling_products = Product::where('status', 1)->inRandomOrder()->take(3)->get();
         foreach ($bestselling_products as $bestselling_product) {
             $bestselling_product['avg_rating'] = Review::where('product_id', $bestselling_product->id)->avg('rating');
         }
@@ -202,6 +203,7 @@ class WebsiteController extends Controller
 
     public function shippingcart(Request $request)
     {
+
         if (!Auth::check()) {
             return redirect()->back()->with("message", "Please login first !");
         }
@@ -213,103 +215,49 @@ class WebsiteController extends Controller
 
         $check_carts = Cart::where('user_id', Auth::id())->get();
         if (count($check_carts) == 0) {
-            return redirect()->back()->with("message", "Sorry!, You can not checkout without add item in cart.");
+            return redirect()->back()->with("message", "Sorry!, You can not checkout without any item in cart.");
         }
 
+        $cart_items = Cart::where('user_id', Auth::id())->get();
 
-        // $user_address = UserAddress::where('user_id', Auth::id())->first();
-        $countries = Country::get();
-        $states = State::get();
-        $cities = City::get();
-        $shipping_state = Shipping_price::get();
-
-
-        // check validation
-        if (
-            empty($user_address->first_name) ||
-            empty($user_address->last_name) ||
-            empty($user_address->full_name) ||
-            empty($user_address->email) ||
-            empty($user_address->contact) ||
-            empty($user_address->mailling_address) ||
-            empty($user_address->shipping_address) ||
-            empty($user_address->country_id) ||
-            empty($user_address->state_id) ||
-            empty($user_address->city_id) ||
-            empty($user_address->zip_code)
-        ) {
-            $is_validated = false;
-        } else {
-            $is_validated = true;
-        }
-
-
-        if (Auth::user()->is_guest == 1) {
-            $cart_items = Cart::where('user_id', Auth::user()->id)->where('session', Session::getId())->with('product', 'attributeValue', 'video', 'education')->get();
-        } else {
-            $cart_items = Cart::where('user_id', Auth::user()->id)->with('product', 'attributeValue', 'video', 'education')->get();
-        }
-
-
-        $cart_items;
         $total_item_in_cart = count($cart_items);
         // $cart_item->pluck('')
 
         $total_price = 0;
-        $total_price_after_coupon_apply = 0;
         if (count($cart_items) > 0) {
             foreach ($cart_items as $cart_item) {
-
-                // check discount and calculate total price
-                // if (!empty($cart_item->discount)) {
-                //     $total_price += ($cart_item->quantity * $cart_item->discounted_price);
-                // } else {
-                //     $total_price += ($cart_item->quantity * $cart_item->price);
-                // }
-                if (!empty($cart_item->type == 1 || $cart_item->type == 2 || $cart_item->type == 3)) {
-                    $total_price += $cart_item->price;
-                } else {
-
-                    if (!empty($cart_item->product->discount)) {
-                        $total_price += ($cart_item->quantity * $cart_item->product->discounted_price);
-                    } else {
-                        $total_price += ($cart_item->quantity * $cart_item->product->price);
-                    }
-                }
+                $total_price += $cart_item->price * $cart_item->quantity;
             }
+        }   
+        $order=New Order();
+        $order->user_id=Auth::id();
+        $order->customer_name=$request->name;
+        $order->customer_email=$request->email;
+        $order->customer_address=$request->address;
+        $order->quantity=count($cart_items);
+        $order->total_price=$total_price;
+        $order->payment_method=$request->payment;
+        $order->save();
+        foreach($cart_items as $cart_item){
+            $order_details=New OrderDetails();
+            $product=Product::where('id',$cart_item->product_id)->first();
+            $order_details->order_id=$order->id;
+            $order_details->product_id=$cart_item->product_id;
+            $order_details->product_name=$product->product_name;
+            $order_details->product_price=$product->price;
+            $order_details->product_discount_price=$product->discount_price;
+            $order_details->product_quantity=$cart_item->quantity;
+            $order_details->product_image=$product->image;
+            $order_details->product_description=$product->description;
+            $order_details->product_category=$product->parent_category_id;
+            $order_details->save();
         }
-
-        // if (!empty($user_address->state_id)) {
-        //     $shipping_price = Shipping_price::where('state_id', $user_address->state_id)->value('price');
-        //     if ($shipping_price !== null) {
-        //         $total_price += $shipping_price;
-        //     }
-        // }
-        // $client = new Client();
-
-
-        // $response = Http::withHeaders([
-        //     'Authorization' => 'Bearer d828ad31e5e2a4985ea44fe289ef1bbe68744e3e19ee5266eb'
-        // ])->get('https://sandbox-api.paddle.com/products');
-
-        $payload = [
-            'vendor_id' => env('PADDLE_VENDOR_ID'),
-            'vendor_auth_code' => env('PADDLE_VENDOR_AUTH_CODE'),
-            'product_id' => 'pro_01hcatzd9pddggv444kg1vvfv9',  // Replace with your actual product ID
-            'customer_email' => 'customer@example.com',  // Replace with the actual customer email
-            // Add other optional parameters here
-        ];
-        // $products = json_decode($response->getBody(), true);
-        // dd($products);
-        // $user1 = auth()->user();
-        // $checkout = $user1->newSubscription('default', 'pro_01hc0hfmjwrnadvt1e9njnrt5t')->create();
-        $after_coupon_apply_total_price = $total_price;
-        // dd('$');
-
-        $paylink = Auth::user()->charge(20, "ChatApp Education",[ 'webhook_url' => 'https://d132-101-53-236-9.ngrok-free.app/Edify-with-Integrations/webhooks/paddle' ]);
+        if (Cart::where('user_id', Auth::id())->delete()) {
+            return ['status'=>200,'message'=>'Order Placed Successfully'];
+        }else{
+            return ['status'=>400,'message'=>'Something went wrong'];
+        }
        
-        
-        return view('website.shipping-cart', get_defined_vars());
     }
 
     public function productdetails(Request $request, $id)
@@ -337,7 +285,7 @@ class WebsiteController extends Controller
             $lengthnames = Length::whereIn('id', $length_id)->get();
         }
 
-        $category=ParentCategory::where('id',$product->parent_category_id)->first();
+        $category = ParentCategory::where('id', $product->parent_category_id)->first();
         $related_products = Product::where('parent_category_id', $product->parent_category_id)->where('id', '!=', $product->id)->get()->take(4);
         for ($i = 0; $i < count($related_products); $i++) {
             $related_products[$i]['avg_rating'] = Review::where('product_id', $related_products[$i]->id)->avg('rating');
@@ -356,7 +304,7 @@ class WebsiteController extends Controller
 
         // $review_avg = round($review_avg);
         // $is_buy_product = BillingInfo::where('user_id', Auth::id())->where('product_id', $productShow->id)->get();
-           
+
         return view('product-details', get_defined_vars());
     }
 
@@ -817,7 +765,14 @@ class WebsiteController extends Controller
 
     public function checkout()
     {
-        return view("website.checkout");
+        $cart_items = Cart::where('user_id', Auth::id())->get();
+        $total=0;
+        foreach ($cart_items as $cart_item) {
+            $total += $cart_item->price * $cart_item->quantity;
+            $cart_item['product_name'] = Product::where('id', $cart_item->product_id)->first()->product_name;
+        }
+
+        return view("checkout", get_defined_vars());
     }
 
     public function payment()
