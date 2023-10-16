@@ -5,6 +5,90 @@
         background-color: #f38181;
     }
 
+    /* Common styles for both widgets */
+    .color-btn1 label {
+        display: block;
+        position: relative;
+        border-radius: 3px;
+    }
+
+    .size-btn1 label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 15px;
+        font-weight: 600;
+        background-color: lightgrey;
+        border-radius: 3px;
+    }
+
+    /* Color widget */
+    .color-btn1 input[type="checkbox"]:checked+label::before {
+        content: '✔';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-weight: bold;
+    }
+
+    /* Size widget */
+    .size-btn1 input[type="checkbox"]:checked+label {
+        background-color: #f38181;
+    }
+
+    /* Hide default checkbox */
+    .cat-list .cat-sublist input[type="checkbox"] {
+        display: none;
+    }
+
+    /* Style the label with a pseudo element for the tick mark */
+    .cat-list .cat-sublist input[type="checkbox"]+label::after {
+        content: "";
+        display: none;
+        width: 11px;
+        height: 11px;
+        border: 1px solid #000;
+        margin-left: 5px;
+        vertical-align: middle;
+    }
+
+    /* Display the tick mark when checked */
+    .cat-list .cat-sublist input[type="checkbox"]:checked+label::after {
+        display: inline-block;
+        content: "✔";
+        text-align: center;
+        line-height: 10px;
+        font-size: 10px;
+        color: green;
+        border-radius: 2px;
+    }
+
+    .single-li input[type="checkbox"]:checked+label::after {
+        display: inline-block;
+        content: "✔";
+        text-align: center;
+        line-height: 10px;
+        font-size: 10px;
+        color: green;
+        border-radius: 2px;
+    }
+
+    .single-li input[type="checkbox"] {
+        display: none;
+    }
+
+    .single-li input[type="checkbox"]+label::after {
+        content: "";
+        display: none;
+        width: 11px;
+        height: 11px;
+        border: 1px solid #000;
+        margin-left: 5px;
+        vertical-align: middle;
+    }
+
 </style>
 
 <main class="main">
@@ -39,7 +123,7 @@
 
         <div class="row">
             <div class="col-lg-9 main-content">
-                <nav class="toolbox sticky-header" data-sticky-options="{'mobile': true}">
+                {{-- <nav class="toolbox sticky-header" data-sticky-options="{'mobile': true}">
                     <div class="toolbox-left">
                         <a href="#" class="sidebar-toggle">
                             <svg data-name="Layer 3" id="Layer_3" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
@@ -104,7 +188,7 @@
                         <!-- End .layout-modes -->
                     </div>
                     <!-- End .toolbox-right -->
-                </nav>
+                </nav> --}}
 
                 <div class="row">
                     @foreach($products as $product)
@@ -125,11 +209,11 @@
                             <div class="product-details">
                                 <div class="category-wrap">
                                     <div class="category-list">
-                                        <a href="{{route('category',$product->parent_category_id)}}" class="product-category">{{$product->category_name}}</a>
+                                        <span class="product-category">{{$product->category_name}}</span>
                                     </div>
                                 </div>
 
-                                <h3 class="product-title"> <a href="{{route('product.details',$product->id)}}">{{$product->name}}</a></h3>
+                                <h3 class="product-title"> <a href="{{route('product.details',$product->id)}}">{{$product->product_name}}</a></h3>
 
                                 <div class="ratings-container">
                                     <div class="product-ratings">
@@ -152,8 +236,8 @@
                                 <!-- End .price-box -->
 
                                 <div class="product-action">
-                                    <a href="{{route('add_wishlist',$product->id)}}" onclick="addWishlistItem({{$product->id}})"  class="btn-icon-wish" title="wishlist"><i class="icon-heart"></i></a>
-                                    <a href="{{route('product.details',$product->id)}}"  class="btn-icon btn-add-cart"><i class="fa fa-arrow-right"></i><span>SELECT
+                                    <a href="{{route('add_wishlist',$product->id)}}" onclick="addWishlistItem({{$product->id}})" class="btn-icon-wish" title="wishlist"><i class="icon-heart"></i></a>
+                                    <a href="{{route('product.details',$product->id)}}" class="btn-icon btn-add-cart"><i class="fa fa-arrow-right"></i><span>SELECT
                                             OPTIONS</span></a>
                                     <a href="{{route('product.details',$product->id)}}" class="btn-quickview" title="Quick View"><i class="fas fa-external-link-alt"></i></a>
                                 </div>
@@ -163,545 +247,7 @@
                     </div>
                     @endforeach
                     <!-- End .col-sm-4 -->
-{{-- 
-                    <div class="col-6 col-sm-4">
-                        <div class="product-default">
-                            <figure>
-                                <a href="product.html">
-                                    <img src="assets/images/products/bp2.png" width="280" height="280" alt="product" />
-                                    <img src="assets/images/products/bp2.png" width="280" height="280" alt="product" />
-                                </a>
-                            </figure>
 
-                            <div class="product-details">
-                                <div class="category-wrap">
-                                    <div class="category-list">
-                                        <a href="category.html" class="product-category">category</a>
-                                    </div>
-                                </div>
-
-                                <h3 class="product-title"> <a href="product.html">Brown Women Casual HandBag</a>
-                                </h3>
-
-                                <div class="ratings-container">
-                                    <div class="product-ratings">
-                                        <span class="ratings" style="width:100%"></span>
-                                        <!-- End .ratings -->
-                                        <span class="tooltiptext tooltip-top"></span>
-                                    </div>
-                                    <!-- End .product-ratings -->
-                                </div>
-                                <!-- End .product-container -->
-
-                                <div class="price-box">
-                                    <span class="product-price">33.00 CFA</span>
-                                </div>
-                                <!-- End .price-box -->
-
-                                <div class="product-action">
-                                    <a href="wishlist.html" class="btn-icon-wish" title="wishlist"><i class="icon-heart"></i></a>
-                                    <a href="product.html" class="btn-icon btn-add-cart"><i class="fa fa-arrow-right"></i><span>SELECT
-                                            OPTIONS</span></a>
-                                    <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View"><i class="fas fa-external-link-alt"></i></a>
-                                </div>
-                            </div>
-                            <!-- End .product-details -->
-                        </div>
-                    </div>
-                    <!-- End .col-sm-4 -->
-
-                    <div class="col-6 col-sm-4">
-                        <div class="product-default">
-                            <figure>
-                                <a href="product.html">
-                                    <img src="assets/images/products/bp3.png" width="280" height="280" alt="product" />
-                                    <img src="assets/images/products/bp3.png" width="280" height="280" alt="product" />
-                                </a>
-
-                                <div class="label-group">
-                                    <div class="product-label label-sale">-20%</div>
-                                </div>
-                            </figure>
-
-                            <div class="product-details">
-                                <div class="category-wrap">
-                                    <div class="category-list">
-                                        <a href="category.html" class="product-category">category</a>
-                                    </div>
-                                </div>
-
-                                <h3 class="product-title"> <a href="product.html">Circled Ultimate 3D
-                                        Speaker</a> </h3>
-
-                                <div class="ratings-container">
-                                    <div class="product-ratings">
-                                        <span class="ratings" style="width:100%"></span>
-                                        <!-- End .ratings -->
-                                        <span class="tooltiptext tooltip-top"></span>
-                                    </div>
-                                    <!-- End .product-ratings -->
-                                </div>
-                                <!-- End .product-container -->
-
-                                <div class="price-box">
-                                    <span class="old-price">90.00 CFA</span>
-                                    <span class="product-price">70.00 CFA</span>
-
-                                </div>
-                                <!-- End .price-box -->
-                                <div class="product-action">
-                                    <a href="wishlist.html" class="btn-icon-wish" title="wishlist"><i class="icon-heart"></i></a>
-                                    <a href="#" class="btn-icon btn-add-cart product-type-simple"><i class="icon-shopping-cart"></i>ADD TO CART</a>
-                                    <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View"><i class="fas fa-external-link-alt"></i></a>
-                                </div>
-                            </div>
-                            <!-- End .product-details -->
-                        </div>
-                    </div>
-                    <!-- End .col-sm-4 -->
-
-                    <div class="col-6 col-sm-4">
-                        <div class="product-default">
-                            <figure>
-                                <a href="product.html">
-                                    <img src="assets/images/products/bp4.png" width="280" height="280" alt="product" />
-                                    <img src="assets/images/products/bp4.png" width="280" height="280" alt="product">
-                                </a>
-
-                                <div class="label-group">
-                                    <div class="product-label label-sale">-30%</div>
-                                </div>
-                            </figure>
-
-                            <div class="product-details">
-                                <div class="category-wrap">
-                                    <div class="category-list">
-                                        <a href="category.html" class="product-category">category</a>
-                                    </div>
-                                </div>
-
-                                <h3 class="product-title"> <a href="product.html">Blue Backpack for the Young -
-                                        S</a> </h3>
-
-                                <div class="ratings-container">
-                                    <div class="product-ratings">
-                                        <span class="ratings" style="width:100%"></span>
-                                        <!-- End .ratings -->
-                                        <span class="tooltiptext tooltip-top"></span>
-                                    </div>
-                                    <!-- End .product-ratings -->
-                                </div>
-                                <!-- End .product-container -->
-
-                                <div class="price-box">
-                                    <span class="old-price">90.00 CFA</span>
-                                    <span class="product-price">70.00 CFA</span>
-                                </div>
-                                <!-- End .price-box -->
-
-                                <div class="product-action">
-                                    <a href="wishlist.html" class="btn-icon-wish" title="wishlist"><i class="icon-heart"></i></a>
-                                    <a href="product.html" class="btn-icon btn-add-cart"><i class="fa fa-arrow-right"></i><span>SELECT
-                                            OPTIONS</span></a>
-                                    <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View"><i class="fas fa-external-link-alt"></i></a>
-                                </div>
-                            </div>
-                            <!-- End .product-details -->
-                        </div>
-                    </div>
-                    <!-- End .col-sm-4 -->
-
-                    <div class="col-6 col-sm-4">
-                        <div class="product-default">
-                            <figure>
-                                <a href="product.html">
-                                    <img src="assets/images/products/bp4.png" width="280" height="280" alt="product" />
-                                    <img src="assets/images/products/bp4.png" width="280" height="280" alt="product" />
-                                </a>
-
-                                <div class="label-group">
-                                    <div class="product-label label-hot">HOT</div>
-                                </div>
-                            </figure>
-
-                            <div class="product-details">
-                                <div class="category-wrap">
-                                    <div class="category-list">
-                                        <a href="category.html" class="product-category">category</a>
-                                    </div>
-                                </div>
-
-                                <h3 class="product-title"> <a href="product.html">Casual Spring Blue Shoes</a>
-                                </h3>
-
-                                <div class="ratings-container">
-                                    <div class="product-ratings">
-                                        <span class="ratings" style="width:100%"></span>
-                                        <!-- End .ratings -->
-                                        <span class="tooltiptext tooltip-top"></span>
-                                    </div>
-                                    <!-- End .product-ratings -->
-                                </div>
-                                <!-- End .product-container -->
-
-                                <div class="price-box">
-                                    <span class="old-price">90.00 CFA</span>
-                                    <span class="product-price">70.00 CFA</span>
-                                </div>
-                                <!-- End .price-box -->
-
-                                <div class="product-action">
-                                    <a href="wishlist.html" class="btn-icon-wish" title="wishlist"><i class="icon-heart"></i></a>
-                                    <a href="#" class="btn-icon btn-add-cart product-type-simple"><i class="icon-shopping-cart"></i>ADD TO CART</a>
-                                    <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View"><i class="fas fa-external-link-alt"></i></a>
-                                </div>
-                            </div>
-                            <!-- End .product-details -->
-                        </div>
-                    </div>
-                    <!-- End .col-sm-4 -->
-
-                    <div class="col-6 col-sm-4">
-                        <div class="product-default">
-                            <figure>
-                                <a href="product.html">
-                                    <img src="assets/images/products/bp5.png" width="280" height="280" alt="product">
-                                    <img src="assets/images/products/bp5.png" width="280" height="280" alt="product" />
-                                </a>
-
-                                <div class="label-group">
-                                    <div class="product-label label-sale">-8%</div>
-                                </div>
-                            </figure>
-
-                            <div class="product-details">
-                                <div class="category-wrap">
-                                    <div class="category-list">
-                                        <a href="category.html" class="product-category">category</a>
-                                    </div>
-                                </div>
-
-                                <h3 class="product-title"> <a href="product.html">Men Black Gentle Belt</a>
-                                </h3>
-
-                                <div class="ratings-container">
-                                    <div class="product-ratings">
-                                        <span class="ratings" style="width:100%"></span>
-                                        <!-- End .ratings -->
-                                        <span class="tooltiptext tooltip-top"></span>
-                                    </div>
-                                    <!-- End .product-ratings -->
-                                </div>
-                                <!-- End .product-container -->
-
-                                <div class="price-box">
-                                    <span class="old-price">90.00 CFA</span>
-                                    <span class="product-price">70.00 CFA</span>
-                                </div>
-                                <!-- End .price-box -->
-
-                                <div class="product-action">
-                                    <a href="wishlist.html" class="btn-icon-wish" title="wishlist"><i class="icon-heart"></i></a>
-                                    <a href="#" class="btn-icon btn-add-cart product-type-simple"><i class="icon-shopping-cart"></i>ADD TO CART</a>
-                                    <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View"><i class="fas fa-external-link-alt"></i></a>
-                                </div>
-                            </div>
-                            <!-- End .product-details -->
-                        </div>
-                    </div>
-                    <!-- End .col-sm-4 -->
-
-                    <div class="col-6 col-sm-4">
-                        <div class="product-default">
-                            <figure>
-                                <a href="product.html">
-                                    <img src="assets/images/products/bp6.png" width="280" height="280" alt="product" />
-                                    <img src="assets/images/products/bp6.png" width="280" height="280" alt="product" />
-                                </a>
-
-                                <div class="label-group">
-                                    <div class="product-label label-sale">-8%</div>
-                                </div>
-                            </figure>
-
-                            <div class="product-details">
-                                <div class="category-wrap">
-                                    <div class="category-list">
-                                        <a href="category.html" class="product-category">category</a>
-                                    </div>
-                                </div>
-
-                                <h3 class="product-title"> <a href="product.html">Brown-Black Men Casual
-                                        Glasses</a> </h3>
-
-                                <div class="ratings-container">
-                                    <div class="product-ratings">
-                                        <span class="ratings" style="width:100%"></span>
-                                        <!-- End .ratings -->
-                                        <span class="tooltiptext tooltip-top"></span>
-                                    </div>
-                                    <!-- End .product-ratings -->
-                                </div>
-                                <!-- End .product-container -->
-
-                                <div class="price-box">
-                                    <span class="old-price">90.00 CFA</span>
-                                    <span class="product-price">70.00 CFA</span>
-                                </div>
-                                <!-- End .price-box -->
-
-                                <div class="product-action">
-                                    <a href="wishlist.html" class="btn-icon-wish" title="wishlist"><i class="icon-heart"></i></a>
-                                    <a href="#" class="btn-icon btn-add-cart product-type-simple"><i class="icon-shopping-cart"></i>ADD TO CART</a>
-                                    <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View"><i class="fas fa-external-link-alt"></i></a>
-                                </div>
-                            </div>
-                            <!-- End .product-details -->
-                        </div>
-                    </div>
-                    <!-- End .col-sm-4 -->
-
-                    <div class="col-6 col-sm-4">
-                        <div class="product-default">
-                            <figure>
-                                <a href="product.html">
-                                    <img src="assets/images/products/bp7.png" width="280" height="280" alt="product" />
-                                    <img src="assets/images/products/bp7.png" width="280" height="280" alt="product" />
-                                </a>
-
-                                <div class="label-group">
-                                    <div class="product-label label-sale">-40%</div>
-                                </div>
-                            </figure>
-
-                            <div class="product-details">
-                                <div class="category-wrap">
-                                    <div class="category-list">
-                                        <a href="category.html" class="product-category">category</a>
-                                    </div>
-                                </div>
-
-                                <h3 class="product-title"> <a href="product.html">Brown-Black Men Casual
-                                        Glasses</a> </h3>
-
-                                <div class="ratings-container">
-                                    <div class="product-ratings">
-                                        <span class="ratings" style="width:100%"></span>
-                                        <!-- End .ratings -->
-                                        <span class="tooltiptext tooltip-top"></span>
-                                    </div>
-                                    <!-- End .product-ratings -->
-                                </div>
-                                <!-- End .product-container -->
-
-                                <div class="price-box">
-                                    <span class="old-price">90.00 CFA</span>
-                                    <span class="product-price">70.00 CFA</span>
-                                </div>
-                                <!-- End .price-box -->
-
-                                <div class="product-action">
-                                    <a href="wishlist.html" class="btn-icon-wish" title="wishlist"><i class="icon-heart"></i></a>
-                                    <a href="#" class="btn-icon btn-add-cart product-type-simple"><i class="icon-shopping-cart"></i>ADD TO CART</a>
-                                    <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View"><i class="fas fa-external-link-alt"></i></a>
-                                </div>
-                            </div>
-                            <!-- End .product-details -->
-                        </div>
-                    </div>
-                    <!-- End .col-sm-4 -->
-
-                    <div class="col-6 col-sm-4">
-                        <div class="product-default">
-                            <figure>
-                                <a href="product.html">
-                                    <img src="assets/images/products/c1.png" width="280" height="280" alt="product" />
-                                    <img src="assets/images/products/c1.png" width="280" height="280" alt="product" />
-                                </a>
-                            </figure>
-
-                            <div class="product-details">
-                                <div class="category-wrap">
-                                    <div class="category-list">
-                                        <a href="category.html" class="product-category">category</a>
-                                    </div>
-                                </div>
-
-                                <h3 class="product-title"> <a href="product.html">Black Men Casual Glasses</a>
-                                </h3>
-
-                                <div class="ratings-container">
-                                    <div class="product-ratings">
-                                        <span class="ratings" style="width:100%"></span>
-                                        <!-- End .ratings -->
-                                        <span class="tooltiptext tooltip-top"></span>
-                                    </div>
-                                    <!-- End .product-ratings -->
-                                </div>
-                                <!-- End .product-container -->
-
-                                <div class="price-box">
-                                    <span class="old-price">90.00 CFA</span>
-                                    <span class="product-price">70.00 CFA</span>
-                                </div>
-                                <!-- End .price-box -->
-
-                                <div class="product-action">
-                                    <a href="wishlist.html" class="btn-icon-wish" title="wishlist"><i class="icon-heart"></i></a>
-                                    <a href="product.html" class="btn-icon btn-add-cart"><i class="fa fa-arrow-right"></i><span>SELECT
-                                            OPTIONS</span></a>
-                                    <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View"><i class="fas fa-external-link-alt"></i></a>
-                                </div>
-                            </div>
-                            <!-- End .product-details -->
-                        </div>
-                    </div>
-                    <!-- End .col-sm-4 -->
-
-                    <div class="col-6 col-sm-4">
-                        <div class="product-default">
-                            <figure>
-                                <a href="product.html">
-                                    <img src="assets/images/products/c2.png" width="280" height="280" alt="product" />
-                                    <img src="assets/images/products/c2.png" width="280" height="280" alt="product" />
-                                </a>
-
-                                <div class="label-group">
-                                    <div class="product-label label-sale">-30%</div>
-                                </div>
-                            </figure>
-
-                            <div class="product-details">
-                                <div class="category-wrap">
-                                    <div class="category-list">
-                                        <a href="category.html" class="product-category">category</a>
-                                    </div>
-                                </div>
-
-                                <h3 class="product-title"> <a href="product.html">Basketball Sports Blue
-                                        Shoes</a> </h3>
-
-                                <div class="ratings-container">
-                                    <div class="product-ratings">
-                                        <span class="ratings" style="width:100%"></span>
-                                        <!-- End .ratings -->
-                                        <span class="tooltiptext tooltip-top"></span>
-                                    </div>
-                                    <!-- End .product-ratings -->
-                                </div>
-                                <!-- End .product-container -->
-
-                                <div class="price-box">
-                                    <span class="old-price">90.00 CFA</span>
-                                    <span class="product-price">70.00 CFA</span>
-                                </div>
-                                <!-- End .price-box -->
-
-                                <div class="product-action">
-                                    <a href="wishlist.html" class="btn-icon-wish" title="wishlist"><i class="icon-heart"></i></a>
-                                    <a href="#" class="btn-icon btn-add-cart product-type-simple"><i class="icon-shopping-cart"></i>ADD TO CART</a>
-                                    <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View"><i class="fas fa-external-link-alt"></i></a>
-                                </div>
-                            </div>
-                            <!-- End .product-details -->
-                        </div>
-                    </div>
-                    <!-- End .col-sm-4 -->
-
-                    <div class="col-6 col-sm-4">
-                        <div class="product-default">
-                            <figure>
-                                <a href="product.html">
-                                    <img src="assets/images/products/c2.png" width="280" height="280" alt="product" />
-                                    <img src="assets/images/products/c2.png" width="280" height="280" alt="product" />
-                                </a>
-                            </figure>
-
-                            <div class="product-details">
-                                <div class="category-wrap">
-                                    <div class="category-list">
-                                        <a href="category.html" class="product-category">category</a>
-                                    </div>
-                                </div>
-
-                                <h3 class="product-title"> <a href="product.html">Men Sports Travel Bag</a>
-                                </h3>
-
-                                <div class="ratings-container">
-                                    <div class="product-ratings">
-                                        <span class="ratings" style="width:100%"></span>
-                                        <!-- End .ratings -->
-                                        <span class="tooltiptext tooltip-top"></span>
-                                    </div>
-                                    <!-- End .product-ratings -->
-                                </div>
-                                <!-- End .product-container -->
-
-                                <div class="price-box">
-                                    <span class="old-price">90.00 CFA</span>
-                                    <span class="product-price">70.00 CFA</span>
-                                </div>
-                                <!-- End .price-box -->
-
-                                <div class="product-action">
-                                    <a href="wishlist.html" class="btn-icon-wish" title="wishlist"><i class="icon-heart"></i></a>
-                                    <a href="#" class="btn-icon btn-add-cart product-type-simple"><i class="icon-shopping-cart"></i>ADD TO CART</a>
-                                    <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View"><i class="fas fa-external-link-alt"></i></a>
-                                </div>
-                            </div>
-                            <!-- End .product-details -->
-                        </div>
-                    </div>
-                    <!-- End .col-sm-4 -->
-
-                    <div class="col-6 col-sm-4">
-                        <div class="product-default">
-                            <figure>
-                                <a href="product.html">
-                                    <img src="assets/images/products/c3.png" width="280" height="280" alt="product" />
-                                    <img src="assets/images/products/c3.png" width="280" height="280" alt="product" />
-                                </a>
-
-                                <div class="label-group">
-                                    <div class="product-label label-hot">HOT</div>
-                                </div>
-                            </figure>
-
-                            <div class="product-details">
-                                <div class="category-wrap">
-                                    <div class="category-list">
-                                        <a href="category.html" class="product-category">category</a>
-                                    </div>
-                                </div>
-
-                                <h3 class="product-title"> <a href="product.html">Brown HandBag</a> </h3>
-
-                                <div class="ratings-container">
-                                    <div class="product-ratings">
-                                        <span class="ratings" style="width:100%"></span>
-                                        <!-- End .ratings -->
-                                        <span class="tooltiptext tooltip-top"></span>
-                                    </div>
-                                    <!-- End .product-ratings -->
-                                </div>
-                                <!-- End .product-container -->
-
-                                <div class="price-box">
-                                    <span class="old-price">90.00 CFA</span>
-                                    <span class="product-price">70.00 CFA</span>
-                                </div>
-                                <!-- End .price-box -->
-
-                                <div class="product-action">
-                                    <a href="wishlist.html" class="btn-icon-wish" title="wishlist"><i class="icon-heart"></i></a>
-                                    <a href="#" class="btn-icon btn-add-cart product-type-simple"><i class="icon-shopping-cart"></i>ADD TO CART</a>
-                                    <a href="ajax/product-quick-view.html" class="btn-quickview" title="Quick View"><i class="fas fa-external-link-alt"></i></a>
-                                </div>
-                            </div>
-                            <!-- End .product-details -->
-                        </div>
-                    </div> --}}
-                    <!-- End .col-sm-4 -->
                 </div>
                 <!-- End .row -->
 
@@ -741,7 +287,7 @@
             <div class="sidebar-overlay"></div>
             <aside class="sidebar-shop col-lg-3 order-lg-first mobile-sidebar">
                 <div class="sidebar-wrapper">
-                    <form action="#">
+                    <form action="{{route('filter')}}" method="GET">
                         <div class="widget">
                             <h3 class="widget-title">
                                 <a data-toggle="collapse" href="#widget-body-2" role="button" aria-expanded="true" aria-controls="widget-body-2">Categories</a>
@@ -757,10 +303,14 @@
                                             </a>
                                             <div class="collapse show" id="widget-category-1">
                                                 <ul class="cat-sublist">
-                                                    <li><a href="{{route('category', 1)}}">Balancelles</a></li>
-                                                    <li><a href="{{route('category', 2)}}">Berceau</a></li>
-                                                    <li><a href="{{route('category', 3)}}">Siège auto & Poussette</a></li>
-                                                    <li><a href="{{route('category', 4)}}">Transats</a></li>
+                                                    <li><input type="checkbox" id="cat_1" name="categories[]" value=1><label for="cat_1">Balancelles</label>
+                                                    </li>
+                                                    <li><input type="checkbox" id="cat_2" name="categories[]" value=2><label for="cat_2">Berceau </label>
+                                                    </li>
+                                                    <li><input type="checkbox" id="cat_3" name="categories[]" value=3><label for="cat_3">Siège auto & Poussette </label>
+                                                    </li>
+                                                    <li><input type="checkbox" id="cat_4" name="categories[]" value=4> <label for="cat_4">Transats</label>
+                                                    </li>
 
                                                 </ul>
                                             </div>
@@ -772,9 +322,12 @@
                                             </a>
                                             <div class="collapse" id="widget-category-2">
                                                 <ul class="cat-sublist">
-                                                    <li><a href="{{route('category', 6)}}">Vêtement fille</a></li>
-                                                    <li><a href="{{route('category', 7)}}">Vêtement garçon</a></li>
-                                                    <li><a href="{{route('category', 8)}}">Bonnet chaussette</a></li>
+                                                    <li><input type="checkbox" id="cat_6" name="categories[]" value=6><label for="cat_6">Vêtement fille</label>
+                                                    </li>
+                                                    <li><input type="checkbox" id="cat_7" name="categories[]" value=7> <label for="cat_7">Vêtement garçon</label>
+                                                    </li>
+                                                    <li><input type="checkbox" id="cat_7" name="categories[]" value=8><label for="cat_8">Bonnet chaussette</label>
+                                                    </li>
 
                                                 </ul>
                                             </div>
@@ -786,8 +339,10 @@
                                             </a>
                                             <div class="collapse" id="widget-category-3">
                                                 <ul class="cat-sublist">
-                                                    <li><a href="{{route('category', 9)}}">Chaussure fille</a></li>
-                                                    <li><a href="{{route('category', 10)}}">Chaussure garçon</a></li>
+                                                    <li><input type="checkbox" id="cat_9" name="categories[]" value=9> <label for="cat_9">Chaussure fille</label>
+                                                    </li>
+                                                    <li><input type="checkbox" id="cat_10" name="categories[]" value=10> <label for="cat_10">Chaussure garçon</label>
+                                                    </li>
 
                                                 </ul>
                                             </div>
@@ -799,11 +354,16 @@
                                             </a>
                                             <div class="collapse" id="widget-category-4">
                                                 <ul class="cat-sublist">
-                                                    <li><a href="{{route('category', 11)}}">Bavoirs</a></li>
-                                                    <li><a href="{{route('category', 12)}}">Biberons et accessoires</a></li>
-                                                    <li><a href="{{route('category', 13)}}">Chaises Hautes</a></li>
-                                                    <li><a href="{{route('category', 14)}}">Sucettes</a></li>
-                                                    <li><a href="{{route('category', 15)}}">Stérilisateurs</a></li>
+                                                    <li><input type="checkbox" id="cat_11" name="categories[]" value=11> <label for="cat_11">Bavoirs</label>
+                                                    </li>
+                                                    <li><input type="checkbox" id="cat_12" name="categories[]" value=12> <label for="cat_12">Biberons et accessoires</label>
+                                                    </li>
+                                                    <li><input type="checkbox" id="cat_13" name="categories[]" value=13> <label for="cat_13">Chaises Hautes</label>
+                                                    </li>
+                                                    <li><input type="checkbox" id="cat_14" name="categories[]" value=14> <label for="cat_13">Sucettes</label>
+                                                    </li>
+                                                    <li><input type="checkbox" id="cat_15" name="categories[]" value=15> <label for="cat_15">Stérilisateurs</label>
+                                                    </li>
                                                 </ul>
                                             </div>
                                         </li>
@@ -814,13 +374,20 @@
                                             </a>
                                             <div class="collapse" id="widget-category-5">
                                                 <ul class="cat-sublist">
-                                                    <li><a href="{{route('category', 16)}}">Couches</a></li>
-                                                    <li><a href="{{route('category', 17)}}">Lingettes</a></li>
-                                                    <li><a href="{{route('category', 18)}}">Matelas et Table à Langer</a></li>
-                                                    <li><a href="{{route('category', 19)}}">Sacs à langer</a></li>
-                                                    <li><a href="{{route('category', 20)}}">Soins de la peau</a></li>
-                                                    <li><a href="{{route('category', 21)}}">Baignoires</a></li>
-                                                    <li><a href="{{route('category', 22)}}">Pots et Réducteurs</a></li>
+                                                    <li><input type="checkbox" id="cat_16" name="categories[]" value=16> <label for="cat_16">Couches</label>
+                                                    </li>
+                                                    <li><input type="checkbox" id="cat_17" name="categories[]" value=17> <label for="cat_17">Lingettes</label>
+                                                    </li>
+                                                    <li><input type="checkbox" id="cat_18" name="categories[]" value=18> <label for="cat_18">Matelas et Table à Langer</label>
+                                                    </li>
+                                                    <li><input type="checkbox" id="cat_19" name="categories[]" value=19> <label for="cat_19">Sacs à langer</label>
+                                                    </li>
+                                                    <li><input type="checkbox" id="cat_20" name="categories[]" value=20> <label for="cat_20">Soins de la peau</label>
+                                                    </li>
+                                                    <li><input type="checkbox" id="cat_21" name="categories[]" value=21> <label for="cat_21">Baignoires</label>
+                                                    </li>
+                                                    <li><input type="checkbox" id="cat_22" name="categories[]" value=22> <label for="cat_22">Pots et Réducteurs</label>
+                                                    </li>
                                                 </ul>
                                             </div>
                                         </li>
@@ -831,10 +398,14 @@
                                             </a>
                                             <div class="collapse" id="widget-category-6">
                                                 <ul class="cat-sublist">
-                                                    <li><a href="{{route('category', 23)}}">Cadeaux de naissance</a></li>
-                                                    <li><a href="{{route('category', 24)}}">Doudous et Peluches</a></li>
-                                                    <li><a href="{{route('category', 25)}}">Tapis d’éveil</a></li>
-                                                    <li><a href="{{route('category', 26)}}">Youpalas</a></li>
+                                                    <li><input type="checkbox" id="cat_23" name="categories[]" value=23> <label for="cat_23">Cadeaux de naissance </label>
+                                                    </li>
+                                                    <li><input type="checkbox" id="cat_24" name="categories[]" value=24> <label for="cat_24">Doudous et Peluches</label>
+                                                    </li>
+                                                    <li><input type="checkbox" id="cat_25" name="categories[]" value=25> <label for="cat_25">Tapis d’éveil</label>
+                                                    </li>
+                                                    <li><input type="checkbox" id="cat_26" name="categories[]" value=26> <label for="cat_26">Youpalas</label>
+                                                    </li>
                                                 </ul>
                                             </div>
                                         </li>
@@ -845,16 +416,23 @@
                                             </a>
                                             <div class="collapse" id="widget-category-7">
                                                 <ul class="cat-sublist">
-                                                    <li><a href="{{route('category', 27)}}">Accessoires bébés</a></li>
-                                                    <li><a href="{{route('category', 28)}}">Portes Bébé</a></li>
-                                                    <li><a href="{{route('category', 29)}}">Slip jetable</a></li>
-                                                    <li><a href="{{route('category', 30)}}">Serviette maternité</a></li>
-                                                    <li><a href="{{route('category', 31)}}">Tire-lait</a></li>
+                                                    <li><input type="checkbox" id="cat_27" name="categories[]" value=27><label for="cat_27">Accessoires bébés</label>
+                                                    </li>
+                                                    <li><input type="checkbox" id="cat_28" name="categories[]" value=28> <label for="cat_28">Portes Bébé</label>
+                                                    </li>
+                                                    <li><input type="checkbox" id="cat_29" name="categories[]" value=29> <label for="cat_29">Slip jetable</label>
+                                                    </li>
+                                                    <li><input type="checkbox" id="cat_30" name="categories[]" value=30><label for="cat_30">erviette maternité</label>
+                                                    </li>
+                                                    <li><input type="checkbox" id="cat_31" name="categories[]" value=31><label for="cat_31">BTire-lait</label>
+                                                    </li>
                                                 </ul>
                                             </div>
                                         </li>
-                                        <li><a href="{{route('category', 5)}}">Tous nos articles</a></li>
-                                        <li><a href="{{route('category', 32)}}">Plus</a></li>
+                                        <li class="single-li"><input type="checkbox" id="cat_5" name="categories[]" value=5> <label for="cat_5">Tous nos articles</label>
+                                        </li>
+                                        <li class="single-li"><input type="checkbox" id="cat_32" name="categories[]" value=32><label for="cat_32">Plus</label>
+                                        </li>
                                     </ul>
                                 </div>
                                 <!-- End .widget-body -->
@@ -870,71 +448,56 @@
 
                             <div class="collapse show" id="widget-body-3">
                                 <div class="widget-body pb-0">
-
-                                    <div class="price-slider-wrapper">
-                                        <div id="price-slider"></div>
-                                        <!-- End #price-slider -->
-                                    </div>
-                                    <!-- End .price-slider-wrapper -->
-
-                                    <div class="filter-price-action d-flex align-items-center justify-content-between flex-wrap">
-                                        <div class="filter-price-text">
-                                            Price:
-                                            <span id="filter-price-range"></span>
+                                    <form action="#">
+                                        <div class="price-slider-wrapper">
+                                            <div id="price-slider"></div>
+                                            <!-- End #price-slider -->
                                         </div>
-                                        <!-- End .filter-price-text -->
+                                        <!-- End .price-slider-wrapper -->
+
+                                        <div class="filter-price-action d-flex align-items-center justify-content-between flex-wrap">
+                                            <div class="filter-price-text">
+                                                Price:
+                                                <span id="filter-price-range"></span>
+                                            </div>
+                                            <!-- End .filter-price-text -->
 
 
-                                    </div>
-                                    <!-- End .filter-price-action -->
-
+                                        </div>
+                                        <!-- End .filter-price-action -->
                                 </div>
                                 <!-- End .widget-body -->
                             </div>
                             <!-- End .collapse -->
                         </div>
-                        <!-- End .widget -->
 
+                        <!-- Color Section -->
                         <div class="widget widget-color">
-                            <h3 class="widget-title">
-                                <a data-toggle="collapse" href="#widget-body-4" role="button" aria-expanded="true" aria-controls="widget-body-4">Color</a>
-                            </h3>
-
-                            <div class="collapse show" id="widget-body-4">
-                                <div class="widget-body pb-0">
-                                    <ul class="config-swatch-list">
-                                        @foreach($attributes as $attribute)
-                                        <li class="color-btn" data-id="{{$attribute->id}}">
-                                            <a style="background-color: {{$attribute->color_code}};"></a>
-                                        </li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                                <!-- End .widget-body -->
+                            <h3 class="widget-title">Color</h3>
+                            <div class="widget-body pb-0">
+                                <ul class="config-swatch-list">
+                                    @foreach($attributes as $attribute)
+                                    <li class="color-btn1" data-id="{{$attribute->id}}">
+                                        <input type="checkbox" name="colors[]" value="{{ $attribute->id }}" id="color-{{ $attribute->id }}" style="display:none;">
+                                        <label for="color-{{ $attribute->id }}" style="background-color: {{$attribute->color_code}};height:20px;width:20px;margin-left:7px;margin-right:7px"></label>
+                                    </li>
+                                    @endforeach
+                                </ul>
                             </div>
-                            <!-- End .collapse -->
                         </div>
-                        <!-- End .widget -->
 
                         <div class="widget widget-size">
-                            <h3 class="widget-title">
-                                <a data-toggle="collapse" href="#widget-body-5" role="button" aria-expanded="true" aria-controls="widget-body-5">Sizes</a>
-                            </h3>
-
-                            <div class="collapse show" id="widget-body-5">
-                                <div class="widget-body pb-0">
-                                    <ul class="config-size-list">
-                                        @foreach($lengths as $length)
-                                        <li class="size-btn" data-id="{{$length->id}}">
-                                            <a>{{$length->name}}</a>
-                                        </li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                                <!-- End .widget-body -->
+                            <h3 class="widget-title">Sizes</h3>
+                            <div class="widget-body pb-0">
+                                <ul class="config-size-list">
+                                    @foreach($lengths as $length)
+                                    <li class="size-btn1" data-id="{{$length->id}}">
+                                        <input type="checkbox" name="sizes[]" value="{{ $length->id }}" id="size-{{ $length->id }}" style="display:none;">
+                                        <label for="size-{{ $length->id }}" style="height:22px;width:22px;margin-left:7px;margin-right:7px">{{ $length->name }}</label>
+                                    </li>
+                                    @endforeach
+                                </ul>
                             </div>
-                            <!-- End .collapse -->
-
                         </div>
                         <!-- End .widget -->
                         <div class="container my-3 d-flex" style="
@@ -943,6 +506,8 @@
                         ">
                             <button type="submit" class="px-5 btn btn-primary">Filter</button>
                         </div>
+                        <input type="hidden" name="min_price" id="min_price" value="">
+                        <input type="hidden" name="max_price" id="max_price" value="">
                     </form>
 
 
@@ -1164,5 +729,105 @@
             size[i].classList.add('bg-color');
         })
     }
+    // call when price change
+    function filter() {
+        var price_range = $('#filter-price-range').text();
+        var starting_price = price_range.split('-')[0];
+        var ending_price = price_range.split('-')[1];
+        starting_price = starting_price.replace('CFA', '');
+        ending_price = ending_price.replace('CFA', '');
+        starting_price = parseInt(starting_price);
+        ending_price = parseInt(ending_price);
+        $('#min_price').val(starting_price);
+        $('#max_price').val(ending_price);
+    }
+    var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            filter();
+        });
+    });
+
+    // Configuration of the observer
+    var config = {
+        attributes: true
+        , childList: true
+        , subtree: true
+    };
+
+    // Pass in the target node and observer config
+    observer.observe(document.getElementById('filter-price-range'), config);
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Function to get URL parameters
+        function getUrlParameters() {
+            var parameters = location.search.replace(/%5B%5D/g, '').substring(1).split('&');
+            var categories = [];
+            var colors = [];
+            var sizes = [];
+            var min_price = "";
+            var max_price = "";
+
+            for (var i = 0; i < parameters.length; i++) {
+                var pair = parameters[i].split('=');
+                var key = pair[0];
+                var value = decodeURIComponent(pair[1] || '');
+
+                switch (key) {
+                    case "categories":
+                        categories.push(value);
+                        break;
+                    case "colors":
+                        colors.push(value);
+                        break;
+                    case "sizes":
+                        sizes.push(value);
+                        break;
+                    case "min_price":
+                        min_price = value;
+                        break;
+                    case "max_price":
+                        max_price = value;
+                        break;
+                }
+            }
+
+            return {
+                categories: categories
+                , colors: colors
+                , sizes: sizes
+                , min_price: min_price
+                , max_price: max_price
+            };
+        }
+
+        // Usage
+        var params = getUrlParameters();
+        console.log(params.categories);
+        console.log(params.colors);
+        console.log(params.sizes);
+        console.log(params.min_price);
+        console.log(params.max_price);
+
+
+        for (var i = 0; i < params.categories.length; i++) {
+            var category = params.categories[i];
+            var id="cat_" + category;
+            var checkbox = document.getElementById('cat_' + category);
+            checkbox.checked = true;
+        }
+        for (var i = 0; i < params.colors.length; i++) {
+            var color = params.colors[i];
+            var id="color-" + color;
+            var checkbox = document.getElementById('color-' + color);
+            checkbox.checked = true;
+        }
+        for (var i = 0; i < params.sizes.length; i++) {
+            var size = params.sizes[i];
+            var id="size-" + size;
+            var checkbox = document.getElementById('size-' + size);
+            checkbox.checked = true;
+        }
+
+    });
 
 </script>

@@ -26,7 +26,11 @@ function getcarttotal()
     $cart_products = Cart::with('product')->where('user_id', $user_id)->get();
     $total = 0;
     foreach ($cart_products as $cart_product) {
-        $total += $cart_product->product->price * $cart_product->quantity;
+        if ($cart_product->product->discount_price) {
+            $total += $cart_product->product->discount_price * $cart_product->quantity;
+        } else {
+            $total += $cart_product->product->price * $cart_product->quantity;
+        }
     }
     return $total;
 }

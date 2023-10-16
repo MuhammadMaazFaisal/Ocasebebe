@@ -12,9 +12,18 @@ class AttributeValue extends Model
     // public function get_attr(){
     //     return $this->belongsTo(Variant::class,'variants_id');
     // }
-    public function attribute_value(){
-        return $this->hasOne(AttributeValue::class,'id');
+    public function attribute_value()
+    {
+        return $this->hasOne(AttributeValue::class, 'id');
     }
 
-    
+    public function attribute()
+    {
+        return $this->belongsTo(Attribute::class);
+    }
+
+    public function productAttributes()
+    {
+        return $this->hasMany(ProductAttribute::class);
+    }
 }

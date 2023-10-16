@@ -28,7 +28,7 @@
                                                 {{-- <th class="sorting" tabindex="0" aria-controls="basic-1"
                                                 aria-label="Details: activate to sort column ascending">Billing To</th> --}}
                                                 <th class="sorting" tabindex="0" aria-controls="basic-1"
-                                                aria-label="Details: activate to sort column ascending">Shipping To</th>
+                                                aria-label="Details: activate to sort column ascending">Payment Method</th>
                                             <th class="sorting" tabindex="0" aria-controls="basic-1" rowspan="1"
                                                 colspan="1" aria-label="Action: activate to sort column ascending"
                                                 style="width: 120.016px;">Action</th>
@@ -41,7 +41,7 @@
                                                     {{ $order->id }}
                                                 </td>
                                                 <td>
-                                                    ${{ number_format($order->total_order_price,2) }}
+                                                    ${{ number_format($order->total_price,2) }}
                                                 </td>
                                                 <td>
                                                     {{ $order->created_at }}
@@ -71,11 +71,7 @@
                                                     @endif
                                                 </td> --}}
                                                 <td>
-                                                    @if (!empty($order->order_address->shipping_address))
-                                                    {{ Str::limit($order->order_address->shipping_address, 11, '...') }}
-                                                    @else
-                                                    N/A
-                                                    @endif
+                                                  {{$order->payment_method}}
                                                 </td>
                                                 <td>
                                                     <a href="{{ route('orderManagement.show',$order->id) }}"><i class="icon-eye"></i></a>

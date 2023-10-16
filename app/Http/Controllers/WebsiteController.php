@@ -72,6 +72,107 @@ class WebsiteController extends Controller
         return view("index", get_defined_vars());
     }
 
+    public function search(Request $request)
+    {
+        $search = $request->q;
+        $products = Product::where('product_name', 'LIKE', '%' . $search . '%')->get();
+        foreach ($products as $product) {
+            $product['avg_rating'] = Review::where('product_id', $product->id)->avg('rating');
+            $product->category_name = ParentCategory::where('id', $product->parent_category_id)->first()->parent_category_name;
+        }
+        $attributes = AttributeValue::all();
+        $lengths = Length::all();
+        return view("shop", get_defined_vars());
+    }
+
+    public function filter(Request $request)
+    {
+        // dd($request->all());
+        // Initialize query object
+
+        $productIDs = [];
+
+        // Filtering by Categories
+        if ($request->has('categories')) {
+            $categories = $request->input('categories');
+            $categoryProducts = DB::table('products')
+                ->whereIn('parent_category_id', $categories)
+                ->pluck('id')
+                ->toArray();
+            $productIDs[] = $categoryProducts;
+        }
+
+        // Filtering by Price
+        if ($request->has('min_price') && $request->has('max_price')) {
+            $minPrice = $request->input('min_price');
+            $maxPrice = $request->input('max_price');
+            $priceProducts = DB::table('products')
+                ->whereBetween('price', [$minPrice, $maxPrice])
+                ->pluck('id')
+                ->toArray();
+            $productIDs[] = $priceProducts;
+        }
+
+        // Filtering by Color (Assuming colors are IDs in attribute_values table)
+        if ($request->has('colors')) {
+            $c_products=[];
+            $colors = $request->input('colors');
+            $color_products=ProductAttribute::get();
+            foreach($color_products as $color_product){
+                $color_product->attribute_value_id=json_decode($color_product->attribute_value_id);
+                foreach($color_product->attribute_value_id as $color_product_id){
+                    if(in_array($color_product_id,$colors)){
+                        $c_products[]=$color_product->product_id;
+                    }
+                }
+            }
+
+            $productIDs[] = $c_products;
+        }
+
+        
+
+        // Filtering by Size (Assuming sizes are length IDs)
+        if ($request->has('sizes')) {
+            $sizes = $request->input('sizes');
+            $s_products=[];
+            $size_products=Product::get();
+            foreach($size_products as $size_product){
+                $size_product->length_id=json_decode($size_product->length_id);
+                foreach($size_product->length_id as $size_product_id){
+                    if(in_array($size_product_id,$sizes)){
+                        $s_products[]=$size_product->id;
+                    }
+                }
+            }
+            $productIDs[] = $s_products;
+        }
+
+        // Find common products from all arrays in $productIDs
+        if (count($productIDs) > 1) {
+            $commonProductIDs = call_user_func_array('array_intersect', $productIDs);
+        } else {
+            $commonProductIDs = $productIDs[0] ?? [];
+        }
+
+        // Retrieve these products
+        $products = Product::whereIn('id', $commonProductIDs)->get();
+        if(!($request->has('sizes')) && !($request->has('colors')) && !($request->has('categories'))){
+            $products=Product::get();
+        }
+
+        foreach ($products as $product) {
+            $product->avg_rating = Review::where('product_id', $product->id)->avg('rating');
+            $product->category_name = ParentCategory::where('id', $product->parent_category_id)->first()->parent_category_name;
+        }
+        $attributes = AttributeValue::all();
+        $lengths = Length::all();
+
+        // dd($products);
+
+        return view('shop', get_defined_vars());
+    }
+
     public function our_products(Request $request)
     {
         $banners = Banner::get();
@@ -228,36 +329,35 @@ class WebsiteController extends Controller
             foreach ($cart_items as $cart_item) {
                 $total_price += $cart_item->price * $cart_item->quantity;
             }
-        }   
-        $order=New Order();
-        $order->user_id=Auth::id();
-        $order->customer_name=$request->name;
-        $order->customer_email=$request->email;
-        $order->customer_address=$request->address;
-        $order->quantity=count($cart_items);
-        $order->total_price=$total_price;
-        $order->payment_method=$request->payment;
+        }
+        $order = new Order();
+        $order->user_id = Auth::id();
+        $order->customer_name = $request->name;
+        $order->customer_email = $request->email;
+        $order->customer_address = $request->address;
+        $order->quantity = count($cart_items);
+        $order->total_price = $total_price;
+        $order->payment_method = $request->payment;
         $order->save();
-        foreach($cart_items as $cart_item){
-            $order_details=New OrderDetails();
-            $product=Product::where('id',$cart_item->product_id)->first();
-            $order_details->order_id=$order->id;
-            $order_details->product_id=$cart_item->product_id;
-            $order_details->product_name=$product->product_name;
-            $order_details->product_price=$product->price;
-            $order_details->product_discount_price=$product->discount_price;
-            $order_details->product_quantity=$cart_item->quantity;
-            $order_details->product_image=$product->image;
-            $order_details->product_description=$product->description;
-            $order_details->product_category=$product->parent_category_id;
+        foreach ($cart_items as $cart_item) {
+            $order_details = new OrderDetails();
+            $product = Product::where('id', $cart_item->product_id)->first();
+            $order_details->order_id = $order->id;
+            $order_details->product_id = $cart_item->product_id;
+            $order_details->product_name = $product->product_name;
+            $order_details->product_price = $product->price;
+            $order_details->product_discount_price = $product->discount_price;
+            $order_details->product_quantity = $cart_item->quantity;
+            $order_details->product_image = $product->image;
+            $order_details->product_description = $product->description;
+            $order_details->product_category = $product->parent_category_id;
             $order_details->save();
         }
         if (Cart::where('user_id', Auth::id())->delete()) {
-            return ['status'=>200,'message'=>'Order Placed Successfully'];
-        }else{
-            return ['status'=>400,'message'=>'Something went wrong'];
+            return ['status' => 200, 'message' => 'Order Placed Successfully'];
+        } else {
+            return ['status' => 400, 'message' => 'Something went wrong'];
         }
-       
     }
 
     public function productdetails(Request $request, $id)
@@ -766,7 +866,7 @@ class WebsiteController extends Controller
     public function checkout()
     {
         $cart_items = Cart::where('user_id', Auth::id())->get();
-        $total=0;
+        $total = 0;
         foreach ($cart_items as $cart_item) {
             $total += $cart_item->price * $cart_item->quantity;
             $cart_item['product_name'] = Product::where('id', $cart_item->product_id)->first()->product_name;
@@ -1015,7 +1115,7 @@ class WebsiteController extends Controller
         $products = Product::where('status', 1)->where('parent_category_id', $request->id)->get();
         foreach ($products as $product) {
             $product->avg_rating = Review::where('product_id', $product->id)->avg('rating');
-            $product->category_name = $parent_category->name;
+            $product->category_name = $parent_category->parent_category_name;
         }
         $attributes = AttributeValue::all();
         $lengths = Length::all();

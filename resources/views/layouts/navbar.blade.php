@@ -63,22 +63,11 @@
                         <div
                             class="header-icon header-search header-search-inline header-search-category w-lg-max text-right mt-0">
                             <a href="#" class="search-toggle" role="button"><i class="icon-search-3"></i></a>
-                            <form action="#" method="get">
+                            <form action="{{ route('search') }}" method="GET">
                                 <div class="header-search-wrapper">
                                     <input type="search" class="form-control" name="q" id="q"
                                         placeholder="Rechercher un article, une catégorie" required>
-                                    <div class="select-custom">
-                                        <select id="cat" name="cat">
-                                            <option value="">Toute catégorie</option>
-                                            <option value="12">Puériculture</option>
-                                            <option value="13">Vêtement</option>
-                                            <option value="66">Chaussures</option>
-                                            <option value="67">Repas Bébé</option>
-                                            <option value="5">Hygiènes et soins</option>
-                                            <option value="21">Jouet et Cadeaux</option>
-                                            <option value="22">Univers Maman</option>
-                                        </select>
-                                    </div>
+                                    
                                     <!-- End .select-custom -->
                                     <button class="btn icon-magnifier p-0" title="search" type="submit"> Recherche
                                     </button>
@@ -157,8 +146,6 @@
                                     <!-- End .dropdown-cart-total -->
 
                                     <div class="dropdown-cart-action">
-                                        <a href="{{ route('cart') }}" class="btn btn-gray btn-block view-cart">View
-                                            Cart</a>
                                         <a href="{{ route('cart') }}" class="btn btn-dark btn-block">Checkout</a>
                                     </div>
                                     <!-- End .dropdown-cart-total -->

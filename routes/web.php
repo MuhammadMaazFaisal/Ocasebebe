@@ -60,9 +60,13 @@ Route::get('faq', function () {
     return view('faq');
 })->name('faq');
 
+//Filter routes
+Route::get('search', [WebsiteController::class, 'search'])->name('search');
+Route::get('filter', [WebsiteController::class, 'filter'])->name('filter');
+
 // Cart routes
 Route::post('add-to-cart', [CartController::class, 'add_to_cart'])->name('add_to_cart');
-Route::get('add-quantity-cart-item', [CartController::class, 'add_quantity_cart_item'])->name('quantity_cart_item');
+Route::get('quantity-cart-item', [CartController::class, 'quantity_cart_item'])->name('quantity_cart_item');
 Route::get('remove-quantity-cart-item', [CartController::class, 'remove_quantity_cart_item'])->name('remove_quantity_cart_item');
 Route::get('remove-cart-item', [CartController::class, 'remove_cart_item'])->name('remove_cart_item');
 Route::get('add-wishlist', [WebsiteController::class, 'add_wishlist'])->name('add_wishlist');

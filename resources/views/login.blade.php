@@ -41,7 +41,7 @@
                             </label>
                             <input type="password" class="form-input form-wide" name="password" id="login-password" required />
 
-                            <div class="form-footer">
+                            {{-- <div class="form-footer">
                                 <div class="custom-control custom-checkbox mb-0">
                                     <input type="checkbox" class="custom-control-input" id="lost-password" />
                                     <label class="custom-control-label mb-0" for="lost-password">Remember
@@ -50,7 +50,7 @@
 
                                 <a href="forgot-password.html" class="forget-password text-dark form-footer-right">Forgot
                                     Password?</a>
-                            </div>
+                            </div> --}}
                             <button type="submit" class="btn btn-dark btn-md w-100">
                                 LOGIN
                             </button>

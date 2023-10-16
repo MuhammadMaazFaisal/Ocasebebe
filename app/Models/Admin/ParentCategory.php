@@ -20,4 +20,10 @@ class ParentCategory extends Model
     public function get_sub_cat(){
         return $this->hasMany(SubCategory::class);
     }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'parent_category_id');
+    }
+
 }

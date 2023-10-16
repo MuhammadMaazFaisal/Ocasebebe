@@ -248,60 +248,38 @@ class CartController extends Controller
     }
 
 
-    public function add_quantity_cart_item(Request $request)
+    public function quantity_cart_item(Request $request)
     {
 
-        $inside_cart = Cart::find($request->cart_id);
+        $product = Cart::where('user_id', Auth::user()->id)->where('product_id', $request->id)->first();
+        $product->quantity = $request->quantity;
 
-        $cart = Product::find($inside_cart->product_id);
-        // check quantity available or not
-        if (!empty($request->quantity) && $request->quantity > $cart->quantity) {
-            // return $cart->stock;
-
-            // Out of stock
-            if ($cart->quantity <= 0 || empty($cart->quantity)) {
-                return response()->json([
-                    'status' => 404,
-                    'message' => 'Sorry!, Item is out of stock!'
-                ]);
-            } else {
-
-                return response()->json([
-                    'status' => 400, 'message' => 'Our available stock quantity is ' . $cart->quantity . ', You can buy only ' . $cart->quantity . ' or less'
-                ]);
-            }
-        }
-
-        $inside_cart->quantity = $request->quantity;
-        $inside_cart->update();
-        if (Auth::user()->is_guest == 1) {
-            $cart_items = Cart::where('user_id', Auth::user()->id)->where('session', Session::getId())->with('product')->get();
-        } else {
-            $cart_items = Cart::where('user_id', Auth::user()->id)->with('product')->get();
-        }
-        $total_item_in_cart = count($cart_items);
-        $total_price = 0;
-        $total_price_after_coupon_apply = 0;
-
-        if (count($cart_items) > 0) {
-            foreach ($cart_items as $cart_item) {
-                // check discount and calculate total price
-                if (!empty($cart_item->type == 3)) {
-                    $total_price += $cart_item->price;
-                } else {
-                    if (!empty($cart_item->product->discount)) {
-                        $total_price += ($cart_item->quantity * $cart_item->product->discounted_price);
+        if ($product->update()) {
+            $cart_items = Cart::where('user_id', Auth::id())->get();
+            $total_price = 0;
+            if (count($cart_items) > 0) {
+                foreach ($cart_items as $cart_item) {
+                    if ($cart_item->discount_price != null) {
+                        $total_price += ($cart_item->quantity * $cart_item->discount_price);
                     } else {
-
-                        $total_price += ($cart_item->quantity * $cart_item->product->price);
+                        $total_price += ($cart_item->quantity * $cart_item->price);
                     }
                 }
             }
-        }
 
-        return response()->json([
-            'status' => 200, 'html' => view('website.common.cart-items', get_defined_vars())->render(),
-        ]);
+
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Quantity updated successfully !',
+                'total_price' => $total_price,
+            ]);
+        } else {
+            return response()->json([
+                'status' => 404,
+                'message' => 'Quantity not updated !',
+            ]);
+        }
     }
 
     public function remove_quantity_cart_item(Request $request)

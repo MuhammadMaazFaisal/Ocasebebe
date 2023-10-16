@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Product extends Model
 {
 
-// $protected=['']
+    // $protected=['']
     use HasFactory;
     protected $fillable = [
         'category',
@@ -28,4 +28,18 @@ class Product extends Model
         return $this->belongsToMany(Order::class);
     }
 
+    public function parentCategory()
+    {
+        return $this->belongsTo(ParentCategory::class);
+    }
+
+    public function length()
+    {
+        return $this->belongsTo(Length::class);
+    }
+
+    public function productAttributes()
+    {
+        return $this->hasMany(ProductAttribute::class);
+    }
 }

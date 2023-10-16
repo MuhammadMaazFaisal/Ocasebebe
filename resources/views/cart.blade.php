@@ -104,7 +104,7 @@
                         <tbody>
                             <tr>
                                 <td>Subtotal</td>
-                                <td>{{$total_price}} CFA</td>
+                                <td class="subtotal-price">{{$total_price}} CFA</td>
 
                             <tr>
                                 <td>Shipping Charges</td>
@@ -115,7 +115,7 @@
                         <tfoot>
                             <tr>
                                 <td>Total</td>
-                                <td>{{$total_price}} CFA</td>
+                                <td class="subtotal-price">{{$total_price}} CFA</td>
                             </tr>
                         </tfoot>
                     </table>
@@ -134,24 +134,52 @@
 
 @include('layouts.footer')
 <script>
-    var quantity = document.getElementsByClassName('horizontal-quantity');
-    for (let i = 0; i < quantity.length; i++) {
-        quantity[i].addEventListener('change', function() {
-            var id = this.getAttribute('data-id');
-            var quantity = this.value;
-            $.ajax({
-                url: "{{route('quantity_cart_item')}}",
-                method: "post",
-                data: {
-                    id: id,
-                    quantity: quantity,
-                    _token: "{{csrf_token()}}"
-                },
-                success: function(data) {
-                    console.log(data);
+    function update_quantity(element) {
+        var id = element.getAttribute('data-id');
+        var quantity = element.value;
+        $.ajax({
+            url: "{{route('quantity_cart_item')}}"
+            , method: "get"
+            , data: {
+                id: id
+                , quantity: quantity
+            }
+            , success: function(data) {
+                if (data.status == 200){
+                    total=document.getElementsByClassName('subtotal-price');
+                    for (let i = 0; i < total.length; i++) {
+                        total[i].innerHTML=data.total_price+" CFA";
+                    }
                 }
-            })
+            }
         })
-    }
 
-    <script>
+    }
+    $(document).ready(function() {
+        var quantity = document.getElementsByClassName('horizontal-quantity');
+        console.log("dasd", quantity);
+        for (let i = 0; i < quantity.length; i++) {
+            quantity[i].addEventListener('change', function() {
+                update_quantity(this);
+            })
+        }
+        var plus_btn = document.getElementsByClassName('btn-up-icon');
+        console.log(plus_btn);
+        for (let i = 0; i < plus_btn.length; i++) {
+            plus_btn[i].addEventListener('click', function() {
+                var element = this.parentNode.previousElementSibling;
+                update_quantity(element);
+            })
+        }
+
+        var minus_btn = document.getElementsByClassName('btn-down-icon');
+        console.log(minus_btn);
+        for (let i = 0; i < minus_btn.length; i++) {
+            minus_btn[i].addEventListener('click', function() {
+                var element = this.parentNode.nextElementSibling
+                update_quantity(element);
+            })
+        }
+    })
+
+</script>

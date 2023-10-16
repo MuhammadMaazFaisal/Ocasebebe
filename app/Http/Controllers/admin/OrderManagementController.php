@@ -10,8 +10,7 @@ use App\Models\Admin\Order;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Admin\Product;
 use App\Http\Controllers\Controller;
-
-
+use App\Models\Admin\OrderDetails;
 
 class OrderManagementController extends Controller
 {
@@ -59,21 +58,13 @@ class OrderManagementController extends Controller
      */
     public function show($id)
     {
-        $order = Order::where('id', $id)->with('order_product.video', 'order_product.color_id', 'order_product.product', 'order_address.country', 'order_address.state', 'order_address.city')->withSum('order_product', 'quantity')->first();
+        $order = Order::where('id', $id)->first();
+        $orderitems=OrderDetails::where('order_id',$id)->get();
 
         if (!$order) {
             return redirect()->route('user.order_list')->with("message_error", "Order not found!");
         }
 
-
-        $total_price = 0;
-        if ($order) {
-            foreach ($order->order_product as $product) {
-                $_quantity = $product->quantity;
-                $_sub_total = $product->discounted_price ? $_quantity * $product->discounted_price : $_quantity * $product->price;
-                $total_price += $_sub_total;
-            }
-        }
 
 
         return view('admin_dashboard.orderManagement.show', get_defined_vars());

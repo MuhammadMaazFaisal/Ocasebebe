@@ -309,7 +309,6 @@
                 length = length_ul.children[i].getAttribute('data-id');
             }
         }
-        console.log($(".horizontal-quantity")[0].value);
         var quantity = $(".horizontal-quantity")[0].value;
         var product_id = @if(isset($product)) "{{ $product->id }}" @else 0 @endif; 
 
