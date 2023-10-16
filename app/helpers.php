@@ -3,6 +3,7 @@
 use App\Models\Cart;
 use App\Models\Admin\Product;
 use App\Models\Admin\Order;
+use App\Models\Admin\ParentCategory;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -35,6 +36,12 @@ function getcarttotal()
     return $total;
 }
 
+function getallcategories()
+{
+    $categories = ParentCategory::all();
+    return $categories;
+}
+
 function getcartcount()
 {
     if (!Auth::check()) {
@@ -45,26 +52,30 @@ function getcartcount()
     return count($cart_products);
 }
 
-function getearnings(){
-    $order=Order::all();
-    $total=0;
-    foreach($order as $orders){
-        $total+=$orders->total;
+function getearnings()
+{
+    $order = Order::all();
+    $total = 0;
+    foreach ($order as $orders) {
+        $total += $orders->total;
     }
     return $total;
 }
 
-function gettotalproducts(){
-    $product=Product::all()->where('status',1);
+function gettotalproducts()
+{
+    $product = Product::all()->where('status', 1);
     return count($product);
 }
 
-function gettotalorders(){
-    $order=Order::all();
+function gettotalorders()
+{
+    $order = Order::all();
     return count($order);
 }
 
-function gettotalusers(){
-    $user=User::all()->where('role',2);
+function gettotalusers()
+{
+    $user = User::all()->where('role', 2);
     return count($user);
 }

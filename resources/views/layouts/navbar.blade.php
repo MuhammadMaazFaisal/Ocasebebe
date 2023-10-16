@@ -67,7 +67,7 @@
                                 <div class="header-search-wrapper">
                                     <input type="search" class="form-control" name="q" id="q"
                                         placeholder="Rechercher un article, une catégorie" required>
-                                    
+
                                     <!-- End .select-custom -->
                                     <button class="btn icon-magnifier p-0" title="search" type="submit"> Recherche
                                     </button>
@@ -77,7 +77,8 @@
                         </div>
                         <!-- End .header-search -->
 
-                        <a href="{{ route('wishlist') }}" class="header-icon" title="wishlist"><i class="icon-wishlist-2"></i></a>
+                        <a href="{{ route('wishlist') }}" class="header-icon" title="wishlist"><i
+                                class="icon-wishlist-2"></i></a>
 
                         <div class="dropdown cart-dropdown">
                             <a href="#" title="Cart" class="dropdown-toggle dropdown-arrow cart-toggle"
@@ -161,81 +162,89 @@
                 <!-- End .container -->
             </div>
             <!-- End .header-middle -->
+            @php
+                $categories = getallcategories();
+                $categories_id = [];
+                foreach ($categories as $category) {
+                    $categories_id[$category->id] = $category->parent_category_name;
+                }
+
+            @endphp
 
             <div class="header-bottom sticky-header d-none d-lg-block" data-sticky-options="{'mobile': false}">
                 <div class="container">
                     <nav class="main-nav w-100">
                         <ul class="menu">
                             <li class="active">
-                                <a href="{{route('category', 5)}}">Tous nos articles</a>
+                                <a href="{{ url('/filter') }}">Tous nos articles</a>
                             </li>
                             <li>
                                 <a href="#">Puériculture</a>
                                 <ul>
-                                    <li><a href="{{route('category', 1)}}">Balancelles</a></li>
-                                    <li><a href="{{route('category', 2)}}">Berceau</a></li>
-                                    <li><a href="{{route('category', 3)}}">Siège auto & Poussette</a></li>
-                                    <li><a href="{{route('category', 4)}}">Transats</a></li>
+                                    <li><a href="{{ route('category', 1) }}">{{ $categories_id[1] }}</a></li>
+                                    <li><a href="{{ route('category', 2) }}">{{ $categories_id[2] }}</a></li>
+                                    <li><a href="{{ route('category', 3) }}">{{ $categories_id[3] }}</a></li>
+                                    <li><a href="{{ route('category', 4) }}">{{ $categories_id[4] }}</a></li>
                                 </ul>
                             </li>
                             <li>
                                 <a href="#">Vêtement</a>
                                 <ul>
-                                    <li><a href="{{route('category', 6)}}">Vêtement fille</a></li>
-                                    <li><a href="{{route('category', 7)}}">Vêtement garçon</a></li>
-                                    <li><a href="{{route('category', 8)}}">Bonnet chaussette</a></li>
+                                    <li><a href="{{ route('category', 6) }}">{{ $categories_id[6] }}</a></li>
+                                    <li><a href="{{ route('category', 7) }}">{{ $categories_id[7] }}</a></li>
+                                    <li><a href="{{ route('category', 8) }}">{{ $categories_id[8] }}</a></li>
                                 </ul>
                             </li>
                             <li>
                                 <a href="#">Chaussures</a>
                                 <ul>
-                                    <li><a href="{{route('category', 9)}}">Chaussure fille</a></li>
-                                    <li><a href="{{route('category', 10)}}">Chaussure garçon</a></li>
+                                    <li><a href="{{ route('category', 9) }}">{{ $categories_id[9] }}</a></li>
+                                    <li><a href="{{ route('category', 10) }}">{{ $categories_id[10] }}</a></li>
                                 </ul>
                             </li>
                             <li>
                                 <a href="#">Repas Bébé</a>
                                 <ul>
-                                    <li><a href="{{route('category', 11)}}">Bavoirs</a></li>
-                                    <li><a href="{{route('category', 12)}}">Biberons et accessoires</a></li>
-                                    <li><a href="{{route('category', 13)}}">Chaises Hautes</a></li>
-                                    <li><a href="{{route('category', 14)}}">Sucettes</a></li>
-                                    <li><a href="{{route('category', 15)}}">Stérilisateurs</a></li>
+                                    <li><a href="{{ route('category', 11) }}">{{ $categories_id[11] }}</a></li>
+                                    <li><a href="{{ route('category', 12) }}">{{ $categories_id[12] }}</a></li>
+                                    <li><a href="{{ route('category', 13) }}">{{ $categories_id[13] }}</a></li>
+                                    <li><a href="{{ route('category', 14) }}">{{ $categories_id[14] }}</a></li>
+                                    <li><a href="{{ route('category', 15) }}">{{ $categories_id[15] }}</a></li>
                                 </ul>
                             </li>
                             <li>
                                 <a href="#">Hygiènes et soins</a>
                                 <ul>
-                                    <li><a href="{{route('category', 16)}}">Couches</a></li>
-                                    <li><a href="{{route('category', 17)}}">Lingettes</a></li>
-                                    <li><a href="{{route('category', 18)}}">Matelas et Table à Langer</a></li>
-                                    <li><a href="{{route('category', 19)}}">Sacs à langer</a></li>
-                                    <li><a href="{{route('category', 20)}}">Soins de la peau</a></li>
-                                    <li><a href="{{route('category', 21)}}">Baignoires</a></li>
-                                    <li><a href="{{route('category', 22)}}">Pots et Réducteurs</a></li>
+                                    <li><a href="{{ route('category', 16) }}">{{ $categories_id[16] }}</a></li>
+                                    <li><a href="{{ route('category', 17) }}">{{ $categories_id[17] }}</a></li>
+                                    <li><a href="{{ route('category', 18) }}">{{ $categories_id[18] }}</a></li>
+                                    <li><a href="{{ route('category', 19) }}">{{ $categories_id[19] }}</a></li>
+                                    <li><a href="{{ route('category', 20) }}">{{ $categories_id[20] }}</a></li>
+                                    <li><a href="{{ route('category', 21) }}">{{ $categories_id[21] }}</a></li>
+                                    <li><a href="{{ route('category', 22) }}">{{ $categories_id[22] }}</a></li>
                                 </ul>
                             </li>
                             <li>
                                 <a href="#">Jouet et Cadeaux</a>
                                 <ul>
-                                    <li><a href="{{route('category', 23)}}">Cadeaux de naissance</a></li>
-                                    <li><a href="{{route('category', 24)}}">Doudous et Peluches</a></li>
-                                    <li><a href="{{route('category', 25)}}">Tapis d’éveil</a></li>
-                                    <li><a href="{{route('category', 26)}}">Youpalas</a></li>
+                                    <li><a href="{{ route('category', 23) }}">{{ $categories_id[23] }}</a></li>
+                                    <li><a href="{{ route('category', 24) }}">{{ $categories_id[24] }}</a></li>
+                                    <li><a href="{{ route('category', 25) }}">{{ $categories_id[25] }}</a></li>
+                                    <li><a href="{{ route('category', 26) }}">{{ $categories_id[26] }}</a></li>
                                 </ul>
                             </li>
                             <li>
                                 <a href="#">Univers Maman</a>
                                 <ul>
-                                    <li><a href="{{route('category', 27)}}">Accessoires bébés</a></li>
-                                    <li><a href="{{route('category', 28)}}">Portes Bébé</a></li>
-                                    <li><a href="{{route('category', 29)}}">Slip jetable</a></li>
-                                    <li><a href="{{route('category', 30)}}">Serviette maternité</a></li>
-                                    <li><a href="{{route('category', 31)}}">Tire-lait</a></li>
+                                    <li><a href="{{ route('category', 27) }}">{{ $categories_id[27] }}</a></li>
+                                    <li><a href="{{ route('category', 28) }}">{{ $categories_id[28] }}</a></li>
+                                    <li><a href="{{ route('category', 29) }}">{{ $categories_id[29] }}</a></li>
+                                    <li><a href="{{ route('category', 30) }}">{{ $categories_id[30] }}</a></li>
+                                    <li><a href="{{ route('category', 31) }}">{{ $categories_id[31] }}</a></li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="{{route('category', 32)}}">Plus</a>
+                                <a href="{{ route('category', 32) }}">{{ $categories_id[32] }}</a>
                             </li>
 
                         </ul>

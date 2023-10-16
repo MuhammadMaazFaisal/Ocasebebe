@@ -34,20 +34,14 @@ Route::post('/login', [LoginController::class, 'login']);
 Route::post('/register', [LoginController::class, 'register'])->name('register');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
-// Product routes
-Route::get('product-details/{id}', [WebsiteController::class, 'productdetails'])->name('product.details');
-
-// Category routes
-Route::get('category/{id}', [WebsiteController::class, 'get_category_products'])->name('category');
-
 // Pages routes
-Route::get ('who-we-are', function () {
+Route::get('who-we-are', function () {
     return view('who-we-are');
 })->name('who-we-are');
-Route::get ('contact', function () {
+Route::get('contact', function () {
     return view('contact');
 })->name('contact');
-Route::get ('terms-and-conditions', function () {
+Route::get('terms-and-conditions', function () {
     return view('terms-and-conditions');
 })->name('terms-and-conditions');
 Route::get('payment-terms', function () {
@@ -59,6 +53,12 @@ Route::get('delivery-policy', function () {
 Route::get('faq', function () {
     return view('faq');
 })->name('faq');
+
+// Product routes
+Route::get('product-details/{id}', [WebsiteController::class, 'productdetails'])->name('product.details');
+
+// Category routes
+Route::get('category/{id}', [WebsiteController::class, 'get_category_products'])->name('category');
 
 //Filter routes
 Route::get('search', [WebsiteController::class, 'search'])->name('search');
@@ -76,6 +76,7 @@ Route::get('cart', [WebsiteController::class, 'add_cart'])->name('cart');
 Route::post('shipping-cart', [WebsiteController::class, 'shippingcart'])->name('shipping-cart');
 Route::post('cash_on_delivery', [WebsiteController::class, 'cash_on_delivery'])->name('cash_on_delivery');
 Route::get('checkout', [WebsiteController::class, 'checkout'])->name('checkout');
+Route::post('add-review', [WebsiteController::class, 'addreview'])->name('add.review');
 
 
 // Admin routes
@@ -137,11 +138,10 @@ Route::group(['middleware' =>  ['preventBackHistory', 'admin_middleware'], 'pref
     Route::get('user-status/{id}', [UserController::class, 'status'])->name('user-status');
     Route::get('user-view/{id}', [UserController::class, 'show'])->name('user-view');
 
-     // Review Routes
-     Route::get('reviews', [ReviewController::class, 'index'])->name('reviews');
-     Route::get('reviews-detail/{id}', [ReviewController::class, 'details'])->name('reviews-detail');
-     Route::get('reviews-status/{id}', [ReviewController::class, 'status'])->name('reviews-status');
-     Route::post('review-toggle', [ReviewController::class, 'reviewtoggle'])->name('review-toggle');
-     Route::post('review-delete/{id}', [ReviewController::class, 'deletereview'])->name('review-delete');
- 
+    // Review Routes
+    Route::get('reviews', [ReviewController::class, 'index'])->name('reviews');
+    Route::get('reviews-detail/{id}', [ReviewController::class, 'details'])->name('reviews-detail');
+    Route::get('reviews-status/{id}', [ReviewController::class, 'status'])->name('reviews-status');
+    Route::post('review-toggle', [ReviewController::class, 'reviewtoggle'])->name('review-toggle');
+    Route::post('review-delete/{id}', [ReviewController::class, 'deletereview'])->name('review-delete');
 });

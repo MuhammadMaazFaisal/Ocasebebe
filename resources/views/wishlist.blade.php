@@ -34,35 +34,39 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($wishlist_items as $wishlist_item)
-                    <tr class="product-row">
-                        <td>
-                            <figure class="product-image-container">
-                                <a href="product.html" class="product-image">
-                                    <img src="{{asset('products/'.$wishlist_item->product->image)}}" alt="product">
-                                </a>
+                    @foreach ($wishlist_items as $wishlist_item)
+                        <tr class="product-row">
+                            <td>
+                                <figure class="product-image-container">
+                                    <a href="product.html" class="product-image">
+                                        <img src="{{ asset('products/' . $wishlist_item->product->image) }}"
+                                            alt="product">
+                                    </a>
 
-                                <a href="{{route('remove_wishlist',$wishlist_item->product->id)}}" class="btn-remove icon-cancel" title="Remove Product"></a>
-                            </figure>
-                        </td>
-                        <td>
-                            <h5 class="product-title">
-                                <a href="product.html">{{$wishlist_item->product->product_name}}</a>
-                            </h5>
-                        </td>
-                        <td class="price-box">
-                        @if($wishlist_item->product->discount_price)
-                            <span class="old-price">{{$wishlist_item->product->price}} CFA</span>
-                            <span class="product-price">{{$wishlist_item->product->discount_price}} CFA</span>
-                        @else
-                            <span class="product-price">{{$wishlist_item->product->price}}</span>
-                        @endif
-                        <td class="action">
-                            <button class="btn btn-dark product-type-simple btn-shop">
-                               <a href="{{route('product.details',$wishlist_item->product->id)}}"> View Product</a>
-                            </button>
-                        </td>
-                    </tr>
+                                    <a href="{{ route('remove_wishlist', $wishlist_item->product->id) }}"
+                                        class="btn-remove icon-cancel" title="Remove Product"></a>
+                                </figure>
+                            </td>
+                            <td>
+                                <h5 class="product-title">
+                                    <a
+                                        href="{{ route('product.details', $wishlist_item->product->id) }}">{{ $wishlist_item->product->product_name }}</a>
+                                </h5>
+                            </td>
+                            <td class="price-box">
+                                @if ($wishlist_item->product->discount_price)
+                                    <span class="old-price">{{ $wishlist_item->product->price }} CFA</span>
+                                    <span class="product-price">{{ $wishlist_item->product->discount_price }} CFA</span>
+                                @else
+                                    <span class="product-price">{{ $wishlist_item->product->price }}</span>
+                                @endif
+                            <td class="action">
+                                <button class="btn btn-dark product-type-simple btn-shop">
+                                    <a href="{{ route('product.details', $wishlist_item->product->id) }}"> View
+                                        Product</a>
+                                </button>
+                            </td>
+                        </tr>
                     @endforeach
                 </tbody>
             </table>

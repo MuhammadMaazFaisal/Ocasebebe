@@ -5,7 +5,7 @@
     <div class="container">
         <nav aria-label="breadcrumb" class="breadcrumb-nav">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html"><i class="icon-home"></i></a></li>
+                <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="icon-home"></i></a></li>
                 <li class="breadcrumb-item"><a href="#">Products</a></li>
             </ol>
         </nav>
@@ -174,19 +174,9 @@
                     <!-- End .product-desc -->
 
                     <ul class="single-info-list">
-
-                        <li>
-                            SKU: <strong>654613612</strong>
-                        </li>
-
                         <li>
                             CATEGORY: <strong><a href="#"
                                     class="product-category">{{ $category->parent_category_name }}</a></strong>
-                        </li>
-
-                        <li>
-                            TAGs: <strong><a href="#" class="product-category">CLOTHES</a></strong>,
-                            <strong><a href="#" class="product-category">SWEATER</a></strong>
                         </li>
                         <li>
 
@@ -203,7 +193,7 @@
                         <a href="javascript:;" id="add-btn" class="btn btn-dark add-cart mr-2" title="Add to Cart">Add
                             to
                             Cart</a>
-                        <a href="cart.html" class="btn btn-gray view-cart d-none">View cart</a>
+                        <a href="{{ route('cart') }}" class="btn btn-gray view-cart d-none">View cart</a>
                         <div class="login-form-container">
                             <h4>
                                 <button data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
@@ -268,7 +258,8 @@
                         </div>
                         <!-- End .social-icons -->
 
-                        <a href="wishlist.html" class="btn-icon-wish add-wishlist" title="Add to Wishlist"><i
+                        <a href="#" onclick="addWishlistItem({{ $product->id }})"
+                            class="btn-icon-wish add-wishlist" title="Add to Wishlist"><i
                                 class="icon-wishlist-2"></i><span>Add to
                                 Wishlist</span></a>
                     </div>
@@ -409,7 +400,7 @@
                                             </div>
 
                                             <span class="comment-by">
-                                                <strong>{{ $review->get_user->email }}</strong>
+                                                <strong>{{ $review->name }}</strong>
                                             </span>
                                         </div>
 
@@ -426,7 +417,7 @@
                         <div class="add-product-review">
                             <h3 class="review-title">Add a review</h3>
 
-                            <form action="#" class="comment-form m-0">
+                            <form action="#" id="review-form" class="comment-form m-0">
                                 <div class="rating-form">
                                     <label for="rating">Your rating <span class="required">*</span></label>
                                     <span class="rating-stars">
@@ -449,7 +440,7 @@
 
                                 <div class="form-group">
                                     <label>Your review <span class="required">*</span></label>
-                                    <textarea cols="5" rows="6" class="form-control form-control-sm"></textarea>
+                                    <textarea name="review" cols="5" rows="6" class="form-control form-control-sm"></textarea>
                                 </div>
                                 <!-- End .form-group -->
 
@@ -458,26 +449,10 @@
                                     <div class="col-md-6 col-xl-12">
                                         <div class="form-group">
                                             <label>Name <span class="required">*</span></label>
-                                            <input type="text" class="form-control form-control-sm" required>
+                                            <input type="text" name="name" class="form-control form-control-sm"
+                                                required>
                                         </div>
                                         <!-- End .form-group -->
-                                    </div>
-
-                                    <div class="col-md-6 col-xl-12">
-                                        <div class="form-group">
-                                            <label>Email <span class="required">*</span></label>
-                                            <input type="text" class="form-control form-control-sm" required>
-                                        </div>
-                                        <!-- End .form-group -->
-                                    </div>
-
-                                    <div class="col-md-12">
-                                        <div class=" custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="save-name" />
-                                            <label class="custom-control-label mb-0" for="save-name">Save my
-                                                name, email, and website in this browser for the next time I
-                                                comment.</label>
-                                        </div>
                                     </div>
                                 </div>
 
@@ -508,7 +483,7 @@
                     @foreach ($related_products as $related_product)
                         <div class="product-default">
                             <figure>
-                                <a href="product.html">
+                                <a href="{{ route('product.details', ['id' => $related_product->id]) }}">
                                     <img src={{ asset('products/' . $related_product->image) }} width="280"
                                         height="280" alt="product">
                                     <img src={{ asset('products/' . $related_product->image) }} width="280"
@@ -523,10 +498,12 @@
                             </figure>
                             <div class="product-details">
                                 <div class="category-list">
-                                    <a href="category.html" class="product-category">Category</a>
+                                    <a href="{{ route('category/' . $category->category_id) }}"
+                                        class="product-category">{{ $category->parent_category_name }}</a>
                                 </div>
                                 <h3 class="product-title">
-                                    <a href="product.html">{{ $related_product->product_name }}</a>
+                                    <a
+                                        href="{{ route('product.details', ['id' => $related_product->id]) }}">{{ $related_product->product_name }}</a>
                                 </h3>
                                 <div class="ratings-container">
                                     <div class="product-ratings">
@@ -549,10 +526,10 @@
                                 </div>
                                 <!-- End .price-box -->
                                 <div class="product-action">
-                                    <a href="wishlist.html" title="Wishlist" class="btn-icon-wish"><i
-                                            class="icon-heart"></i></a>
-                                    <a href="product.html" class="btn-icon btn-add-cart"><i
-                                            class="fa fa-arrow-right"></i><span>SELECT
+                                    <a href="#" onclick="addWishlistItem({{ $related_product->id }})"
+                                        title="Wishlist" class="btn-icon-wish"><i class="icon-heart"></i></a>
+                                    <a href="{{ route('product.details', ['id' => $related_product->id]) }}"
+                                        class="btn-icon btn-add-cart"><i class="fa fa-arrow-right"></i><span>SELECT
                                             OPTIONS</span></a>
                                     <a href="{{ route('product.details', ['id' => $related_product->id]) }}"
                                         class="btn-quickview"><i class="fas fa-external-link-alt"></i></a>
@@ -571,3 +548,44 @@
 </main>
 <!-- End .main -->
 @include('layouts.footer')
+
+<script>
+    $(document).ready(function() {
+        $('#review-form').submit(function(e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+            formData.append('product_id', {{ $product->id }});
+            formData.append('_token', "{{ csrf_token() }}");
+            $.ajax({
+                url: "{{ route('add.review') }}",
+                type: "POST",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    console.log(response);
+                    if (response.status == 200) {
+                        swal({
+                            title: "Success!",
+                            text: response.message,
+                            icon: "success",
+                            button: "OK!",
+                        }).then((value) => {
+                            window.location.reload();
+                        });
+                    } else {
+                        swal({
+                            title: "Error!",
+                            text: response.message,
+                            icon: "error",
+                            button: "OK!",
+                        }).then((value) => {
+                            window.location.reload();
+                        });
+                    }
+                }
+            });
+        });
+    });
+</script>

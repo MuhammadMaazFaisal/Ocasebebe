@@ -75,10 +75,14 @@ class WebsiteController extends Controller
     public function search(Request $request)
     {
         $search = $request->q;
-        $products = Product::where('product_name', 'LIKE', '%' . $search . '%')->get();
+        $products = Product::where('product_name', 'LIKE', '%' . $search . '%')->paginate(12);
         foreach ($products as $product) {
             $product['avg_rating'] = Review::where('product_id', $product->id)->avg('rating');
             $product->category_name = ParentCategory::where('id', $product->parent_category_id)->first()->parent_category_name;
+        }
+        $featured_products = Product::where('status', 1)->inRandomOrder()->take(12)->get();
+        foreach ($featured_products as $featured_product) {
+            $featured_product->avg_rating = Review::where('product_id', $featured_product->id)->avg('rating');
         }
         $attributes = AttributeValue::all();
         $lengths = Length::all();
@@ -115,14 +119,14 @@ class WebsiteController extends Controller
 
         // Filtering by Color (Assuming colors are IDs in attribute_values table)
         if ($request->has('colors')) {
-            $c_products=[];
+            $c_products = [];
             $colors = $request->input('colors');
-            $color_products=ProductAttribute::get();
-            foreach($color_products as $color_product){
-                $color_product->attribute_value_id=json_decode($color_product->attribute_value_id);
-                foreach($color_product->attribute_value_id as $color_product_id){
-                    if(in_array($color_product_id,$colors)){
-                        $c_products[]=$color_product->product_id;
+            $color_products = ProductAttribute::get();
+            foreach ($color_products as $color_product) {
+                $color_product->attribute_value_id = json_decode($color_product->attribute_value_id);
+                foreach ($color_product->attribute_value_id as $color_product_id) {
+                    if (in_array($color_product_id, $colors)) {
+                        $c_products[] = $color_product->product_id;
                     }
                 }
             }
@@ -130,18 +134,18 @@ class WebsiteController extends Controller
             $productIDs[] = $c_products;
         }
 
-        
+
 
         // Filtering by Size (Assuming sizes are length IDs)
         if ($request->has('sizes')) {
             $sizes = $request->input('sizes');
-            $s_products=[];
-            $size_products=Product::get();
-            foreach($size_products as $size_product){
-                $size_product->length_id=json_decode($size_product->length_id);
-                foreach($size_product->length_id as $size_product_id){
-                    if(in_array($size_product_id,$sizes)){
-                        $s_products[]=$size_product->id;
+            $s_products = [];
+            $size_products = Product::get();
+            foreach ($size_products as $size_product) {
+                $size_product->length_id = json_decode($size_product->length_id);
+                foreach ($size_product->length_id as $size_product_id) {
+                    if (in_array($size_product_id, $sizes)) {
+                        $s_products[] = $size_product->id;
                     }
                 }
             }
@@ -156,9 +160,9 @@ class WebsiteController extends Controller
         }
 
         // Retrieve these products
-        $products = Product::whereIn('id', $commonProductIDs)->get();
-        if(!($request->has('sizes')) && !($request->has('colors')) && !($request->has('categories'))){
-            $products=Product::get();
+        $products = Product::whereIn('id', $commonProductIDs)->paginate(12);
+        if (!($request->has('sizes')) && !($request->has('colors')) && !($request->has('categories'))) {
+            $products = Product::paginate(12);
         }
 
         foreach ($products as $product) {
@@ -167,6 +171,10 @@ class WebsiteController extends Controller
         }
         $attributes = AttributeValue::all();
         $lengths = Length::all();
+        $featured_products = Product::where('status', 1)->inRandomOrder()->take(12)->get();
+        foreach ($featured_products as $featured_product) {
+            $featured_product->avg_rating = Review::where('product_id', $featured_product->id)->avg('rating');
+        }
 
         // dd($products);
 
@@ -306,17 +314,20 @@ class WebsiteController extends Controller
     {
 
         if (!Auth::check()) {
-            return redirect()->back()->with("message", "Please login first !");
+            $notification = ['login' => 'Please login first ! '];
+            return $notification;
         }
 
         if (Auth::check() && Auth::user()->role == 1) {
-            return redirect()->back()->with("message", "Admin is not allowed to purchase!");
+            $notification = ['admin' => 'You are not allowed to login here ! '];
+            return $notification;
         }
 
 
         $check_carts = Cart::where('user_id', Auth::id())->get();
         if (count($check_carts) == 0) {
-            return redirect()->back()->with("message", "Sorry!, You can not checkout without any item in cart.");
+            $notification = ['message' => 'Sorry!, You can not checkout without any item in cart.'];
+            return $notification;
         }
 
         $cart_items = Cart::where('user_id', Auth::id())->get();
@@ -394,16 +405,9 @@ class WebsiteController extends Controller
 
 
 
-        // total count of person who add current item in cart
-        // $people_add_item_in_carts = Cart::where('product_id', $productShow->id)->count();
         $reviews = Review::where('product_id', $product->id)->with('get_user')->where('status', 1)->get();
-        // $ratings = Review::where('product_id', $productShow->id)->where('status', 1)->get();
-        // $avg = $ratings->average('rating');
-        $review_count = Review::where('product_id', $product->id)->count();
+        $review_count = Review::where('product_id', $product->id)->where('status', 1)->count();
         $review_avg = Review::where('product_id', $product->id)->avg('rating');
-
-        // $review_avg = round($review_avg);
-        // $is_buy_product = BillingInfo::where('user_id', Auth::id())->where('product_id', $productShow->id)->get();
 
         return view('product-details', get_defined_vars());
     }
@@ -750,7 +754,7 @@ class WebsiteController extends Controller
 
         if (!Auth::check()) {
             $notification = array('login' => 'Please Login first !', 'alert-type' => 'success');
-            return redirect()->route('sign-in')->with($notification);
+            return redirect()->route('login')->with($notification);
         }
 
 
@@ -1112,13 +1116,17 @@ class WebsiteController extends Controller
     public function get_category_products(Request $request, $id)
     {
         $parent_category = ParentCategory::where('id', $request->id)->first();
-        $products = Product::where('status', 1)->where('parent_category_id', $request->id)->get();
+        $products = Product::where('status', 1)->where('parent_category_id', $request->id)->paginate(12);
         foreach ($products as $product) {
             $product->avg_rating = Review::where('product_id', $product->id)->avg('rating');
             $product->category_name = $parent_category->parent_category_name;
         }
         $attributes = AttributeValue::all();
         $lengths = Length::all();
+        $featured_products = Product::where('status', 1)->inRandomOrder()->take(12)->get();
+        foreach ($featured_products as $featured_product) {
+            $featured_product->avg_rating = Review::where('product_id', $featured_product->id)->avg('rating');
+        }
         return view('shop', get_defined_vars());
     }
 
@@ -1318,5 +1326,40 @@ class WebsiteController extends Controller
     public function invoice()
     {
         return view('emails.invoice', get_defined_vars());
+    }
+
+    function addreview(Request $request)
+    {
+        $validated = $request->validate([
+            'rating' => 'required',
+            'review' => 'required',
+            'product_id' => 'required',
+        ]);
+        $order = Order::where('user_id', Auth::id())->with('order_details')->get();
+        $review = Review::where('user_id', Auth::id())->where('product_id', $request->product_id)->first();
+
+        if (count($order) == 0) {
+            $notification = array('message' => 'You have not purchased this product !', 'status' => 404);
+            return $notification;
+        }
+        if ($review) {
+            $notification = array('message' => 'You have already given review on this product !', 'status' => 404);
+            return $notification;
+        }
+
+        $review = new Review();
+        $review->user_id = Auth::id();
+        $review->product_id = $request->product_id;
+        $review->rating = $request->rating;
+        $review->comments = $request->review;
+        $review->name = $request->name;
+        $review->status = 1;
+        if ($review->save()) {
+            $notification = array('message' => 'Review has been added successfully !', 'status' => 200);
+            return $notification;
+        } else {
+            $notification = array('message' => 'Review has not been added successfully !', 'status' => 404);
+            return $notification;
+        }
     }
 }

@@ -14,7 +14,7 @@
                 <a href="#">Order Complete</a>
             </li>
         </ul>
-        <form  id="checkout-form">
+        <form id="checkout-form">
             <div class="row">
                 <div class="col-lg-7">
                     <ul class="checkout-steps">
@@ -231,20 +231,20 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            @foreach ($cart_items as $item)
-                                <tr>
-                                    <td class="product-col">
-                                        <h3 class="product-title">
-                                           {{ $item->product_name }} ×
-                                            <span class="product-qty">{{ $item->quantity }}</span>
-                                        </h3>
-                                    </td>
+                                @foreach ($cart_items as $item)
+                                    <tr>
+                                        <td class="product-col">
+                                            <h3 class="product-title">
+                                                {{ $item->product_name }} ×
+                                                <span class="product-qty">{{ $item->quantity }}</span>
+                                            </h3>
+                                        </td>
 
-                                    <td class="price-col">
-                                        <span>{{ $item->price }} CFA</span>
-                                    </td>
-                                </tr>
-                            @endforeach
+                                        <td class="price-col">
+                                            <span>{{ $item->price }} CFA</span>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                             <tfoot>
                                 <tr class="cart-subtotal">
@@ -262,7 +262,8 @@
 
                                         <div class="form-group form-group-custom-control">
                                             <div class="custom-control custom-radio d-flex">
-                                                <input type="radio" class="custom-control-input" name="radio" checked />
+                                                <input type="radio" class="custom-control-input" name="radio"
+                                                    checked />
                                                 <label class="custom-control-label">Local Pickup</label>
                                             </div>
                                             <!-- End .custom-checkbox -->
@@ -296,7 +297,8 @@
                             <h4 class="">Payment methods</h4>
                             <div class="form-group form-group-custom-control my-0">
                                 <div class="custom-control custom-radio d-flex my-2">
-                                    <input type="radio" class="custom-control-input" value="Cash on Delivery" name="payment" checked />
+                                    <input type="radio" class="custom-control-input" value="Cash on Delivery"
+                                        name="payment" checked />
                                     <label class="custom-control-label">Cash on Delivery</label>
                                 </div>
                                 <!-- End .custom-checkbox -->
@@ -305,7 +307,8 @@
 
                             <div class="form-group form-group-custom-control my-0">
                                 <div class="custom-control custom-radio d-flex my-2">
-                                    <input type="radio" name="payment" value="Quickpay" class="custom-control-input">
+                                    <input type="radio" name="payment" value="Quickpay"
+                                        class="custom-control-input">
                                     <label class="custom-control-label">Quickpay</label>
                                 </div>
                                 <!-- End .custom-checkbox -->
@@ -334,16 +337,14 @@
             var formdata = new FormData(this);
             formdata.append('_token', '{{ csrf_token() }}');
             $.ajax({
-                url: "{{ route('shipping-cart')}}",
+                url: "{{ route('shipping-cart') }}",
                 type: 'POST',
                 data: formdata,
                 contentType: false,
                 processData: false,
                 success: function(data) {
-                    console.log(data);
-                    data=JSON.parse(data);
                     if (data.status == 200) {
-                       swal({
+                        swal({
                             title: "Success!",
                             text: data.message,
                             icon: "success",
