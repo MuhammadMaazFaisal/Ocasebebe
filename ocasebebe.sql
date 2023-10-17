@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Oct 16, 2023 at 08:35 PM
+-- Generation Time: Oct 17, 2023 at 08:50 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -88,6 +88,29 @@ CREATE TABLE `carts` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `leads`
+--
+
+CREATE TABLE `leads` (
+  `id` bigint UNSIGNED NOT NULL,
+  `product_id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  `name` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `leads`
+--
+
+INSERT INTO `leads` (`id`, `product_id`, `user_id`, `name`, `email`, `created_at`, `updated_at`) VALUES
+(1, 1, 4, 'Question 1', 'admin@bodymindspirit.com', '2023-10-17 15:40:19', '2023-10-17 15:40:19');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `length`
 --
 
@@ -140,7 +163,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (49, '2023_10_11_185949_create_product_attributes_table', 2),
 (51, '2023_10_13_201751_create_cart_table', 2),
 (52, '2023_10_13_202422_create_wishlists_table', 2),
-(53, '2023_10_12_171525_create_reviews_table', 3);
+(53, '2023_10_12_171525_create_reviews_table', 3),
+(54, '2023_10_17_201657_create_leads_table', 4);
 
 -- --------------------------------------------------------
 
@@ -276,8 +300,8 @@ CREATE TABLE `products` (
   `length_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `parent_category_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `product_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `price` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `discount_price` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `price` decimal(10,2) NOT NULL,
+  `discount_price` decimal(10,2) DEFAULT NULL,
   `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `multiple_image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `short_description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -292,7 +316,7 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `length_id`, `parent_category_id`, `product_name`, `price`, `discount_price`, `image`, `multiple_image`, `short_description`, `description`, `status`, `created_at`, `updated_at`) VALUES
-(1, '[\"1\",\"2\"]', '4', 'Dummy Product', '25', '20', '1697249478.png', '[\"169724947926.jpg\"]', 'This is short description', 'This is the main description', 1, '2023-10-13 21:11:19', '2023-10-14 07:35:00');
+(1, '[\"1\",\"2\"]', '4', 'Dummy Product', '25.00', '20.00', '1697249478.png', '[\"169724947926.jpg\"]', 'This is short description', 'This is the main description', 1, '2023-10-13 21:11:19', '2023-10-14 07:35:00');
 
 -- --------------------------------------------------------
 
@@ -358,7 +382,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `role`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Admin', 'admin@gmail.com', 1, '$2y$10$2C.JE9RoInrYBpjqeA4NhOeZlLi7LgkJdWJ8CRKrfnhG4CkuzSeEm', NULL, '2023-10-13 19:07:22', '2023-10-13 19:07:22');
+(1, 'Admin', 'admin@gmail.com', 1, '$2y$10$2C.JE9RoInrYBpjqeA4NhOeZlLi7LgkJdWJ8CRKrfnhG4CkuzSeEm', NULL, '2023-10-13 19:07:22', '2023-10-13 19:07:22'),
+(4, NULL, '123@gmail.com', 2, '$2y$10$M/H2gsmkoEHVkY0XYP/Sne7qOceKSK5iTG/5BcIPJUwfIaIjA8Y3C', NULL, '2023-10-17 13:08:41', '2023-10-17 13:08:41');
 
 -- --------------------------------------------------------
 
@@ -414,6 +439,14 @@ ALTER TABLE `carts`
   ADD KEY `carts_user_id_foreign` (`user_id`),
   ADD KEY `carts_attribute_id_foreign` (`attribute_id`),
   ADD KEY `carts_length_id_foreign` (`length_id`);
+
+--
+-- Indexes for table `leads`
+--
+ALTER TABLE `leads`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `leads_product_id_foreign` (`product_id`),
+  ADD KEY `leads_user_id_foreign` (`user_id`);
 
 --
 -- Indexes for table `length`
@@ -524,6 +557,12 @@ ALTER TABLE `carts`
   MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `leads`
+--
+ALTER TABLE `leads`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `length`
 --
 ALTER TABLE `length`
@@ -533,7 +572,7 @@ ALTER TABLE `length`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -581,7 +620,7 @@ ALTER TABLE `reviews`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `variants`
@@ -613,6 +652,13 @@ ALTER TABLE `carts`
   ADD CONSTRAINT `carts_length_id_foreign` FOREIGN KEY (`length_id`) REFERENCES `length` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `carts_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `carts_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `leads`
+--
+ALTER TABLE `leads`
+  ADD CONSTRAINT `leads_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `leads_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `product_attributes`

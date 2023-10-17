@@ -204,22 +204,23 @@
                             <div id="collapseOne" class="collapse">
                                 <div class="login-section feature-box">
                                     <div class="feature-box-content">
-                                        <form action="#" id="login-form">
-                                            <h3>La livraison est à 2 000 FCFA partout au Sénégal</h3>
+                                        <form id="lead-form">
                                             <div class="row">
 
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="mb-0 pb-1">Nom <span
                                                                 class="required">*</span></label>
-                                                        <input type="text" class="form-control" required />
+                                                        <input type="text" name="name" class="form-control"
+                                                            required />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="mb-0 pb-1">Email <span
                                                                 class="required">*</span></label>
-                                                        <input type="email" class="form-control" required />
+                                                        <input type="email" name="email" class="form-control"
+                                                            required />
                                                     </div>
                                                 </div>
 
@@ -551,6 +552,42 @@
 
 <script>
     $(document).ready(function() {
+        $('#lead-form').submit(function(e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+            formData.append('product_id', {{ $product->id }});
+            formData.append('_token', "{{ csrf_token() }}");
+            $.ajax({
+                url: "{{ route('add.lead') }}",
+                type: "POST",
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    console.log(response);
+                    if (response.status == 200) {
+                        swal({
+                            title: "Success!",
+                            text: response.message,
+                            icon: "success",
+                            button: "OK!",
+                        }).then((value) => {
+                            window.location.reload();
+                        });
+                    } else {
+                        swal({
+                            title: "Error!",
+                            text: response.message,
+                            icon: "error",
+                            button: "OK!",
+                        }).then((value) => {
+                            window.location.reload();
+                        });
+                    }
+                }
+            });
+        });
         $('#review-form').submit(function(e) {
             e.preventDefault();
             var formData = new FormData(this);

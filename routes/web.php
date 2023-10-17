@@ -77,6 +77,7 @@ Route::post('shipping-cart', [WebsiteController::class, 'shippingcart'])->name('
 Route::post('cash_on_delivery', [WebsiteController::class, 'cash_on_delivery'])->name('cash_on_delivery');
 Route::get('checkout', [WebsiteController::class, 'checkout'])->name('checkout');
 Route::post('add-review', [WebsiteController::class, 'addreview'])->name('add.review');
+Route::post('add-lead', [WebsiteController::class, 'addlead'])->name('add.lead');
 
 
 // Admin routes
@@ -144,4 +145,7 @@ Route::group(['middleware' =>  ['preventBackHistory', 'admin_middleware'], 'pref
     Route::get('reviews-status/{id}', [ReviewController::class, 'status'])->name('reviews-status');
     Route::post('review-toggle', [ReviewController::class, 'reviewtoggle'])->name('review-toggle');
     Route::post('review-delete/{id}', [ReviewController::class, 'deletereview'])->name('review-delete');
+
+    // Lead Routes
+    Route::get('leads', [WebsiteController::class, 'leads'])->name('leads');
 });

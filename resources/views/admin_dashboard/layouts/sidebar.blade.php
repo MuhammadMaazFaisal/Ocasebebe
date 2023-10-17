@@ -130,14 +130,25 @@
                         </ul>
                     </li>
 
-                     {{-- Review Management --}}
-                     <li class="sidebar-list">
+                    {{-- Review Management --}}
+                    <li class="sidebar-list">
                         <label class="badge badge-success"></label><a
                             class="sidebar-link sidebar-title
                     {{ Route::currentRouteName() == 'reviews' ? 'active' : '' }}
                     {{ Route::currentRouteName() == 'reviews-detail' ? 'active' : '' }}"
                             href="{{ route('reviews') }}"><span class="lan-3"><i class="fa fa-comments fa-lg"
                                     aria-hidden="true"></i>Reviews Management </span>
+                        </a>
+                    </li>
+
+                    {{-- Leads Management --}}
+                    <li class="sidebar-list">
+                        <label class="badge badge-success"></label><a
+                            class="sidebar-link sidebar-title
+                    {{ Route::currentRouteName() == 'leads' ? 'active' : '' }}"
+                            href="{{ route('leads') }}"><span class="lan-3"><i class="fa fa-comments fa-lg"
+                                    aria-hidden="true"></i>Leads Management
+                            </span>
                         </a>
                     </li>
 

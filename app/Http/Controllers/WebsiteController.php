@@ -28,7 +28,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use App\Models\Admin\Review;
 use App\Models\Admin\OrderDetails;
-
+use App\Models\Leads;
 
 class WebsiteController extends Controller
 {
@@ -1361,5 +1361,43 @@ class WebsiteController extends Controller
             $notification = array('message' => 'Review has not been added successfully !', 'status' => 404);
             return $notification;
         }
+    }
+
+    function addlead(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+        ]);
+        if (Auth::check()) {
+            $leads = Leads::where('user_id', Auth::id())->where('product_id', $request->product_id)->first();
+            if ($leads) {
+                $notification = array('message' => 'You have already given response on this product !', 'status' => 404);
+                return $notification;
+            }
+        } else {
+            $notification = array('message' => 'Please login first !', 'status' => 404);
+            return $notification;
+        }
+
+        $lead = new Leads();
+        $lead->user_id = Auth::id();
+        $lead->product_id = $request->product_id;
+        $lead->name = $request->name;
+        $lead->email = $request->email;
+        if ($lead->save()) {
+            $notification = array('message' => 'Your response has been added successfully !', 'status' => 200);
+            return $notification;
+        } else {
+            $notification = array('message' => 'Your response could not be added !', 'status' => 404);
+            return $notification;
+        }
+    }
+
+    public function leads()
+    {
+
+        $leads = Leads::with('products')->get();
+        return view('admin_dashboard.leads.index', get_defined_vars());
     }
 }

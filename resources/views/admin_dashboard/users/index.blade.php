@@ -1,11 +1,10 @@
 @extends('admin_dashboard.layouts.master')
 @section('content')
-<style>
-    .add-margin-for-space {
-        margin: 0px 6px;
-    }
-
-</style>
+    <style>
+        .add-margin-for-space {
+            margin: 0px 6px;
+        }
+    </style>
 
     <div class="container-fluid">
         <div class="row">
@@ -13,7 +12,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h5>Users Management</h5>
-                        
+
 
                     </div>
                     <div class="card-body">
@@ -25,7 +24,7 @@
                                         <tr role="row">
                                             <th class="sorting_asc" tabindex="0" aria-controls="basic-1" rowspan="1"
                                                 colspan="1" aria-sort="ascending">
-                                                S.NO</th>
+                                                User Id</th>
                                             <th class="sorting" tabindex="0" aria-controls="basic-1"
                                                 aria-label="Details: activate to sort column ascending">Email</th>
                                         </tr>
@@ -34,10 +33,10 @@
                                         @foreach ($users as $value)
                                             <tr role="row" class="odd">
                                                 <td>
-                                                    {{$loop->iteration}}
+                                                    {{ $value->id }}
                                                 </td>
                                                 <td>
-                                                    {{$value->email}}
+                                                    {{ $value->email }}
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -55,49 +54,49 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>.
 
 
-        <script>
-            // $(document).ready(function() {
+    <script>
+        // $(document).ready(function() {
 
-                toastr.options = {
-                    'closeButton': true,
-                    'debug': false,
-                    'newestOnTop': false,
-                    'progressBar': false,
-                    'positionClass': 'toast-top-right',
-                    'preventDuplicates': false,
-                    'showDuration': '1000',
-                    'hideDuration': '1000',
-                    'timeOut': '5000',
-                    'extendedTimeOut': '1000',
-                    'showEasing': 'swing',
-                    'hideEasing': 'linear',
-                    'showMethod': 'fadeIn',
-                    'hideMethod': 'fadeOut',
-                }
+        toastr.options = {
+            'closeButton': true,
+            'debug': false,
+            'newestOnTop': false,
+            'progressBar': false,
+            'positionClass': 'toast-top-right',
+            'preventDuplicates': false,
+            'showDuration': '1000',
+            'hideDuration': '1000',
+            'timeOut': '5000',
+            'extendedTimeOut': '1000',
+            'showEasing': 'swing',
+            'hideEasing': 'linear',
+            'showMethod': 'fadeIn',
+            'hideMethod': 'fadeOut',
+        }
 
-            //     $(".deleteuser").on("click", function() {
-            //         var id = $(this).attr("data-id");
-            //         $.ajax({
-            //             url: "{{route('user-delete',"id")}}",
-            //             data: {
-            //                 "id": id,
-            //                 '_method': 'DELETE',
-            //                 "_token": "{{ csrf_token() }}"
-            //             },
-            //             // method: 'DELETE',
-            //             success: function(result) {
-            //                 toastr.success('User Delete Sucessfully');
-            //                 setTimeout(() => {
-            //                     location.reload();
-            //                 }, 1000);
-            //             }
-            //         });
-            //     });
-            // })
+        //     $(".deleteuser").on("click", function() {
+        //         var id = $(this).attr("data-id");
+        //         $.ajax({
+        //             url: "{{ route('user-delete', 'id') }}",
+        //             data: {
+        //                 "id": id,
+        //                 '_method': 'DELETE',
+        //                 "_token": "{{ csrf_token() }}"
+        //             },
+        //             // method: 'DELETE',
+        //             success: function(result) {
+        //                 toastr.success('User Delete Sucessfully');
+        //                 setTimeout(() => {
+        //                     location.reload();
+        //                 }, 1000);
+        //             }
+        //         });
+        //     });
+        // })
 
 
-             function confirmDelete(id) {
-             Swal.fire({
+        function confirmDelete(id) {
+            Swal.fire({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",
                 icon: 'warning',
@@ -105,44 +104,43 @@
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'Yes, delete it!'
-             }).then((result) => {
-             if (result.isConfirmed) {
-                Swal.fire(
-                'Deleted!',
-                'Your file has been deleted.',
-                'success'
-                )
-             }
-             if (result.isConfirmed == true) {
-                $.ajax({
-                url: "{{route('user-delete')}}",
-                type: "GET",
-                data: {
-                "id": id,
-                "_token": "{{ csrf_token() }}"
-             },
-             success: function () {
-                setTimeout(() => {
-                location.reload();
-                }, 1000);
-                 swal("Done!","It was succesfully deleted!","success");
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire(
+                        'Deleted!',
+                        'Your file has been deleted.',
+                        'success'
+                    )
+                }
+                if (result.isConfirmed == true) {
+                    $.ajax({
+                        url: "{{ route('user-delete') }}",
+                        type: "GET",
+                        data: {
+                            "id": id,
+                            "_token": "{{ csrf_token() }}"
+                        },
+                        success: function() {
+                            setTimeout(() => {
+                                location.reload();
+                            }, 1000);
+                            swal("Done!", "It was succesfully deleted!", "success");
 
-              }
-             });
-             }else{
-                swal("Cancelled", "Your imaginary file is safe :)", "error");
+                        }
+                    });
+                } else {
+                    swal("Cancelled", "Your imaginary file is safe :)", "error");
                 };
-             });
+            });
 
-             }
-        </script>
+        }
+    </script>
 
 
 
-{{-- @if (Session::has('Update_Faqs'))
+    {{-- @if (Session::has('Update_Faqs'))
     <script>
         toastr.success('Faqs Updated', '{{ Session::get('Update_Faqs') }}', 'success')
     </script>
 @endif --}}
-
-    @endsection
+@endsection
