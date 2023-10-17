@@ -6,8 +6,8 @@
             <nav aria-label="breadcrumb" class="breadcrumb-nav">
                 <div class="container">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                        <li class="breadcrumb-item"><a href="category.html">Shop</a></li>
+                        <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ url('filter/') }}">Shop</a></li>
                         <li class="breadcrumb-item active" aria-current="page">
                             My Account
                         </li>
@@ -33,13 +33,15 @@
                                 Username or email address
                                 <span class="required">*</span>
                             </label>
-                            <input type="email" class="form-input form-wide" name="email" id="login-email" required />
+                            <input type="email" class="form-input form-wide" name="email" id="login-email"
+                                required />
 
                             <label for="login-password">
                                 Password
                                 <span class="required">*</span>
                             </label>
-                            <input type="password" class="form-input form-wide" name="password" id="login-password" required />
+                            <input type="password" class="form-input form-wide" name="password" id="login-password"
+                                required />
 
                             {{-- <div class="form-footer">
                                 <div class="custom-control custom-checkbox mb-0">
@@ -66,13 +68,15 @@
                                 Email address
                                 <span class="required">*</span>
                             </label>
-                            <input type="email" class="form-input form-wide" name="email" id="register-email" required />
+                            <input type="email" class="form-input form-wide" name="email" id="register-email"
+                                required />
 
                             <label for="register-password">
                                 Password
                                 <span class="required">*</span>
                             </label>
-                            <input type="password" class="form-input form-wide" name="password" id="register-password" required />
+                            <input type="password" class="form-input form-wide" name="password" id="register-password"
+                                required />
 
                             <div class="form-footer mb-2">
                                 <button type="submit" class="btn btn-dark btn-md w-100 mr-0">
@@ -94,12 +98,12 @@
             var email = $("#login-email").val();
             var password = $("#login-password").val();
             $.ajax({
-                url: "{{route('login')}}",
+                url: "{{ route('login') }}",
                 type: "POST",
                 data: {
                     email: email,
                     password: password,
-                    _token: "{{csrf_token()}}"
+                    _token: "{{ csrf_token() }}"
                 },
                 success: function(response) {
                     console.log(response);
@@ -110,7 +114,7 @@
                             icon: "success",
                             button: "OK",
                         }).then(function() {
-                            window.location.href = "{{route('home')}}";
+                            window.location.href = "{{ route('home') }}";
                         });
                     } else {
                         swal({
@@ -131,12 +135,12 @@
             var email = $("#register-email").val();
             var password = $("#register-password").val();
             $.ajax({
-                url: "{{route('register')}}",
+                url: "{{ route('register') }}",
                 type: "POST",
                 data: {
                     email: email,
                     password: password,
-                    _token: "{{csrf_token()}}"
+                    _token: "{{ csrf_token() }}"
                 },
                 success: function(response) {
                     if (response['alert-type'] == "success") {

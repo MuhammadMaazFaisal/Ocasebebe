@@ -5,10 +5,10 @@
     <div class="container checkout-container">
         <ul class="checkout-progress-bar d-flex justify-content-center flex-wrap">
             <li>
-                <a href="cart.html">Shopping Cart</a>
+                <a href="{{ route('cart') }}">Shopping Cart</a>
             </li>
             <li class="active">
-                <a href="checkout.html">Checkout</a>
+                <a href="{{ route('checkout') }}">Checkout</a>
             </li>
             <li class="disabled">
                 <a href="#">Order Complete</a>
@@ -305,14 +305,14 @@
                             </div>
                             <!-- End .form-group -->
 
-                            <div class="form-group form-group-custom-control my-0">
+                            {{-- <div class="form-group form-group-custom-control my-0">
                                 <div class="custom-control custom-radio d-flex my-2">
                                     <input type="radio" name="payment" value="Quickpay"
                                         class="custom-control-input">
                                     <label class="custom-control-label">Quickpay</label>
                                 </div>
                                 <!-- End .custom-checkbox -->
-                            </div>
+                            </div> --}}
                         </div>
 
                         <button type="submit" class="btn btn-dark btn-place-order">

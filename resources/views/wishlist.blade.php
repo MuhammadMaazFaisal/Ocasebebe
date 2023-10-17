@@ -7,7 +7,7 @@
             <nav aria-label="breadcrumb" class="breadcrumb-nav">
                 <div class="container">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="demo4.html">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
                         <li class="breadcrumb-item active" aria-current="page">
                             Wishlist
                         </li>
@@ -38,7 +38,8 @@
                         <tr class="product-row">
                             <td>
                                 <figure class="product-image-container">
-                                    <a href="product.html" class="product-image">
+                                    <a href="{{ route('product.details', $wishlist_item->product->id) }}"
+                                        class="product-image">
                                         <img src="{{ asset('products/' . $wishlist_item->product->image) }}"
                                             alt="product">
                                     </a>

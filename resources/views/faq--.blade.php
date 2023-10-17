@@ -6,7 +6,7 @@
         <div class="container">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a href="demo4.html"><i class="icon-home"></i></a>
+                    <a href="{{ url('/') }}"><i class="icon-home"></i></a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">
                     Contact Us
@@ -107,7 +107,8 @@
                 <h2 class="mt-6 mb-1">Frequently Asked Questions</h2>
                 <div id="accordion">
                     <div class="card card-accordion">
-                        <a class="card-header" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        <a class="card-header" href="#" data-toggle="collapse" data-target="#collapseOne"
+                            aria-expanded="true" aria-controls="collapseOne">
                             Curabitur eget leo at velit imperdiet viaculis
                             vitaes?
                         </a>
@@ -123,7 +124,8 @@
                     </div>
 
                     <div class="card card-accordion">
-                        <a class="card-header collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseOne">
+                        <a class="card-header collapsed" href="#" data-toggle="collapse"
+                            data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseOne">
                             Curabitur eget leo at velit imperdiet vague
                             iaculis vitaes?
                         </a>
@@ -156,7 +158,8 @@
                     </div>
 
                     <div class="card card-accordion">
-                        <a class="card-header collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                        <a class="card-header collapsed" href="#" data-toggle="collapse"
+                            data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
                             Curabitur eget leo at velit imperdiet viaculis
                             vitaes?
                         </a>
@@ -172,7 +175,8 @@
                     </div>
 
                     <div class="card card-accordion">
-                        <a class="card-header collapsed" href="#" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseThree">
+                        <a class="card-header collapsed" href="#" data-toggle="collapse"
+                            data-target="#collapseFour" aria-expanded="true" aria-controls="collapseThree">
                             Curabitur eget leo at velit imperdiet vague
                             iaculis vitaes?
                         </a>
@@ -205,7 +209,8 @@
                     </div>
 
                     <div class="card card-accordion">
-                        <a class="card-header collapsed" href="#" data-toggle="collapse" data-target="#collapseFive" aria-expanded="true" aria-controls="collapseThree">
+                        <a class="card-header collapsed" href="#" data-toggle="collapse"
+                            data-target="#collapseFive" aria-expanded="true" aria-controls="collapseThree">
                             Curabitur eget leo at velit imperdiet varius
                             iaculis vitaes?
                         </a>

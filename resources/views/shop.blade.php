@@ -98,7 +98,7 @@
                 <div class="row">
                     <div class="pl-lg-5 pb-5 pb-md-0 col-sm-5 col-xl-4 col-lg-4 offset-1">
                         <h3>Electronic<br>Deals</h3>
-                        <a href="category.html" class="btn btn-dark">Get Yours!</a>
+                        <a href="#" class="btn btn-dark">Get Yours!</a>
                     </div>
                     <div class="pl-lg-3 col-sm-4 offset-sm-0 offset-1 pt-3">
                         <div class="coupon-sale-content">
@@ -116,9 +116,8 @@
     <div class="container">
         <nav aria-label="breadcrumb" class="breadcrumb-nav">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="demo4.html"><i class="icon-home"></i></a></li>
-                <li class="breadcrumb-item"><a href="#">Men</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Accessories</li>
+                <li class="breadcrumb-item"><a href="{{ url('/') }}"><i class="icon-home"></i></a></li>
+                <li class="breadcrumb-item active"><a href="#">Shop</a></li>
             </ol>
         </nav>
 
@@ -179,7 +178,7 @@
                         <!-- End .toolbox-item -->
 
                         <div class="toolbox-item layout-modes">
-                            <a href="shop.html" class="layout-btn btn-grid active" title="Grid">
+                            <a href="{{ url('/') }}" class="layout-btn btn-grid active" title="Grid">
                                 <i class="icon-mode-grid"></i>
                             </a>
                             <a href="#" class="layout-btn btn-list" title="List">
@@ -196,7 +195,7 @@
                         <div class="col-6 col-sm-4">
                             <div class="product-default">
                                 <figure>
-                                    <a href="product.html">
+                                    <a href="{{ route('product.details', $product->id) }}">
                                         <img src="{{ asset('products/' . $product->image) }}" width="280"
                                             height="280" alt="product" />
                                         <img src="{{ asset('products/' . $product->image) }}" width="280"
