@@ -146,7 +146,7 @@
                         <label class="badge badge-success"></label><a
                             class="sidebar-link sidebar-title
                     {{ Route::currentRouteName() == 'leads' ? 'active' : '' }}"
-                            href="{{ route('leads') }}"><span class="lan-3"><i class="fa fa-comments fa-lg"
+                            href="{{ route('leads') }}"><span class="lan-3"><i class="fa fa-question-circle fa-lg"
                                     aria-hidden="true"></i>Leads Management
                             </span>
                         </a>
