@@ -365,6 +365,11 @@ class WebsiteController extends Controller
             $order_details->save();
         }
         if (Cart::where('user_id', Auth::id())->delete()) {
+            $urlhtml = view('email_templates.order_confirmation')->render();
+            $subject = "Order Placed Successfully!";
+            $email = Auth::user()->email;
+            $data = ['email' => $email, 'subject' => $subject, 'html' => $urlhtml];
+            email($data);
             return ['status' => 200, 'message' => 'Order Placed Successfully'];
         } else {
             return ['status' => 400, 'message' => 'Something went wrong'];
@@ -1071,11 +1076,6 @@ class WebsiteController extends Controller
         return view("website.contact-us", get_defined_vars());
     }
 
-    public function forget_password()
-    {
-        return view("website.forget-password");
-    }
-
     public function reset_password(Request $request, $token)
     {
 
@@ -1399,5 +1399,15 @@ class WebsiteController extends Controller
 
         $leads = Leads::with('products')->get();
         return view('admin_dashboard.leads.index', get_defined_vars());
+    }
+
+    public function forgot_password()
+    {
+        return view('forgot-password');
+    }
+
+    public function update_password()
+    {
+        return view('update-password');
     }
 }

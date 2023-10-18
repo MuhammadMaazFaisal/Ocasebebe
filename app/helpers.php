@@ -79,3 +79,35 @@ function gettotalusers()
     $user = User::all()->where('role', 2);
     return count($user);
 }
+
+function email($data)
+{
+    $url = 'https://api.brevo.com/v3/smtp/email';
+    $apiKey = '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';
+    $data = [
+        'sender' => [
+            'name' => "Ô'CASE BÉBÉ",
+            'email' => 'ocasebebe@gmail.com'
+        ],
+        'to' => [
+            ['email' => $data['email']],
+        ],
+        'htmlContent' => $data['html'],
+        'subject' => $data['subject'],
+    ];
+
+    $headers = [
+        'Accept: application/json',
+        'Content-Type: application/json',
+        "api-key: $apiKey"
+    ];
+
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    $response = curl_exec($ch);
+    // dd($response);
+    curl_close($ch);
+}

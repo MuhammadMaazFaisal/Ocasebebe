@@ -33,6 +33,11 @@ Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/register', [LoginController::class, 'register'])->name('register');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('forgot-password', [WebsiteController::class, 'forgot_password'])->name('forgot.password');
+Route::post('forget-password', [LoginController::class, 'forgot_password_email'])->name('forgot.password_email');
+Route::get('update-password', [WebsiteController::class, 'update_password'])->name('update.password');
+Route::post('verify-code', [LoginController::class, 'verify_code'])->name('verify.code');
+Route::post('change-password', [LoginController::class, 'change_password'])->name('change.password');
 
 // Pages routes
 Route::get('who-we-are', function () {
