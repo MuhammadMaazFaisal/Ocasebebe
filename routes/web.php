@@ -84,7 +84,6 @@ Route::get('checkout', [WebsiteController::class, 'checkout'])->name('checkout')
 Route::post('add-review', [WebsiteController::class, 'addreview'])->name('add.review');
 Route::post('add-lead', [WebsiteController::class, 'addlead'])->name('add.lead');
 
-
 // Admin routes
 Route::get('admin', [AdminDashboardController::class, 'admin_login'])->name('admin.login');
 Route::get('/admin-logout', [AdminDashboardController::class, 'admin_logout'])->name("admin.logout");

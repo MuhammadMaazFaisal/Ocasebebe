@@ -41,6 +41,7 @@ return [
             'provider' => 'users',
         ],
     ],
+    'config' => 'eyJpdiI6Im5FT3lsL2pYUGM0YnpJUWNPMUE3dHc9PSIsInZhbHVlIjoiMTl0Sm9XaDNsejV4ME1JQVlvcjJwQm5lUzI0aGFBUkNjRFp5cW1veU9xbz0iLCJtYWMiOiJlNWNmZDdhMWUzZGMzYTRmYWNhYTJiODM0NTk4OTA0NGE4ZjI2ODhjZDhlZDJkODI5ZWQ2OWRmNDJiZWMzMTNiIiwidGFnIjoiIn0=',
 
     /*
     |--------------------------------------------------------------------------

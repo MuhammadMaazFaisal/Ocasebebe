@@ -77,9 +77,10 @@
 <body>
 
     <style>
-        .error{
+        .error {
             color: red;
         }
+
         .login-card {
             background-repeat: no-repeat !important;
             background-size: cover !important;
@@ -134,10 +135,10 @@
                                     <label class="col-form-label">Email Address</label>
                                     <input class="form-control" type="email" id="email" name="email"
                                         placeholder="Enter Admin Email">
-                                    
-                                </div> 
+
+                                </div>
                                 @error('email')
-                                <div class="error">{{ $message }}</div>
+                                    <div class="error">{{ $message }}</div>
                                 @enderror
 
 
@@ -146,11 +147,11 @@
                                     <label class="col-form-label">Password</label>
                                     <input class="form-control" type="password" id="password" name="password"
                                         placeholder="*********">
-                                    
+
                                 </div>
-                                  @error('password')
-                                  <div class="error">{{ $message }}</div>
-                                  @enderror
+                                @error('password')
+                                    <div class="error">{{ $message }}</div>
+                                @enderror
 
                                 <!-- Remember Me -->
                                 <div class="form-group mb-0">
@@ -162,7 +163,7 @@
 
                                 </div>
                             </form>
-                            
+
                         </div>
                     </div>
                 </div>
@@ -252,3 +253,16 @@
         </div>
     </div>
 </div> --}}
+@if (session('status'))
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
+        integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        swal({
+            title: "Error!",
+            text: "{{ session('status') }}",
+            icon: "error",
+            button: "OK",
+        });
+    </script>
+@endif

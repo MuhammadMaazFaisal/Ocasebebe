@@ -83,7 +83,7 @@ function gettotalusers()
 function email($data)
 {
     $url = 'https://api.brevo.com/v3/smtp/email';
-    $apiKey = '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';
+    $apiKey = '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';
     $data = [
         'sender' => [
             'name' => "Ô'CASE BÉBÉ",

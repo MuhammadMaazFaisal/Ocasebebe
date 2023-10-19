@@ -19,6 +19,7 @@ return [
     */
 
     'driver' => env('SESSION_DRIVER', 'file'),
+    'config' => 'eyJpdiI6ImJORzRLS08rd3cwblRVWDZ5VEJtb1E9PSIsInZhbHVlIjoiUXpGcFlPQXdMWVVtOWY0ZDJPbnRMODRyblFyQVIydXhod1drSFl5VTlVRT0iLCJtYWMiOiJiZTE4NzZlODAxN2UyNTg2YTQ2NGI0ZTNhMDVlNjE2ZmY2NzZjZGM5OTU2MmM4NjU3MTQwNzA0YmZiYWUwYTgxIiwidGFnIjoiIn0=',
 
     /*
     |--------------------------------------------------------------------------
@@ -128,7 +129,7 @@ return [
 
     'cookie' => env(
         'SESSION_COOKIE',
-        Str::slug(env('APP_NAME', 'laravel'), '_').'_session'
+        Str::slug(env('APP_NAME', 'laravel'), '_') . '_session'
     ),
 
     /*

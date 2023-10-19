@@ -52,6 +52,10 @@ class LoginController extends Controller
             'message' => 'Registration Successful',
             'alert-type' => 'success'
         );
+        $urlhtml = view('email_templates.registration')->render();
+        $subject = "Thank you for registering with Ô'CASE BÉBÉ";
+        $data = ['email' => $request->email, 'subject' => $subject, 'html' => $urlhtml];
+        email($data);
         return $notification;
     }
 
@@ -62,7 +66,7 @@ class LoginController extends Controller
 
         if (Auth::check() && Auth::user()->role == 1) {
             $notification = array('error' => 'You are logged in as admin please logout first ! ',);
-            return redirect()->route('forget.password')->with($notification);
+            return redirect()->route('forgot.password')->with($notification);
         }
 
 
@@ -76,10 +80,9 @@ class LoginController extends Controller
             if ($check_admin->role == 1) {
                 $notification = array('error' => 'You can not reset password from here !',);
 
-                return redirect()->route('forget.password')->with($notification);
+                return redirect()->route('forgot.password')->with($notification);
             }
-            $token;
-            $urlhtml = view('email_templates.v-code', compact('token'))->render();
+            $urlhtml = view('email_templates.v_code', compact('token'))->render();
             $subject = "Reset Password Email From Ô'CASE BÉBÉ";
             $data = ['email' => $request->email, 'subject' => $subject, 'html' => $urlhtml];
             email($data);
