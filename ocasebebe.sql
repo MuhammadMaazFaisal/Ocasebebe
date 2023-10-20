@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Oct 17, 2023 at 08:50 PM
+-- Generation Time: Oct 20, 2023 at 09:49 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -77,8 +77,8 @@ CREATE TABLE `carts` (
   `id` bigint UNSIGNED NOT NULL,
   `product_id` bigint UNSIGNED NOT NULL,
   `user_id` bigint UNSIGNED NOT NULL,
-  `attribute_id` bigint UNSIGNED NOT NULL,
-  `length_id` bigint UNSIGNED NOT NULL,
+  `attribute_id` bigint UNSIGNED DEFAULT NULL,
+  `length_id` bigint UNSIGNED DEFAULT NULL,
   `quantity` int NOT NULL,
   `price` decimal(8,2) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -185,6 +185,15 @@ CREATE TABLE `orders` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `user_id`, `customer_name`, `customer_email`, `customer_address`, `quantity`, `total_price`, `payment_method`, `created_at`, `updated_at`) VALUES
+(4, '5', 'Question 1', 'm.maazfaisal0301@gmail.com', '123', '1', '20', 'Cash on Delivery', '2023-10-18 17:20:43', '2023-10-18 17:20:43'),
+(5, '4', 'Question 1', 'fredaston491@gmail.com', '123', '1', '200', 'Cash on Delivery', '2023-10-20 16:31:52', '2023-10-20 16:31:52'),
+(6, '4', 'Question 1', 'fredaston491@gmail.com', '123', '1', '200', 'Cash on Delivery', '2023-10-20 16:32:20', '2023-10-20 16:32:20');
+
 -- --------------------------------------------------------
 
 --
@@ -197,7 +206,7 @@ CREATE TABLE `order_details` (
   `product_id` int NOT NULL,
   `product_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `product_price` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `product_discount_price` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `product_discount_price` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `product_quantity` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `product_image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `product_description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -205,6 +214,14 @@ CREATE TABLE `order_details` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `order_details`
+--
+
+INSERT INTO `order_details` (`id`, `order_id`, `product_id`, `product_name`, `product_price`, `product_discount_price`, `product_quantity`, `product_image`, `product_description`, `product_category`, `created_at`, `updated_at`) VALUES
+(3, 4, 1, 'Dummy Product', '25.00', '20.00', '1', '1697249478.png', 'This is the main description', '4', '2023-10-18 17:20:43', '2023-10-18 17:20:43'),
+(4, 6, 2, 'Product 12', '100.00', NULL, '2', '1697835793.jpg', 'fadsf', '14', '2023-10-20 16:32:20', '2023-10-20 16:32:20');
 
 -- --------------------------------------------------------
 
@@ -271,6 +288,33 @@ CREATE TABLE `password_resets` (
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `password_resets`
+--
+
+INSERT INTO `password_resets` (`email`, `token`, `created_at`) VALUES
+('123@gmail.com', 'oTIqHA', '2023-10-18 15:57:23'),
+('123@gmail.com', 'zcOJfZ', '2023-10-18 15:58:08'),
+('admin@bodymindspirit.com', 'GDOB59', '2023-10-18 15:58:27'),
+('123@gmail.com', 'G92hth', '2023-10-18 15:59:45'),
+('fredaston491@gmail.com', '6kSy5V', '2023-10-18 16:01:33'),
+('123@gmail.com', 'IqiaEy', '2023-10-18 16:03:43'),
+('123@gmail.com', '92qfYK', '2023-10-18 16:04:07'),
+('123@gmail.com', 'kfOhyf', '2023-10-18 16:04:14'),
+('123@gmail.com', 'D9PWWf', '2023-10-18 16:04:29'),
+('m.maazfaisal0301@gmail.com', 'mXcGMtjx96', '2023-10-18 17:15:13'),
+('m.maazfaisal0301@gmail.com', 'QcWWpOc4lo', '2023-10-18 17:16:29'),
+('m.maazfaisal0301@gmail.com', 'r5qxp9JLFq', '2023-10-18 17:18:02'),
+('m.maazfaisal0301@gmail.com', 'Fo42dXUAgd', '2023-10-18 17:19:05'),
+('m.maazfaisal0301@gmail.com', 'ylptPVOFVR', '2023-10-19 11:36:06'),
+('m.maazfaisal0301@gmail.com', 'p3ktYTr6iw', '2023-10-19 11:38:32'),
+('m.maazfaisal0301@gmail.com', 'TBonGgYtPM', '2023-10-19 11:41:03'),
+('m.maazfaisal0301@gmail.com', 'V73nNxDOHo', '2023-10-19 11:44:50'),
+('m.maazfaisal0301@gmail.com', '8fIcYrnugP', '2023-10-19 11:46:23'),
+('m.maazfaisal0301@gmail.com', 'Z9PIyMwKPG', '2023-10-19 11:46:26'),
+('m.maazfaisal0301@gmail.com', 'uY6dkBDzP9', '2023-10-19 11:48:13'),
+('m.maazfaisal0301@gmail.com', 'H4H8dpgOwQ', '2023-10-19 11:48:50');
+
 -- --------------------------------------------------------
 
 --
@@ -297,7 +341,7 @@ CREATE TABLE `personal_access_tokens` (
 
 CREATE TABLE `products` (
   `id` bigint UNSIGNED NOT NULL,
-  `length_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `length_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `parent_category_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `product_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `price` decimal(10,2) NOT NULL,
@@ -316,7 +360,8 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `length_id`, `parent_category_id`, `product_name`, `price`, `discount_price`, `image`, `multiple_image`, `short_description`, `description`, `status`, `created_at`, `updated_at`) VALUES
-(1, '[\"1\",\"2\"]', '4', 'Dummy Product', '25.00', '20.00', '1697249478.png', '[\"169724947926.jpg\"]', 'This is short description', 'This is the main description', 1, '2023-10-13 21:11:19', '2023-10-14 07:35:00');
+(1, '[\"1\",\"2\"]', '4', 'Dummy Product', '25.00', '20.00', '1697249478.png', '[\"169724947926.jpg\"]', 'This is short description', 'This is the main description', 1, '2023-10-13 21:11:19', '2023-10-14 07:35:00'),
+(2, NULL, '14', 'Product 12', '100.00', NULL, '1697838498.jpg', NULL, 'sad', 'fadsf', 1, '2023-10-20 16:03:13', '2023-10-20 16:48:18');
 
 -- --------------------------------------------------------
 
@@ -383,7 +428,9 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `role`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'Admin', 'admin@gmail.com', 1, '$2y$10$2C.JE9RoInrYBpjqeA4NhOeZlLi7LgkJdWJ8CRKrfnhG4CkuzSeEm', NULL, '2023-10-13 19:07:22', '2023-10-13 19:07:22'),
-(4, NULL, '123@gmail.com', 2, '$2y$10$M/H2gsmkoEHVkY0XYP/Sne7qOceKSK5iTG/5BcIPJUwfIaIjA8Y3C', NULL, '2023-10-17 13:08:41', '2023-10-17 13:08:41');
+(4, NULL, '123@gmail.com', 2, '$2y$10$M/H2gsmkoEHVkY0XYP/Sne7qOceKSK5iTG/5BcIPJUwfIaIjA8Y3C', NULL, '2023-10-17 13:08:41', '2023-10-17 13:08:41'),
+(5, NULL, 'm.maazfaisal0301@gmail.com', 2, '$2y$10$Ge7cfDx9MVsfUSvdjyLNOOxOsbglsIh5SMJLvDCFa137kz6Q4PfC6', NULL, '2023-10-18 16:33:28', '2023-10-18 16:45:42'),
+(6, NULL, 'm.maazfaisal0302@gmail.com', 2, '$2y$10$P2rJaK6c8fdzpJiaC5sRCOGFW7Tln7bgebwhKqLc4gqcpJV7SwVVy', NULL, '2023-10-19 12:45:57', '2023-10-19 12:45:57');
 
 -- --------------------------------------------------------
 
@@ -554,7 +601,7 @@ ALTER TABLE `attribute_values`
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `leads`
@@ -578,13 +625,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `parent_categories`
@@ -602,7 +649,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `product_attributes`
@@ -620,7 +667,7 @@ ALTER TABLE `reviews`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `variants`
