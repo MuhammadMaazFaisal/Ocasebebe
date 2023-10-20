@@ -11,10 +11,7 @@
         </nav>
 
         <div class="product-single-container product-single-default">
-            <div class="cart-message d-none">
-                <strong class="single-cart-notice">“{{ $product->product_name }}”</strong>
-                <span>has been added to your cart.</span>
-            </div>
+            
 
             <div class="row">
                 <div class="col-lg-5 col-md-6 product-single-gallery">
@@ -35,13 +32,15 @@
                                     height="468" alt="product" />
                             </div>
 
-                            @foreach (json_decode($product->multiple_image) as $image)
-                                <div class="product-item">
-                                    <img class="product-single-image" src={{ asset('products/' . $image) }}
-                                        data-zoom-image={{ asset('products/' . $image) }} width="468" height="468"
-                                        alt="product" />
-                                </div>
-                            @endforeach
+                            @if (json_decode($product->multiple_image))
+                                @foreach (json_decode($product->multiple_image) as $image)
+                                    <div class="product-item">
+                                        <img class="product-single-image" src={{ asset('products/' . $image) }}
+                                            data-zoom-image={{ asset('products/' . $image) }} width="468"
+                                            height="468" alt="product" />
+                                    </div>
+                                @endforeach
+                            @endif
                         </div>
                         <!-- End .product-single-carousel -->
                         <span class="prod-full-screen">
@@ -56,12 +55,14 @@
                             <img src={{ asset('products/' . $product->image) }} width="110" height="110"
                                 alt="product-thumbnail" />
                         </div>
-                        @foreach (json_decode($product->multiple_image) as $image)
-                            <div class="owl-dot">
-                                <img src={{ asset('products/' . $image) }} width="110" height="110"
-                                    alt="product-thumbnail" />
-                            </div>
-                        @endforeach
+                        @if (json_decode($product->multiple_image))
+                            @foreach (json_decode($product->multiple_image) as $image)
+                                <div class="owl-dot">
+                                    <img src={{ asset('products/' . $image) }} width="110" height="110"
+                                        alt="product-thumbnail" />
+                                </div>
+                            @endforeach
+                        @endif
                     </div>
                 </div>
                 <!-- End .product-single-gallery -->
@@ -121,10 +122,10 @@
 
                     <div class="price-box">
                         @if ($product->discount_price)
-                            <span class="old-price"> {{ $product->price }} FCFA </span>
-                            <span class="product-price"> {{ $product->discount_price }} FCFA </span>
+                            <span class="old-price"> {{ $product->price }} CFA </span>
+                            <span class="product-price"> {{ $product->discount_price }} CFA </span>
                         @else
-                            <span class="product-price"> {{ $product->price }} FCFA </span>
+                            <span class="product-price"> {{ $product->price }} CFA </span>
                         @endif
                     </div>
                     <!-- End .price-box -->
@@ -135,7 +136,7 @@
                         </p>
                     </div>
                     <div class="product-filters-container custom-product-filters pt-0 pb-2 mb-0">
-                        @if (count(json_decode($product_attributes)) > 0)
+                        @if (json_decode($product_attributes))
                             <div class="product-single-filter">
                                 <label>Color:</label>
 
@@ -151,7 +152,7 @@
                                 </ul>
                             </div>
                         @endif
-                        @if (count(json_decode($lengthnames)) > 0)
+                        @if ($lengthnames)
                             <div class="product-single-filter">
                                 <label>Size:</label>
 
@@ -167,7 +168,9 @@
 
                         <div class="product-single-filter">
                             <label></label>
-                            <a class="font1 text-uppercase clear-btn" href="#">Clear</a>
+                            @if ($lengthnames && $product_attributes)
+                                <a class="font1 text-uppercase clear-btn" href="#">Clear</a>
+                            @endif
                         </div>
                         <!---->
                     </div>
@@ -518,11 +521,11 @@
                                 <!-- End .product-container -->
                                 <div class="price-box">
                                     @if ($related_product->discount_price)
-                                        <del class="old-price"> {{ $related_product->price }} FCFA </del>
-                                        <span class="product-price"> {{ $related_product->discount_price }} FCFA
+                                        <del class="old-price"> {{ $related_product->price }} CFA </del>
+                                        <span class="product-price"> {{ $related_product->discount_price }} CFA
                                         </span>
                                     @else
-                                        <span class="product-price"> {{ $related_product->price }} FCFA </span>
+                                        <span class="product-price"> {{ $related_product->price }} CFA </span>
                                     @endif
                                 </div>
                                 <!-- End .price-box -->

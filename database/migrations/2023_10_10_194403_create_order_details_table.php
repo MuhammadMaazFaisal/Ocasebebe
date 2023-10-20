@@ -19,6 +19,8 @@ class CreateOrderDetailsTable extends Migration
             $table->integer('product_id')->references('id')->on('products');
             $table->string('product_name');
             $table->string('product_price');
+            $table->string('product_attribute')->nullable();
+            $table->string('product_length')->nullable();
             $table->string('product_discount_price')->nullable();
             $table->string('product_quantity');
             $table->string('product_image');

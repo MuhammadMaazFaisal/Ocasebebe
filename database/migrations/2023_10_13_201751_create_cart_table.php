@@ -17,8 +17,8 @@ class CreateCartTable extends Migration
             $table->id();
             $table->foreignId('product_id')->constrained('products')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('attribute_id')->constrained('attribute_values')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('length_id')->constrained('length')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('attribute_id')->constrained('attribute_values')->onDelete('cascade')->onUpdate('cascade')->nullable();
+            $table->foreignId('length_id')->constrained('length')->onDelete('cascade')->onUpdate('cascade')->nullable();
             $table->integer('quantity');
             $table->decimal('price', 8, 2);
             $table->timestamps();

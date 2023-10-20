@@ -297,41 +297,51 @@
 
         let color_ul = document.querySelector('.config-color-list');
         var color = '';
-        for (let i = 0; i < color_ul.children.length; i++) {
-            if (color_ul.children[i].classList.contains('active')) {
-                color = color_ul.children[i].getAttribute('data-id');
+        if (color_ul) {
+            for (let i = 0; i < color_ul.children.length; i++) {
+                if (color_ul.children[i].classList.contains('active')) {
+                    color = color_ul.children[i].getAttribute('data-id');
+                }
             }
         }
         let length_ul = document.querySelector('.config-lengths');
         var length = '';
-        for (let i = 0; i < length_ul.children.length; i++) {
-            if (length_ul.children[i].classList.contains('active')) {
-                length = length_ul.children[i].getAttribute('data-id');
+        if (length_ul) {
+            for (let i = 0; i < length_ul.children.length; i++) {
+                if (length_ul.children[i].classList.contains('active')) {
+                    length = length_ul.children[i].getAttribute('data-id');
+                }
             }
         }
         var quantity = $(".horizontal-quantity")[0].value;
-        var product_id = @if(isset($product)) "{{ $product->id }}" @else 0 @endif; 
+        var product_id =
+            @if (isset($product))
+                "{{ $product->id }}"
+            @else
+                0
+            @endif ;
 
         $.ajax({
             url: "{{ route('add_to_cart') }}",
             type: "POST",
             data: {
                 _token: '{{ csrf_token() }}',
-                id: product_id, 
+                id: product_id,
                 quantity: quantity,
                 color_id: color,
                 length: length
             },
 
             success: function(response) {
-                if (response.status == 403) {
+                if (response.status == 403 ) {
                     swal({
                         title: "Warning!",
                         text: response.message,
                         icon: "warning",
                         button: "OK",
+                    }).then(function() {
+                        window.location.href = "{{ route('login') }}";
                     });
-                    return false;
                 }
 
                 if (response.status == 501) {
@@ -340,8 +350,9 @@
                         text: response.message,
                         icon: "warning",
                         button: "OK",
+                    }).then(function() {
+                        window.location.href = "{{ route('login') }}";
                     });
-                    return false;
                 }
 
                 if (response.status == 200) {
@@ -360,6 +371,8 @@
                         text: response.message,
                         icon: "error",
                         button: "OK",
+                    }).then(function() {
+                        location.reload();
                     });
                 }
             }

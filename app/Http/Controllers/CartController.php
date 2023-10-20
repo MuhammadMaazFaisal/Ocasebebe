@@ -18,6 +18,12 @@ class CartController extends Controller
     public function add_to_cart(Request $request)
     {
 
+        if (!Auth::check()) {
+            return response()->json([
+                'status' => 404,
+                'message' => "Please Login First !"
+            ]);
+        }
         $alread_in_carts = Cart::where('user_id', Auth::id())->where('product_id', $request->id)->get();
         if (count($alread_in_carts) > 0) {
             return response()->json([
@@ -35,9 +41,17 @@ class CartController extends Controller
         $addcart->user_id = Auth::user()->id;
         $addcart->product_id = $request->id;
         $addcart->quantity =  $request->quantity;
-        $addcart->attribute_id =  $request->color_id;
+        if ($request->color_id != null) {
+            $addcart->attribute_id =  $request->color_id;
+        } else {
+            $addcart->attribute_id =  null;
+        }
         $addcart->price =  $price;
-        $addcart->length_id =  $request->length;
+        if ($request->length != null) {
+            $addcart->length_id =  $request->length;
+        } else {
+            $addcart->length_id =  null;
+        }
         $addcart->save();
 
         $cart_counts = Cart::where('user_id', Auth::user()->id)->count();

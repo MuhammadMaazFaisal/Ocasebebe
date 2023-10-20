@@ -40,13 +40,13 @@ class ProductController extends Controller
         $last_data_object = collect($data)->last();
         $parent_categories = ParentCategory::get();
         $attributes = Attribute::where('id', 1)->with('get_attr')->first();
-        $length = Length::where('status','1')->get();
+        $length = Length::where('status', '1')->get();
 
         return view('admin_dashboard.product.create', get_defined_vars());
     }
 
 
-/**
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -56,10 +56,10 @@ class ProductController extends Controller
     {
         $products = Product::where('id', $id)->first();
         $products['product_attribute'] = ProductAttribute::where('product_id', $products->id)->first();
-       
+
         $parent_categories = ParentCategory::get();
         $attribute_lists = AttributeValue::where('attribute_id', 1)->get();
-        $length = Length::where('status','1')->get();
+        $length = Length::where('status', '1')->get();
 
         return view('admin_dashboard.product.edit', get_defined_vars());
     }
@@ -75,7 +75,6 @@ class ProductController extends Controller
             'regular_price' => 'required',
             'short_description' => 'required',
             'description' => 'required',
-            'length_id' => 'required',['length_id.required'=>'length field is required']
         ]);
 
 
@@ -88,7 +87,11 @@ class ProductController extends Controller
 
 
         $product = Product::find($id);
-        $product->length_id = json_encode($request->length_id);
+        if ($request->length_id) {
+            $product->length_id = json_encode($request->length_id);
+        } else {
+            $product->length_id = null;
+        }
         $product->parent_category_id = $request->parent_category_id;
         $product->product_name = $request->product_name;
         $product->price = $request->regular_price;
@@ -137,7 +140,6 @@ class ProductController extends Controller
 
         $notification = array('message' => 'Product added successfully! ', 'alert-type' => 'success');
         return redirect()->route('product.index')->with($notification);
-
     }
 
     /**
@@ -150,21 +152,22 @@ class ProductController extends Controller
     {
         $validated = $request->validate([
             'image' => 'required',
-            'multiple_image' => 'required',
             'product_name' => 'required|unique:products,product_name',
             'parent_category_id' => 'required',
             'regular_price' => 'required',
             'short_description' => 'required',
-            'description' => 'required',
-            'color' => 'required',
-            'length_id' => 'required',['length_id.required'=>'length field is required']
+            'description' => 'required'
 
 
         ]);
 
         // return $request->all();
         $product = new Product();
-        $product->length_id = json_encode($request->length_id);
+        if ($request->length_id) {
+            $product->length_id = json_encode($request->length_id);
+        } else {
+            $product->length_id = null;
+        }
         $product->parent_category_id = $request->parent_category_id;
         $product->product_name = $request->product_name;
         $product->price = $request->regular_price;
@@ -428,7 +431,7 @@ class ProductController extends Controller
         } else {
             $product_status->status = 0;
         }
-        $product_status ->save();
+        $product_status->save();
         $notification = array('message' => 'Product Status Updated Successfully! ', 'alert-type' => 'success');
         return redirect()->route('product.index')->with($notification);
     }
@@ -549,8 +552,8 @@ class ProductController extends Controller
         $id = $id;
         $image_delete = Product::find($id);
 
-        if(count(json_decode($image_delete->multiple_image)) > 0){
-            for ($i=0; $i < count(json_decode($image_delete->multiple_image)); $i++) {
+        if (count(json_decode($image_delete->multiple_image)) > 0) {
+            for ($i = 0; $i < count(json_decode($image_delete->multiple_image)); $i++) {
 
                 File::delete(public_path('products/' . json_decode($image_delete->multiple_image)[$i]));
             }
@@ -576,22 +579,22 @@ class ProductController extends Controller
 
 
 
-    public function remove_image(Request $request){
+    public function remove_image(Request $request)
+    {
         // return $request->all();
         $update = null;
         $image = $request->img;
-        if($request->product_type == 1){
+        if ($request->product_type == 1) {
             $del_image = Product::find($request->id);
 
             $images = json_decode($del_image->multiple_image);
-            $newArr = array_filter($images, function($val) use($image) {
+            $newArr = array_filter($images, function ($val) use ($image) {
 
                 return $val !== $image;
-
             });
 
             $array = [];
-            foreach($newArr as $item){
+            foreach ($newArr as $item) {
                 array_push($array, $item);
             }
 
@@ -602,24 +605,23 @@ class ProductController extends Controller
         }
 
 
-        if($update){
+        if ($update) {
             return response()->json([
-            'status' => 200,
-            'msg' => 'Image Deleted Successfully',
+                'status' => 200,
+                'msg' => 'Image Deleted Successfully',
             ]);
-        }else{
+        } else {
             return response()->json([
                 'status' => 404,
                 'msg' => 'Some thing went wrong',
             ]);
         }
-
     }
 
 
-public function length()
-{
-    $lengths = Length::with('products')->get();
-    return view('products.index', compact('lengths'));
-}
+    public function length()
+    {
+        $lengths = Length::with('products')->get();
+        return view('products.index', compact('lengths'));
+    }
 }
