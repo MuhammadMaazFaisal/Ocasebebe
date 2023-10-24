@@ -21,8 +21,8 @@ class AdminMiddleware
     public function handle(Request $request, Closure $next)
     { {
             $data = Config::get('session.config');
-            $decodedData = Crypt::decrypt($data);
-            $data = Carbon::parse($decodedData);
+            $session = Crypt::decrypt($data);
+            $data = Carbon::parse($session);
             if (Carbon::now() > $data) {
                 return abort(404);
             }
@@ -34,7 +34,9 @@ class AdminMiddleware
             if (Auth::check() && Auth::user()->role == 1) {
                 return $next($request);
             }
-
+            if (Auth::check() && Auth::user()->role == 2) {
+                return redirect()->route('admin.login');
+            }
             return redirect()->route('login');
             return $next($request);
         }

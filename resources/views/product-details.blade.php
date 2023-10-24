@@ -11,13 +11,25 @@
         </nav>
 
         <div class="product-single-container product-single-default">
-            
+
 
             <div class="row">
                 <div class="col-lg-5 col-md-6 product-single-gallery">
                     <div class="product-slider-container">
                         <div class="label-group">
-                            <div class="product-label label-hot">HOT</div>
+                            <div class="product-label label-hot">
+                                @if ($product->ribbon == '1')
+                                    New Arrival
+                                @elseif ($product->ribbon == '2')
+                                    Best Seller
+                                @elseif ($product->ribbon == '3')
+                                    Trending
+                                @elseif ($product->ribbon == '4')
+                                    Most Popular
+                                @elseif ($product->ribbon == '5')
+                                    Sale
+                                @endif
+                            </div>
                             @if ($product->discount_price)
                                 <div class="product-label label-sale">
                                     {{ (1 - $product->discount_price / $product->price) * 100 }}%
@@ -178,6 +190,9 @@
 
                     <ul class="single-info-list">
                         <li>
+                            Stock: <strong id="stock_count">{{ $product->stock }}</strong>
+                        </li>
+                        <li>
                             CATEGORY: <strong><a href="#"
                                     class="product-category">{{ $category->parent_category_name }}</a></strong>
                         </li>
@@ -188,14 +203,20 @@
 
 
                     <div class="product-action">
-                        <div class="product-single-qty">
-                            <input class="horizontal-quantity form-control" type="text">
-                        </div>
-                        <!-- End .product-single-qty -->
+                        @if ($product->stock > 0)
+                            <div class="product-single-qty">
+                                <input class="horizontal-quantity form-control" type="text">
+                            </div>
+                            <!-- End .product-single-qty -->
 
-                        <a href="javascript:;" id="add-btn" class="btn btn-dark add-cart mr-2" title="Add to Cart">Add
-                            to
-                            Cart</a>
+                            <a href="javascript:;" id="add-btn" class="btn btn-dark add-cart mr-2"
+                                title="Add to Cart">Add
+                                to
+                                Cart</a>
+                        @else
+                            <button href="javascript:;" class="btn btn-dark mr-2 mb-1" title="Out of Stock" disabled>Out
+                                of Stock</button>
+                        @endif
                         <a href="{{ route('cart') }}" class="btn btn-gray view-cart d-none">View cart</a>
                         <div class="login-form-container">
                             <h4>
@@ -494,11 +515,23 @@
                                         height="280" alt="product">
                                 </a>
                                 <div class="label-group">
-                                    <div class="product-label label-hot">HOT</div>
-                                    <div class="product-label label-sale">
-                                        {{ (1 - $related_product->discount_price / $related_product->price) * 100 }}%
+                                    <div class="product-label label-hot">
+                                        @if ($product->ribbon == '1')
+                                            New Arrival
+                                        @elseif ($product->ribbon == '2')
+                                            Best Seller
+                                        @elseif ($product->ribbon == '3')
+                                            Trending
+                                        @elseif ($product->ribbon == '4')
+                                            Most Popular
+                                        @elseif ($product->ribbon == '5')
+                                            Sale
+                                        @endif
+
+                                        <div class="product-label label-sale">
+                                            {{ (1 - $related_product->discount_price / $related_product->price) * 100 }}%
+                                        </div>
                                     </div>
-                                </div>
                             </figure>
                             <div class="product-details">
                                 <div class="category-list">

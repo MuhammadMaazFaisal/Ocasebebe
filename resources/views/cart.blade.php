@@ -28,41 +28,49 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($cart_items as $cart_item)
-                            <tr class="product-row">
-                                <td>
-                                    <figure class="product-image-container">
-                                        <a href="{{route('product.details',$cart_item->product->id)}}" class="product-image">
-                                            <img src="{{asset('products/'.$cart_item->product->image)}}" alt="product">
-                                        </a>
+                            @foreach ($cart_items as $cart_item)
+                                <tr class="product-row">
+                                    <td>
+                                        <figure class="product-image-container">
+                                            <a href="{{ route('product.details', $cart_item->product->id) }}"
+                                                class="product-image">
+                                                <img src="{{ asset('products/' . $cart_item->product->image) }}"
+                                                    alt="product">
+                                            </a>
 
-                                        <a href="#" onclick="delete_Item({{$cart_item->product_id}})" class="btn-remove icon-cancel" title="Remove Product"></a>
-                                    </figure>
-                                </td>
-                                <td class="product-col">
-                                    <h5 class="product-title">
-                                        <a href="{{route('product.details',$cart_item->product->id)}}">{{$cart_item->product->product_name}}</a>
-                                    </h5>
-                                </td>
-                                <td>
-                                    @if($cart_item->product->discount_price)
-                                    {{$cart_item->product->discount_price}}
-                                    @else
-                                    {{$cart_item->product->price}}
-                                    @endif
-                                    CFA</td>
-                                <td>
-                                    <div class="product-single-qty">
-                                        <input class="horizontal-quantity form-control" type="text" value="{{$cart_item->quantity}}" data-id="{{$cart_item->product_id}}">
-                                    </div><!-- End .product-single-qty -->
-                                </td>
-                                <td class="text-right"><span class="subtotal-price">
-                                        @if($cart_item->product->discount_price)
-                                        {{$cart_item->product->discount_price * $cart_item->quantity}}
+                                            <a href="#" onclick="delete_Item({{ $cart_item->product_id }})"
+                                                class="btn-remove icon-cancel" title="Remove Product"></a>
+                                        </figure>
+                                    </td>
+                                    <td class="product-col">
+                                        <h5 class="product-title">
+                                            <a
+                                                href="{{ route('product.details', $cart_item->product->id) }}">{{ $cart_item->product->product_name }}</a>
+                                        </h5>
+                                    </td>
+                                    <td>
+                                        @if ($cart_item->product->discount_price)
+                                            {{ $cart_item->product->discount_price }}
                                         @else
-                                        {{$cart_item->product->price * $cart_item->quantity}}
-                                        @endif CFA</span></td>
-                            </tr>
+                                            {{ $cart_item->product->price }}
+                                        @endif
+                                        CFA
+                                    </td>
+                                    <td>
+                                        <div class="product-single-qty">
+                                            <input class="horizontal-quantity form-control" type="text"
+                                                value="{{ $cart_item->quantity }}"
+                                                data-id="{{ $cart_item->product_id }}">
+                                        </div><!-- End .product-single-qty -->
+                                    </td>
+                                    <td class="text-right"><span class="subtotal-price">
+                                            @if ($cart_item->product->discount_price)
+                                                {{ $cart_item->product->discount_price * $cart_item->quantity }}
+                                            @else
+                                                {{ $cart_item->product->price * $cart_item->quantity }}
+                                            @endif CFA
+                                        </span></td>
+                                </tr>
                             @endforeach
                         </tbody>
 
@@ -104,7 +112,7 @@
                         <tbody>
                             <tr>
                                 <td>Subtotal</td>
-                                <td class="subtotal-price">{{$total_price}} CFA</td>
+                                <td class="subtotal-price">{{ $total_price }} CFA</td>
 
                             <tr>
                                 <td>Shipping Charges</td>
@@ -115,13 +123,13 @@
                         <tfoot>
                             <tr>
                                 <td>Total</td>
-                                <td class="subtotal-price">{{$total_price}} CFA</td>
+                                <td class="subtotal-price">{{ $total_price }} CFA</td>
                             </tr>
                         </tfoot>
                     </table>
 
                     <div class="checkout-methods">
-                        <a href="{{route('checkout')}}" class="btn btn-block btn-dark">Proceed to Checkout
+                        <a href="{{ route('checkout') }}" class="btn btn-block btn-dark">Proceed to Checkout
                             <i class="fa fa-arrow-right"></i></a>
                     </div>
                 </div><!-- End .cart-summary -->
@@ -138,17 +146,17 @@
         var id = element.getAttribute('data-id');
         var quantity = element.value;
         $.ajax({
-            url: "{{route('quantity_cart_item')}}"
-            , method: "get"
-            , data: {
-                id: id
-                , quantity: quantity
-            }
-            , success: function(data) {
-                if (data.status == 200){
-                    total=document.getElementsByClassName('subtotal-price');
+            url: "{{ route('quantity_cart_item') }}",
+            method: "get",
+            data: {
+                id: id,
+                quantity: quantity
+            },
+            success: function(data) {
+                if (data.status == 200) {
+                    total = document.getElementsByClassName('subtotal-price');
                     for (let i = 0; i < total.length; i++) {
-                        total[i].innerHTML=data.total_price+" CFA";
+                        total[i].innerHTML = data.total_price + " CFA";
                     }
                 }
             }
@@ -181,5 +189,14 @@
             })
         }
     })
-
 </script>
+@if (session('message'))
+    <script>
+        swal({
+            title: "Error!",
+            text: "{{ session('message') }}",
+            icon: "error",
+            button: "OK",
+        })
+    </script>
+@endif

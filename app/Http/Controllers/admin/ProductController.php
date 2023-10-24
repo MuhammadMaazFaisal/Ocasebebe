@@ -75,6 +75,7 @@ class ProductController extends Controller
             'regular_price' => 'required',
             'short_description' => 'required',
             'description' => 'required',
+            'stock' => 'required',
         ]);
 
 
@@ -99,6 +100,12 @@ class ProductController extends Controller
         $product->status = 1;
         $product->short_description = $request->short_description;
         $product->description = $request->description;
+        $product->stock = $request->stock;
+        if ($request->ribbon) {
+            $product->ribbon = $request->ribbon;
+        } else {
+            $product->ribbon = null;
+        }
 
 
 
@@ -156,7 +163,9 @@ class ProductController extends Controller
             'parent_category_id' => 'required',
             'regular_price' => 'required',
             'short_description' => 'required',
-            'description' => 'required'
+            'description' => 'required',
+            'stock' => 'required',
+
 
 
         ]);
@@ -175,6 +184,12 @@ class ProductController extends Controller
         $product->status = 1;
         $product->short_description = $request->short_description;
         $product->description = $request->description;
+        $product->stock = $request->stock;
+        if ($request->ribbon) {
+            $product->ribbon = $request->ribbon;
+        } else {
+            $product->ribbon = null;
+        }
 
 
 

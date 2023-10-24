@@ -294,89 +294,106 @@
 
     $("#add-btn").on("click", function() {
 
-
-        let color_ul = document.querySelector('.config-color-list');
-        var color = '';
-        if (color_ul) {
-            for (let i = 0; i < color_ul.children.length; i++) {
-                if (color_ul.children[i].classList.contains('active')) {
-                    color = color_ul.children[i].getAttribute('data-id');
-                }
-            }
-        }
-        let length_ul = document.querySelector('.config-lengths');
-        var length = '';
-        if (length_ul) {
-            for (let i = 0; i < length_ul.children.length; i++) {
-                if (length_ul.children[i].classList.contains('active')) {
-                    length = length_ul.children[i].getAttribute('data-id');
-                }
-            }
-        }
+        var stock_count = $("#stock_count")[0].innerText;
         var quantity = $(".horizontal-quantity")[0].value;
-        var product_id =
-            @if (isset($product))
-                "{{ $product->id }}"
-            @else
-                0
-            @endif ;
+        stock_count = parseInt(stock_count);
+        quantity = parseInt(quantity);
 
-        $.ajax({
-            url: "{{ route('add_to_cart') }}",
-            type: "POST",
-            data: {
-                _token: '{{ csrf_token() }}',
-                id: product_id,
-                quantity: quantity,
-                color_id: color,
-                length: length
-            },
+        if (quantity > stock_count) {
 
-            success: function(response) {
-                if (response.status == 403 ) {
-                    swal({
-                        title: "Warning!",
-                        text: response.message,
-                        icon: "warning",
-                        button: "OK",
-                    }).then(function() {
-                        window.location.href = "{{ route('login') }}";
-                    });
-                }
+            swal({
+                title: "Error!",
+                text: "This much quantity is not available",
+                icon: "error",
+                button: "OK",
+            }).then(function() {
+                location.reload();
+            });
+        } else {
 
-                if (response.status == 501) {
-                    swal({
-                        title: "Warning!",
-                        text: response.message,
-                        icon: "warning",
-                        button: "OK",
-                    }).then(function() {
-                        window.location.href = "{{ route('login') }}";
-                    });
-                }
-
-                if (response.status == 200) {
-                    swal({
-                        title: "Success!",
-                        text: response.message,
-                        icon: "success",
-                        button: "OK",
-                    }).then(function() {
-                        location.reload();
-                    });
-
-                } else {
-                    swal({
-                        title: "Cart",
-                        text: response.message,
-                        icon: "error",
-                        button: "OK",
-                    }).then(function() {
-                        location.reload();
-                    });
+            let color_ul = document.querySelector('.config-color-list');
+            var color = '';
+            if (color_ul) {
+                for (let i = 0; i < color_ul.children.length; i++) {
+                    if (color_ul.children[i].classList.contains('active')) {
+                        color = color_ul.children[i].getAttribute('data-id');
+                    }
                 }
             }
-        });
+            let length_ul = document.querySelector('.config-lengths');
+            var length = '';
+            if (length_ul) {
+                for (let i = 0; i < length_ul.children.length; i++) {
+                    if (length_ul.children[i].classList.contains('active')) {
+                        length = length_ul.children[i].getAttribute('data-id');
+                    }
+                }
+            }
+            var quantity = $(".horizontal-quantity")[0].value;
+            var product_id =
+                @if (isset($product))
+                    "{{ $product->id }}"
+                @else
+                    0
+                @endif ;
+
+            $.ajax({
+                url: "{{ route('add_to_cart') }}",
+                type: "POST",
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    id: product_id,
+                    quantity: quantity,
+                    color_id: color,
+                    length: length
+                },
+
+                success: function(response) {
+                    if (response.status == 403) {
+                        swal({
+                            title: "Warning!",
+                            text: response.message,
+                            icon: "warning",
+                            button: "OK",
+                        }).then(function() {
+                            window.location.href = "{{ route('login') }}";
+                        });
+                    }
+
+                    if (response.status == 501) {
+                        swal({
+                            title: "Warning!",
+                            text: response.message,
+                            icon: "warning",
+                            button: "OK",
+                        }).then(function() {
+                            window.location.href = "{{ route('login') }}";
+                        });
+                    }
+
+                    if (response.status == 200) {
+                        swal({
+                            title: "Success!",
+                            text: response.message,
+                            icon: "success",
+                            button: "OK",
+                        }).then(function() {
+                            location.reload();
+                        });
+
+                    } else {
+                        swal({
+                            title: "Cart",
+                            text: response.message,
+                            icon: "error",
+                            button: "OK",
+                        }).then(function() {
+                            location.reload();
+                        });
+                    }
+                }
+            });
+        }
     });
 
 

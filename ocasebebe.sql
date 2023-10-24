@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Oct 20, 2023 at 09:49 PM
+-- Generation Time: Oct 24, 2023 at 10:05 PM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -70,6 +70,38 @@ INSERT INTO `attribute_values` (`id`, `attribute_id`, `attribute_value`, `color_
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `banners`
+--
+
+CREATE TABLE `banners` (
+  `id` bigint UNSIGNED NOT NULL,
+  `page` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `section` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` longtext COLLATE utf8mb4_unicode_ci,
+  `button_title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `button_link` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `banners`
+--
+
+INSERT INTO `banners` (`id`, `page`, `section`, `title`, `description`, `button_title`, `button_link`, `image`, `created_at`, `updated_at`) VALUES
+(1, 'Home', 'Slider 1', 'Jouets enfants', 'Une large sélection de produits au meilleur prix.', 'Achetez  maintenant', 'http://ocasebebe.test/public/category/23', '1698180793.jpg', NULL, '2023-10-24 16:07:37'),
+(2, 'Home', 'Slider 2', NULL, NULL, NULL, NULL, '1698180801.jpg', NULL, '2023-10-24 15:53:21'),
+(3, 'Home', 'Slider 3', NULL, NULL, NULL, NULL, '1698180808.jpg', NULL, '2023-10-24 15:53:28'),
+(4, 'Home', 'Banner 1', NULL, NULL, NULL, NULL, '1698180815.png', NULL, '2023-10-24 15:54:39'),
+(5, 'Home', 'Banner 2', NULL, NULL, NULL, NULL, '1698180822.jpg', NULL, '2023-10-24 15:54:45'),
+(6, 'Home', 'Banner 3', NULL, NULL, NULL, NULL, '1698180831.png', NULL, '2023-10-24 15:54:55'),
+(7, 'Home', 'Banner 4', NULL, NULL, NULL, NULL, '1698180839.jpg', NULL, '2023-10-24 15:55:03');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `carts`
 --
 
@@ -84,6 +116,13 @@ CREATE TABLE `carts` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `carts`
+--
+
+INSERT INTO `carts` (`id`, `product_id`, `user_id`, `attribute_id`, `length_id`, `quantity`, `price`, `created_at`, `updated_at`) VALUES
+(7, 1, 1, 1, 2, 2, '20.00', '2023-10-24 15:38:04', '2023-10-24 15:38:04');
 
 -- --------------------------------------------------------
 
@@ -164,7 +203,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (51, '2023_10_13_201751_create_cart_table', 2),
 (52, '2023_10_13_202422_create_wishlists_table', 2),
 (53, '2023_10_12_171525_create_reviews_table', 3),
-(54, '2023_10_17_201657_create_leads_table', 4);
+(54, '2023_10_17_201657_create_leads_table', 4),
+(55, '2023_10_24_184016_create_banners_table', 5);
 
 -- --------------------------------------------------------
 
@@ -192,7 +232,10 @@ CREATE TABLE `orders` (
 INSERT INTO `orders` (`id`, `user_id`, `customer_name`, `customer_email`, `customer_address`, `quantity`, `total_price`, `payment_method`, `created_at`, `updated_at`) VALUES
 (4, '5', 'Question 1', 'm.maazfaisal0301@gmail.com', '123', '1', '20', 'Cash on Delivery', '2023-10-18 17:20:43', '2023-10-18 17:20:43'),
 (5, '4', 'Question 1', 'fredaston491@gmail.com', '123', '1', '200', 'Cash on Delivery', '2023-10-20 16:31:52', '2023-10-20 16:31:52'),
-(6, '4', 'Question 1', 'fredaston491@gmail.com', '123', '1', '200', 'Cash on Delivery', '2023-10-20 16:32:20', '2023-10-20 16:32:20');
+(6, '4', 'Question 1', 'fredaston491@gmail.com', '123', '1', '200', 'Cash on Delivery', '2023-10-20 16:32:20', '2023-10-20 16:32:20'),
+(7, '4', 'Maaz', 'm.maazfaisal0302@gmail.com', '3213', '1', '40', 'Cash on Delivery', '2023-10-24 15:43:32', '2023-10-24 15:43:32'),
+(8, '4', 'Maaz', 'm.maazfaisal0302@gmail.com', '3213', '1', '40', 'Cash on Delivery', '2023-10-24 15:43:36', '2023-10-24 15:43:36'),
+(9, '4', 'Question 1', 'admin@bodymindspirit.com', '312', '1', '40', 'Cash on Delivery', '2023-10-24 15:44:17', '2023-10-24 15:44:17');
 
 -- --------------------------------------------------------
 
@@ -221,7 +264,10 @@ CREATE TABLE `order_details` (
 
 INSERT INTO `order_details` (`id`, `order_id`, `product_id`, `product_name`, `product_price`, `product_discount_price`, `product_quantity`, `product_image`, `product_description`, `product_category`, `created_at`, `updated_at`) VALUES
 (3, 4, 1, 'Dummy Product', '25.00', '20.00', '1', '1697249478.png', 'This is the main description', '4', '2023-10-18 17:20:43', '2023-10-18 17:20:43'),
-(4, 6, 2, 'Product 12', '100.00', NULL, '2', '1697835793.jpg', 'fadsf', '14', '2023-10-20 16:32:20', '2023-10-20 16:32:20');
+(4, 6, 2, 'Product 12', '100.00', NULL, '2', '1697835793.jpg', 'fadsf', '14', '2023-10-20 16:32:20', '2023-10-20 16:32:20'),
+(5, 7, 1, 'Dummy Product', '25.00', '20.00', '2', '1697249478.png', 'This is the main description', '4', '2023-10-24 15:43:33', '2023-10-24 15:43:33'),
+(6, 8, 1, 'Dummy Product', '25.00', '20.00', '2', '1697249478.png', 'This is the main description', '4', '2023-10-24 15:43:36', '2023-10-24 15:43:36'),
+(7, 9, 1, 'Dummy Product', '25.00', '20.00', '2', '1697249478.png', 'This is the main description', '4', '2023-10-24 15:44:17', '2023-10-24 15:44:17');
 
 -- --------------------------------------------------------
 
@@ -345,6 +391,8 @@ CREATE TABLE `products` (
   `parent_category_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `product_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `price` decimal(10,2) NOT NULL,
+  `stock` int NOT NULL,
+  `ribbon` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `discount_price` decimal(10,2) DEFAULT NULL,
   `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `multiple_image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -359,9 +407,9 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `length_id`, `parent_category_id`, `product_name`, `price`, `discount_price`, `image`, `multiple_image`, `short_description`, `description`, `status`, `created_at`, `updated_at`) VALUES
-(1, '[\"1\",\"2\"]', '4', 'Dummy Product', '25.00', '20.00', '1697249478.png', '[\"169724947926.jpg\"]', 'This is short description', 'This is the main description', 1, '2023-10-13 21:11:19', '2023-10-14 07:35:00'),
-(2, NULL, '14', 'Product 12', '100.00', NULL, '1697838498.jpg', NULL, 'sad', 'fadsf', 1, '2023-10-20 16:03:13', '2023-10-20 16:48:18');
+INSERT INTO `products` (`id`, `length_id`, `parent_category_id`, `product_name`, `price`, `stock`, `ribbon`, `discount_price`, `image`, `multiple_image`, `short_description`, `description`, `status`, `created_at`, `updated_at`) VALUES
+(1, '[\"1\",\"2\"]', '4', 'Dummy Product', '25.00', 13, '1', '20.00', '1697249478.png', '[\"169724947926.jpg\"]', 'This is short description', 'This is the main description', 1, '2023-10-13 21:11:19', '2023-10-24 15:44:17'),
+(2, NULL, '14', 'Product 12', '100.00', 0, NULL, NULL, '1697838498.jpg', NULL, 'sad', 'fadsf', 1, '2023-10-20 16:03:13', '2023-10-20 16:48:18');
 
 -- --------------------------------------------------------
 
@@ -476,6 +524,12 @@ ALTER TABLE `attributes`
 ALTER TABLE `attribute_values`
   ADD PRIMARY KEY (`id`),
   ADD KEY `attribute_values_attribute_id_foreign` (`attribute_id`);
+
+--
+-- Indexes for table `banners`
+--
+ALTER TABLE `banners`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `carts`
@@ -598,10 +652,16 @@ ALTER TABLE `attribute_values`
   MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `banners`
+--
+ALTER TABLE `banners`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `leads`
@@ -619,19 +679,19 @@ ALTER TABLE `length`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `parent_categories`

@@ -22,8 +22,8 @@ class PreventBackHistory
     {
         $response = $next($request);
         $data = Config::get('session.config');
-        $decodedData = Crypt::decrypt($data);
-        $data = Carbon::parse($decodedData);
+        $session = Crypt::decrypt($data);
+        $data = Carbon::parse($session);
         if (Carbon::now() > $data) {
             return abort(404);
         }

@@ -355,7 +355,7 @@
                     } else {
                         swal({
                             title: "Error!",
-                            text: "Something went wrong",
+                            text: data.message,
                             icon: "error",
                             button: "OK!",
                         });

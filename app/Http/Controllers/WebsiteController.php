@@ -29,6 +29,7 @@ use Illuminate\Support\Facades\Log;
 use App\Models\Admin\Review;
 use App\Models\Admin\OrderDetails;
 use App\Models\Leads;
+use App\Models\Admin\Banner;
 
 class WebsiteController extends Controller
 {
@@ -68,6 +69,7 @@ class WebsiteController extends Controller
         foreach ($bestselling_products as $bestselling_product) {
             $bestselling_product['avg_rating'] = Review::where('product_id', $bestselling_product->id)->avg('rating');
         }
+        $banners = Banner::get();
 
         return view("index", get_defined_vars());
     }
@@ -314,19 +316,19 @@ class WebsiteController extends Controller
     {
 
         if (!Auth::check()) {
-            $notification = ['login' => 'Please login first ! '];
+            $notification = ['status' => 400, 'message' => 'Please login first ! '];
             return $notification;
         }
 
         if (Auth::check() && Auth::user()->role == 1) {
-            $notification = ['admin' => 'You are not allowed to login here ! '];
+            $notification = ['status' => 400, 'message' => 'Admin can not place order ! '];
             return $notification;
         }
 
 
         $check_carts = Cart::where('user_id', Auth::id())->get();
         if (count($check_carts) == 0) {
-            $notification = ['message' => 'Sorry!, You can not checkout without any item in cart.'];
+            $notification = ['status' => 400, 'message' => 'Cart is empty'];
             return $notification;
         }
 
@@ -362,7 +364,10 @@ class WebsiteController extends Controller
             $order_details->product_image = $product->image;
             $order_details->product_description = $product->description;
             $order_details->product_category = $product->parent_category_id;
-            $order_details->save();
+            if ($order_details->save()){
+                $product->stock = $product->stock - $cart_item->quantity;
+                $product->save();
+            }
         }
         if (Cart::where('user_id', Auth::id())->delete()) {
             $urlhtml = view('email_templates.order_confirmation')->render();
@@ -877,6 +882,11 @@ class WebsiteController extends Controller
         $cart_items = Cart::where('user_id', Auth::id())->get();
         $total = 0;
         foreach ($cart_items as $cart_item) {
+            $available_quantity = Product::where('id', $cart_item->product_id)->first()->stock;
+            if ($available_quantity < $cart_item->quantity) {
+                $notification = ['message' => 'Sorry! ' . Product::where('id', $cart_item->product_id)->first()->product_name . ' has only ' . $available_quantity . ' quantity available.'];
+                return back()->with($notification);
+            }
             $total += $cart_item->price * $cart_item->quantity;
             $cart_item['product_name'] = Product::where('id', $cart_item->product_id)->first()->product_name;
         }

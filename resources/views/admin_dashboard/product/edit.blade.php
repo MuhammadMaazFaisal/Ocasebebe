@@ -814,6 +814,35 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="row mb-4">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="exampleFormControlInput10">Stock.*</label>
+                                                <input type="number" class="form-control regularPrice salePrice"
+                                                    placeholder="Stock" id="stock" name="stock"
+                                                    value="{{ $products->stock }}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="ribbon">Ribbon.</label>
+                                                <select id="ribbon" name="ribbon" for="exampleFormControlInput10"
+                                                    class="form-control btn-square type">
+                                                    <option value="" disabled selected>Choose Ribbon</option>
+                                                    <option value="1" class="form-control btn-square"
+                                                        {{ $products->ribbon == 1 ? 'selected' : '' }}>New Arrival
+                                                    </option>
+                                                    <option value="2" class="form-control btn-square" {{ $products->ribbon == 2 ? 'selected' : '' }}>Best Seller
+                                                    </option>
+                                                    <option value="3" class="form-control btn-square" {{ $products->ribbon == 3 ? 'selected' : '' }}>Trending
+                                                    </option>
+                                                    <option value="4" class="form-control btn-square" {{ $products->ribbon == 4 ? 'selected' : '' }}>Most Popular
+                                                    </option>
+                                                    <option value="5" class="form-control btn-square" {{ $products->ribbon == 5 ? 'selected' : '' }}>Sale</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="mb-3">

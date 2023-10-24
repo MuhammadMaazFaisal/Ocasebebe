@@ -7,17 +7,17 @@
 				'loop': false
 			}">
         <div class="home-slide home-slide1 banner">
-            <img class="slide-bg" src="{{ asset('assets/images/demoes/demo4/slider/slide-1.jpg') }}" width="1903"
+            <img class="slide-bg" src="{{ asset('banner/' . $banners[0]->image) }}" width="1903"
                 height="499" alt="slider image">
             <div class="container d-flex align-items-center">
                 <div class="banner-layer appear-animate" data-animation-name="fadeInUpShorter">
-                    <h3 class="m-b-3 text-white">Jouets enfants <br>fille & garçon</h3>
-                    <h4 class="text-transform-none m-b-3 text-white">Une large sélection de produits au meilleur prix.
+                    <h3 class="m-b-3 text-white">{{$banners[0]->title}}</h3>
+                    <h4 class="text-transform-none m-b-3 text-white">{{$banners[0]->description}}
                     </h4>
                     <h5 class="d-inline-block mb-0">
                     </h5>
-                    <a href="{{ route('category', ['id' => 23]) }}" class="btn btn-primary btn-lg">Achetez
-                        maintenant</a>
+                    <a href="{{$banners[0]->button_link}}" class="btn btn-primary btn-lg">{{$banners[0]->button_title}}
+                    </a>
                 </div>
                 <!-- End .banner-layer -->
             </div>
@@ -26,18 +26,20 @@
 
         <div class="home-slide home-slide2 banner banner-md-vw">
             <img class="slide-bg" style="background-color: #ccc;" width="1903" height="499"
-                src="{{ asset('assets/images/demoes/demo4/slider/slide-2.jpg') }}" alt="slider image">
+                src="{{ asset('banner/' . $banners[1]->image) }}" alt="slider image">
             <div class="container d-flex align-items-center">
                 <div class="banner-layer d-flex justify-content-center appear-animate"
                     data-animation-name="fadeInUpShorter">
                     <div class="mx-auto">
-                        <h3 class="m-b-3 text-white">Siège Auto Isofix Kidstar</h3>
-                        <h4 class="text-transform-none m-b-3 text-white">Un design élégant et des accessoires innovants
-                            pour la croissance.</h4>
+                        <h3 class="m-b-3 text-white">{{$banners[1]->title}}</h3>
+                        <h4 class="text-transform-none m-b-3 text-white">
+                            {{$banners[1]->description}}
+                        </h4>
                         <h5 class="d-inline-block mb-0">
                         </h5>
-                        <a href="{{ route('category', ['id' => 3]) }}" class="btn btn-primary btn-lg">Achetez
-                            maintenant</a>
+                        <a href="{{$banners[1]->button_link}}" class="btn btn-primary btn-lg">
+                        {{$banners[1]->button_title}}
+                        </a>
                     </div>
                 </div>
                 <!-- End .banner-layer -->
@@ -45,32 +47,19 @@
         </div>
         <!-- End .home-slide -->
         <div class="home-slide home-slide1 banner">
-            <img class="slide-bg" src="{{ asset('assets/images/demoes/demo4/slider/slide-3.jpg') }}" width="1903"
+            <img class="slide-bg" src="{{ asset('banner/' . $banners[2]->image) }}" width="1903"
                 height="499" alt="slider image">
             <div class="container d-flex align-items-center">
                 <div class="banner-layer appear-animate" data-animation-name="fadeInUpShorter">
-                    <h3 class="m-b-3">Berceau Bébé <bR>Évolutif</h3>
-                    <h4 class="text-transform-none m-b-3">Un beau lit à barreaux, pour accueillir le bébé dès les
-                        premières nuits.</h4>
+                    <h3 class="m-b-3">{{$banners[2]->title}}</h3>
+                    <h4 class="text-transform-none m-b-3">
+                        {{$banners[2]->description}}
+                    </h4>
                     <h5 class="d-inline-block mb-0">
                     </h5>
-                    <a href="{{ route('category', ['id' => 2]) }}" class="btn btn-primary btn-lg">Achetez
-                        maintenant</a>
-                </div>
-                <!-- End .banner-layer -->
-            </div>
-        </div>
-        <!-- End .home-slide -->
-        <div class="home-slide home-slide1 banner">
-            <img class="slide-bg" src="{{ asset('assets/images/demoes/demo4/slider/slide-4.jpg') }}" width="1903"
-                height="499" alt="slider image">
-            <div class="container d-flex align-items-center">
-                <div class="banner-layer appear-animate" data-animation-name="fadeInUpShorter">
-                    <h3 class="m-b-3">Accessoires <br>pour Bébé</h3>
-                    <h4 class="text-transform-none m-b-3">Obtenez les produits les plus sur pour le soins.</h4>
-                    <h5 class="d-inline-block mb-0">
-                    </h5>
-                    <a href="{{ route('category', ['id' => 27]) }}" class="btn btn-dark btn-lg">Shop Now!</a>
+                    <a href="{{$banners[2]->button_link}}" class="btn btn-primary btn-lg">
+                    {{$banners[2]->button_title}}
+                    </a>
                 </div>
                 <!-- End .banner-layer -->
             </div>
@@ -80,46 +69,6 @@
     <!-- End .home-slider -->
 
     <div class="container">
-        <!-- <div class="info-boxes-slider owl-carousel owl-theme mb-2" data-owl-options="{
-					'dots': false,
-					'loop': false,
-					'responsive': {
-						'576': {
-							'items': 2
-						},
-						'992': {
-							'items': 3
-						}
-					}
-				}">
-                    <div class="info-box info-box-icon-left">
-                        <i class="icon-shipping"></i>
-
-                        <div class="info-box-content">
-                            <h4>FREE SHIPPING &amp; RETURN</h4>
-                            <p class="text-body">Free shipping on all orders over $99.</p>
-                        </div>
-                    </div>
-
-                    <div class="info-box info-box-icon-left">
-                        <i class="icon-money"></i>
-
-                        <div class="info-box-content">
-                            <h4>MONEY BACK GUARANTEE</h4>
-                            <p class="text-body">100% money back guarantee</p>
-                        </div>
-                    </div>
-
-                    <div class="info-box info-box-icon-left">
-                        <i class="icon-support"></i>
-
-                        <div class="info-box-content">
-                            <h4>ONLINE SUPPORT 24/7</h4>
-                            <p class="text-body">Lorem ipsum dolor sit amet.</p>
-                        </div>
-                    </div>
-                </div> -->
-        <!-- End .info-boxes-slider -->
 
         <div class="banners-container mb-2">
             <div class="banners-slider owl-carousel owl-theme" data-owl-options="{
@@ -132,8 +81,8 @@
                             width="380" height="175" />
                     </figure>
                     <div class="banner-layer">
-                        <h3 class="m-b-2 mb-3">Nouvel Arrivage</h3>
-                        <a href="{{ url('/filter') }}" class="btn btn-sm btn-primary">Parcouir les produits</a>
+                        <h3 class="m-b-2 mb-3">{{ $banners[3]->title }}</h3>
+                        <a href="{{$banners[3]->button_link}}" class="btn btn-sm btn-primary">{{ $banners[3]->button_title }}</a>
                     </div>
                 </div>
                 <!-- End .banner -->
@@ -147,11 +96,11 @@
                     <div class="banner-layer text-center">
                         <div class="row align-items-lg-center">
                             <div class="col-lg-12 text-lg-right">
-                                <h3>offres promotionnelles</h3>
-                                <h4 class="pb-4 pb-lg-0 mb-0 text-body">À partir de 99 CFA</h4>
+                                <h3>{{ $banners[4]->title }}</h3>
+                                <h4 class="pb-4 pb-lg-0 mb-0 text-body">{{ $banners[4]->description }}</h4>
                             </div>
                             <div class="col-lg-5 text-lg-left px-0 px-xl-3">
-                                <a href="{{ url('/filter') }}" class="btn btn-sm btn-dark">Parcouir les produits</a>
+                                <a href="{{$banners[4]->button_link}}" class="btn btn-sm btn-dark">{{ $banners[4]->button_title }}</a>
                             </div>
                         </div>
                     </div>
@@ -159,15 +108,14 @@
                 <!-- End .banner -->
 
                 <div class="banner banner3 banner-sm-vw d-flex align-items-center appear-animate"
-                    style="background-color: #ccc;" data-animation-name="fadeInRightShorter"
-                    data-animation-delay="500">
+                    style="background-color: #ccc;" data-animation-name="fadeInRightShorter" data-animation-delay="500">
                     <figure class="w-100">
                         <img src="{{ asset('assets/images/demoes/demo4/banners/banner-3.png') }}" alt="banner"
                             width="380" height="175" />
                     </figure>
                     <div class="banner-layer">
-                        <h3 class="m-b-2">Offre spéciale</h3>
-                        <a href="{{ url('/filter') }}" class="btn btn-sm btn-dark">Commandez maintenant</a>
+                        <h3 class="m-b-2">{{ $banners[5]->title }}</h3>
+                        <a href="{{$banners[5]->button_link}}" class="btn btn-sm btn-dark">{{ $banners[5]->button_title }}</a>
                     </div>
                 </div>
                 <!-- End .banner -->
@@ -270,9 +218,9 @@
                         <figure>
                             <a href="{{ route('product.details', ['id' => $new_product->id]) }}">
                                 <img src="{{ asset('products/' . $new_product->image) }}" width="280"
-                                    height="280" alt="product">
+                                    height="280" alt="product" style="height: 200px">
                                 <img src="{{ asset('products/' . $new_product->image) }}" width="280"
-                                    height="280" alt="product">
+                                    height="280" alt="product" style="height: 200px">
                             </a>
                         </figure>
                         <div class="product-details">
@@ -327,13 +275,12 @@
                 <div class="banner-content row align-items-center mx-0">
                     <div class="col-md-9 col-sm-8">
                         <h2 class="text-white text-uppercase text-center text-sm-left ls-n-20 mb-md-0 px-4">
-                            <b class="d-inline-block mr-3 mb-1 mb-md-0">Big Sale</b> All new fashion brands items up
-                            to 70% off
-                            <small class="text-transform-none align-middle">Online Purchases Only</small>
+                            <b class="d-inline-block mr-3 mb-1 mb-md-0">{{ $banners[6]->title }}</b> 
+                            {{ $banners[6]->description }}
                         </h2>
                     </div>
                     <div class="col-md-3 col-sm-4 text-center text-sm-right">
-                        <a class="btn btn-light btn-white btn-lg" href="{{ url('/filter') }}">View Sale</a>
+                        <a class="btn btn-light btn-white btn-lg" href="{{$banners[6]->button_link}}">{{ $banners[6]->button_title }}</a>
                     </div>
                 </div>
             </div>
@@ -413,146 +360,6 @@
 
     <section class="blog-section pb-0">
         <div class="container">
-            {{-- <h2 class="section-title heading-border border-0 appear-animate" data-animation-name="fadeInUp">
-                Articles récents </h2>
-
-            <div class="owl-carousel owl-theme appear-animate" data-animation-name="fadeIn"
-                data-owl-options="{
-						'loop': false,
-						'margin': 20,
-						'autoHeight': true,
-						'autoplay': false,
-						'dots': false,
-						'items': 2,
-						'responsive': {
-							'0': {
-								'items': 1
-							},
-							'480': {
-								'items': 2
-							},
-							'576': {
-								'items': 3
-							},
-							'768': {
-								'items': 4
-							}
-						}
-					}">
-                <article class="post">
-                    <div class="post-media">
-                        <a href="#">
-                            <img src="{{ asset('assets/images/blog/home/post1.png') }}" alt="Post"
-            width="225" height="280">
-            </a>
-            <div class="post-date">
-                <span class="day">26</span>
-                <span class="month">Feb</span>
-            </div>
-        </div>
-        <!-- End .post-media -->
-
-        <div class="post-body">
-            <h2 class="post-title">
-                <a href="#">Soin et Bien être : comment bien choisir sa gamme de toilette pour bébé
-                    ?</a>
-            </h2>
-            <div class="post-content">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras non placerat mi. Etiam non
-                    tellus sem. Aenean...</p>
-            </div>
-            <!-- End .post-content -->
-            <a href="#" class="post-comment">0 Comments</a>
-        </div>
-        <!-- End .post-body -->
-        </article>
-        <!-- End .post -->
-
-        <article class="post">
-            <div class="post-media">
-                <a href="#">
-                    <img src="{{ asset('assets/images/blog/home/post2.jpg') }}" alt="Post" width="225" height="280">
-                </a>
-                <div class="post-date">
-                    <span class="day">26</span>
-                    <span class="month">Feb</span>
-                </div>
-            </div>
-            <!-- End .post-media -->
-
-            <div class="post-body">
-                <h2 class="post-title">
-                    <a href="#">Le réducteur de toilettes pour bébé</a>
-                </h2>
-                <div class="post-content">
-                    <p>Leap into electronic typesetting, remaining essentially unchanged. It was popularised in
-                        the 1960s with the release of...</p>
-                </div>
-                <!-- End .post-content -->
-                <a href="#" class="post-comment">0 Comments</a>
-            </div>
-            <!-- End .post-body -->
-        </article>
-        <!-- End .post -->
-
-        <article class="post">
-            <div class="post-media">
-                <a href="#">
-                    <img src="{{ asset('assets/images/blog/home/post3.png') }}" alt="Post" width="225" height="280">
-                </a>
-                <div class="post-date">
-                    <span class="day">26</span>
-                    <span class="month">Feb</span>
-                </div>
-            </div>
-            <!-- End .post-media -->
-
-            <div class="post-body">
-                <h2 class="post-title">
-                    <a href="#">Le cododo : Bienfaits, précautions et mode d'emploi</a>
-                </h2>
-                <div class="post-content">
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-                        has been the...</p>
-                </div>
-                <!-- End .post-content -->
-                <a href="#" class="post-comment">0 Comments</a>
-            </div>
-            <!-- End .post-body -->
-        </article>
-        <!-- End .post -->
-
-        <article class="post">
-            <div class="post-media">
-                <a href="#">
-                    <img src="{{ asset('assets/images/blog/home/post4.jpg') }}" alt="Post" width="225" height="280">
-                </a>
-                <div class="post-date">
-                    <span class="day">26</span>
-                    <span class="month">Feb</span>
-                </div>
-            </div>
-            <!-- End .post-media -->
-
-            <div class="post-body">
-                <h2 class="post-title">
-                    <a href="#">La transition entre l’allaitement maternel et le biberon : le tire
-                        lait</a>
-                </h2>
-                <div class="post-content">
-                    <p>Leap into electronic typesetting, remaining essentially unchanged. It was popularised in
-                        the 1960s with the release of...</p>
-                </div>
-                <!-- End .post-content -->
-                <a href="#" class="post-comment">0 Comments</a>
-            </div>
-            <!-- End .post-body -->
-        </article>
-        <!-- End .post -->
-        </div> --}}
-            {{--
-            <hr class="mt-0 m-b-5"> --}}
-
             <div class="brands-slider owl-carousel owl-theme images-center appear-animate"
                 data-animation-name="fadeIn" data-animation-duration="500" data-owl-options="{
 					'margin': 0}">
@@ -581,9 +388,9 @@
                             <figure>
                                 <a href="{{ route('product.details', ['id' => $product->id]) }}">
                                     <img src="{{ asset('products/' . $product->image) }}" width="84"
-                                        height="84" alt="product">
+                                        height="84" alt="product" style="height: 84px">
                                     <img src="{{ asset('products/' . $product->image) }}" width="84"
-                                        height="84" alt="product">
+                                        height="84" alt="product" style="height: 84px">
                                 </a>
                             </figure>
 
@@ -629,9 +436,9 @@
                             <figure>
                                 <a href="{{ route('product.details', ['id' => $product->id]) }}">
                                     <img src="{{ asset('products/' . $product->image) }}" width="84"
-                                        height="84" alt="product">
+                                        height="84" alt="product" style="height: 84px">
                                     <img src="{{ asset('products/' . $product->image) }}" width="84"
-                                        height="84" alt="product">
+                                        height="84" alt="product" style="height: 84px">
                                 </a>
                             </figure>
 
@@ -677,9 +484,9 @@
                             <figure>
                                 <a href="{{ route('product.details', ['id' => $product->id]) }}">
                                     <img src="{{ asset('products/' . $product->image) }}" width="84"
-                                        height="84" alt="product">
+                                        height="84" alt="product" style="height: 84px">
                                     <img src="{{ asset('products/' . $product->image) }}" width="84"
-                                        height="84" alt="product">
+                                        height="84" alt="product" style="height: 84px">
                                 </a>
                             </figure>
 
@@ -725,9 +532,9 @@
                             <figure>
                                 <a href="{{ route('product.details', ['id' => $product->id]) }}">
                                     <img src="{{ asset('products/' . $product->image) }}" width="84"
-                                        height="84" alt="product">
+                                        height="84" alt="product" style="height: 84px">
                                     <img src="{{ asset('products/' . $product->image) }}" width="84"
-                                        height="84" alt="product">
+                                        height="84" alt="product" style="height: 84px">
                                 </a>
                             </figure>
 

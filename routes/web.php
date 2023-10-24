@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\AttributeValueControler;
 use App\Http\Controllers\Admin\LengthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\Admin\ReviewController;
+use App\Http\Controllers\Admin\BannerController;
 
 
 /*
@@ -93,6 +94,11 @@ Route::group(['middleware' =>  ['preventBackHistory', 'admin_middleware'], 'pref
 
     Route::get('dashboard', [AdminDashboardController::class, 'admin_dashboard'])->name('admin.dashboard');
 
+    // cms
+    Route::group(['prefix' => 'cms'], function () {
+        Route::resource('banner', BannerController::class);
+    });
+
     // category routes
     Route::group(['prefix' => 'category'], function () {
         // Parent category routes
@@ -121,7 +127,6 @@ Route::group(['middleware' =>  ['preventBackHistory', 'admin_middleware'], 'pref
     Route::get('attribute-value/{id}', [AttributeValueControler::class, 'attributevalue'])->name('attribute-value');
     Route::resource('attribute-value', AttributeValueControler::class);
     Route::get('attribute-status/{id}', [AttributeValueControler::class, 'status'])->name('attribute-status');
-
 
     //Length Management
     Route::get('length', [LengthController::class, 'index'])->name('admin.length');

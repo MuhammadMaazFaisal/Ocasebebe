@@ -737,7 +737,8 @@
                                                             class="form-control btn-square">{{ $lengthname->name }}
                                                         </option>
                                                     @endforeach
-                                                </select></div>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="row mb-4" id="discounted_id">
@@ -755,6 +756,34 @@
                                                 <input type="number" class="form-control salePrice"
                                                     placeholder="Sale price" id="sale_price" name="sale_price"
                                                     value="{{ old('sale_price') }}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-4">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="exampleFormControlInput10">Stock.*</label>
+                                                <input type="number" class="form-control regularPrice salePrice"
+                                                    placeholder="Stock" id="stock" name="stock"
+                                                    value="{{ old('stock') }}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="ribbon">Ribbon.</label>
+                                                <select id="ribbon" name="ribbon" for="exampleFormControlInput10"
+                                                    class="form-control btn-square type">
+                                                    <option value="" disabled selected>Choose Ribbon</option>
+                                                    <option value="1" class="form-control btn-square">New Arrival
+                                                    </option>
+                                                    <option value="2" class="form-control btn-square">Best Seller
+                                                    </option>
+                                                    <option value="3" class="form-control btn-square">Trending
+                                                    </option>
+                                                    <option value="4" class="form-control btn-square">Most Popular
+                                                    </option>
+                                                    <option value="5" class="form-control btn-square">Sale</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
