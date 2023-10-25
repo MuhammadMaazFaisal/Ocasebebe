@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Oct 24, 2023 at 10:05 PM
+-- Generation Time: Oct 25, 2023 at 11:47 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -75,13 +75,13 @@ INSERT INTO `attribute_values` (`id`, `attribute_id`, `attribute_value`, `color_
 
 CREATE TABLE `banners` (
   `id` bigint UNSIGNED NOT NULL,
-  `page` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `page` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `section` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `description` longtext COLLATE utf8mb4_unicode_ci,
-  `button_title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `button_link` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `button_title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `button_link` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -122,7 +122,7 @@ CREATE TABLE `carts` (
 --
 
 INSERT INTO `carts` (`id`, `product_id`, `user_id`, `attribute_id`, `length_id`, `quantity`, `price`, `created_at`, `updated_at`) VALUES
-(7, 1, 1, 1, 2, 2, '20.00', '2023-10-24 15:38:04', '2023-10-24 15:38:04');
+(9, 3, 1, NULL, NULL, 2, 25.00, '2023-10-25 06:36:57', '2023-10-25 06:36:57');
 
 -- --------------------------------------------------------
 
@@ -134,8 +134,8 @@ CREATE TABLE `leads` (
   `id` bigint UNSIGNED NOT NULL,
   `product_id` bigint UNSIGNED NOT NULL,
   `user_id` bigint UNSIGNED NOT NULL,
-  `name` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -217,7 +217,7 @@ CREATE TABLE `orders` (
   `user_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `customer_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `customer_email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `customer_address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `customer_address` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `quantity` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `total_price` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `payment_method` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -235,7 +235,8 @@ INSERT INTO `orders` (`id`, `user_id`, `customer_name`, `customer_email`, `custo
 (6, '4', 'Question 1', 'fredaston491@gmail.com', '123', '1', '200', 'Cash on Delivery', '2023-10-20 16:32:20', '2023-10-20 16:32:20'),
 (7, '4', 'Maaz', 'm.maazfaisal0302@gmail.com', '3213', '1', '40', 'Cash on Delivery', '2023-10-24 15:43:32', '2023-10-24 15:43:32'),
 (8, '4', 'Maaz', 'm.maazfaisal0302@gmail.com', '3213', '1', '40', 'Cash on Delivery', '2023-10-24 15:43:36', '2023-10-24 15:43:36'),
-(9, '4', 'Question 1', 'admin@bodymindspirit.com', '312', '1', '40', 'Cash on Delivery', '2023-10-24 15:44:17', '2023-10-24 15:44:17');
+(9, '4', 'Question 1', 'admin@bodymindspirit.com', '312', '1', '40', 'Cash on Delivery', '2023-10-24 15:44:17', '2023-10-24 15:44:17'),
+(10, '4', '123', '123@example.com', 'R/380, Block B, Sheet 44, Saima Arabian Vi', '1', '50', 'Cash on Delivery', '2023-10-25 06:43:34', '2023-10-25 06:43:34');
 
 -- --------------------------------------------------------
 
@@ -267,7 +268,8 @@ INSERT INTO `order_details` (`id`, `order_id`, `product_id`, `product_name`, `pr
 (4, 6, 2, 'Product 12', '100.00', NULL, '2', '1697835793.jpg', 'fadsf', '14', '2023-10-20 16:32:20', '2023-10-20 16:32:20'),
 (5, 7, 1, 'Dummy Product', '25.00', '20.00', '2', '1697249478.png', 'This is the main description', '4', '2023-10-24 15:43:33', '2023-10-24 15:43:33'),
 (6, 8, 1, 'Dummy Product', '25.00', '20.00', '2', '1697249478.png', 'This is the main description', '4', '2023-10-24 15:43:36', '2023-10-24 15:43:36'),
-(7, 9, 1, 'Dummy Product', '25.00', '20.00', '2', '1697249478.png', 'This is the main description', '4', '2023-10-24 15:44:17', '2023-10-24 15:44:17');
+(7, 9, 1, 'Dummy Product', '25.00', '20.00', '2', '1697249478.png', 'This is the main description', '4', '2023-10-24 15:44:17', '2023-10-24 15:44:17'),
+(8, 10, 3, 'Product 1', '25.00', NULL, '2', '1698233784.png', 'testing', '16', '2023-10-25 06:43:34', '2023-10-25 06:43:34');
 
 -- --------------------------------------------------------
 
@@ -392,7 +394,7 @@ CREATE TABLE `products` (
   `product_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `price` decimal(10,2) NOT NULL,
   `stock` int NOT NULL,
-  `ribbon` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ribbon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `discount_price` decimal(10,2) DEFAULT NULL,
   `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `multiple_image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -408,8 +410,9 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `length_id`, `parent_category_id`, `product_name`, `price`, `stock`, `ribbon`, `discount_price`, `image`, `multiple_image`, `short_description`, `description`, `status`, `created_at`, `updated_at`) VALUES
-(1, '[\"1\",\"2\"]', '4', 'Dummy Product', '25.00', 13, '1', '20.00', '1697249478.png', '[\"169724947926.jpg\"]', 'This is short description', 'This is the main description', 1, '2023-10-13 21:11:19', '2023-10-24 15:44:17'),
-(2, NULL, '14', 'Product 12', '100.00', 0, NULL, NULL, '1697838498.jpg', NULL, 'sad', 'fadsf', 1, '2023-10-20 16:03:13', '2023-10-20 16:48:18');
+(1, NULL, '4', 'Dummy Product', 25.00, 13, '1', 20.00, '1697249478.png', '[]', 'This is short description', 'This is the main description', 1, '2023-10-13 21:11:19', '2023-10-25 06:33:44'),
+(2, NULL, '14', 'Product 12', 100.00, 0, NULL, NULL, '1697838498.jpg', NULL, 'sad', 'fadsf', 1, '2023-10-20 16:03:13', '2023-10-20 16:48:18'),
+(3, NULL, '16', 'Product 1', 25.00, 48, NULL, NULL, '1698233784.png', NULL, 'testing', 'testing', 1, '2023-10-25 06:36:24', '2023-10-25 06:43:34');
 
 -- --------------------------------------------------------
 
@@ -432,7 +435,7 @@ CREATE TABLE `product_attributes` (
 --
 
 INSERT INTO `product_attributes` (`id`, `product_id`, `product_attribute_id`, `attribute_value_id`, `attribute_value`, `created_at`, `updated_at`) VALUES
-(1, 1, '1', '[1,3]', '[\"Black\",\"Red\"]', '2023-10-13 21:11:19', '2023-10-13 22:17:01');
+(1, 1, '1', '[1]', '[\"Black\"]', '2023-10-13 21:11:19', '2023-10-25 06:34:53');
 
 -- --------------------------------------------------------
 
@@ -661,7 +664,7 @@ ALTER TABLE `banners`
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `leads`
@@ -685,13 +688,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `parent_categories`
@@ -709,7 +712,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `product_attributes`
