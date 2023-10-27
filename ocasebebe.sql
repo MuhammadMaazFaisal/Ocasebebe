@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Oct 25, 2023 at 11:47 AM
+-- Generation Time: Oct 27, 2023 at 10:06 PM
 -- Server version: 8.0.30
--- PHP Version: 8.1.10
+-- PHP Version: 7.4.16
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -108,7 +108,8 @@ INSERT INTO `banners` (`id`, `page`, `section`, `title`, `description`, `button_
 CREATE TABLE `carts` (
   `id` bigint UNSIGNED NOT NULL,
   `product_id` bigint UNSIGNED NOT NULL,
-  `user_id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED DEFAULT NULL,
+  `session_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `attribute_id` bigint UNSIGNED DEFAULT NULL,
   `length_id` bigint UNSIGNED DEFAULT NULL,
   `quantity` int NOT NULL,
@@ -116,13 +117,6 @@ CREATE TABLE `carts` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `carts`
---
-
-INSERT INTO `carts` (`id`, `product_id`, `user_id`, `attribute_id`, `length_id`, `quantity`, `price`, `created_at`, `updated_at`) VALUES
-(9, 3, 1, NULL, NULL, 2, 25.00, '2023-10-25 06:36:57', '2023-10-25 06:36:57');
 
 -- --------------------------------------------------------
 
@@ -133,7 +127,8 @@ INSERT INTO `carts` (`id`, `product_id`, `user_id`, `attribute_id`, `length_id`,
 CREATE TABLE `leads` (
   `id` bigint UNSIGNED NOT NULL,
   `product_id` bigint UNSIGNED NOT NULL,
-  `user_id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED DEFAULT NULL,
+  `session_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -144,8 +139,9 @@ CREATE TABLE `leads` (
 -- Dumping data for table `leads`
 --
 
-INSERT INTO `leads` (`id`, `product_id`, `user_id`, `name`, `email`, `created_at`, `updated_at`) VALUES
-(1, 1, 4, 'Question 1', 'admin@bodymindspirit.com', '2023-10-17 15:40:19', '2023-10-17 15:40:19');
+INSERT INTO `leads` (`id`, `product_id`, `user_id`, `session_id`, `name`, `email`, `created_at`, `updated_at`) VALUES
+(1, 1, 4, '', 'Question 1', 'admin@bodymindspirit.com', '2023-10-17 15:40:19', '2023-10-17 15:40:19'),
+(2, 3, 1, 'vG9KfkaOM97eZgUuNuJKjLni8ErpJBL81oM8KmsR', 'Maaz', '123@gmail.com', '2023-10-27 13:51:02', '2023-10-27 13:51:02');
 
 -- --------------------------------------------------------
 
@@ -236,7 +232,8 @@ INSERT INTO `orders` (`id`, `user_id`, `customer_name`, `customer_email`, `custo
 (7, '4', 'Maaz', 'm.maazfaisal0302@gmail.com', '3213', '1', '40', 'Cash on Delivery', '2023-10-24 15:43:32', '2023-10-24 15:43:32'),
 (8, '4', 'Maaz', 'm.maazfaisal0302@gmail.com', '3213', '1', '40', 'Cash on Delivery', '2023-10-24 15:43:36', '2023-10-24 15:43:36'),
 (9, '4', 'Question 1', 'admin@bodymindspirit.com', '312', '1', '40', 'Cash on Delivery', '2023-10-24 15:44:17', '2023-10-24 15:44:17'),
-(10, '4', '123', '123@example.com', 'R/380, Block B, Sheet 44, Saima Arabian Vi', '1', '50', 'Cash on Delivery', '2023-10-25 06:43:34', '2023-10-25 06:43:34');
+(10, '4', '123', '123@example.com', 'R/380, Block B, Sheet 44, Saima Arabian Vi', '1', '50', 'Cash on Delivery', '2023-10-25 06:43:34', '2023-10-25 06:43:34'),
+(11, '1', 'Maaz', 'fredaston491@gmail.com', 'n,,mn', '1', '125', 'Cash on Delivery', '2023-10-27 13:48:19', '2023-10-27 13:48:19');
 
 -- --------------------------------------------------------
 
@@ -269,7 +266,8 @@ INSERT INTO `order_details` (`id`, `order_id`, `product_id`, `product_name`, `pr
 (5, 7, 1, 'Dummy Product', '25.00', '20.00', '2', '1697249478.png', 'This is the main description', '4', '2023-10-24 15:43:33', '2023-10-24 15:43:33'),
 (6, 8, 1, 'Dummy Product', '25.00', '20.00', '2', '1697249478.png', 'This is the main description', '4', '2023-10-24 15:43:36', '2023-10-24 15:43:36'),
 (7, 9, 1, 'Dummy Product', '25.00', '20.00', '2', '1697249478.png', 'This is the main description', '4', '2023-10-24 15:44:17', '2023-10-24 15:44:17'),
-(8, 10, 3, 'Product 1', '25.00', NULL, '2', '1698233784.png', 'testing', '16', '2023-10-25 06:43:34', '2023-10-25 06:43:34');
+(8, 10, 3, 'Product 1', '25.00', NULL, '2', '1698233784.png', 'testing', '16', '2023-10-25 06:43:34', '2023-10-25 06:43:34'),
+(9, 11, 3, 'Product 1', '25.00', NULL, '5', '1698233784.png', 'testing', '16', '2023-10-27 13:48:19', '2023-10-27 13:48:19');
 
 -- --------------------------------------------------------
 
@@ -410,9 +408,9 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `length_id`, `parent_category_id`, `product_name`, `price`, `stock`, `ribbon`, `discount_price`, `image`, `multiple_image`, `short_description`, `description`, `status`, `created_at`, `updated_at`) VALUES
-(1, NULL, '4', 'Dummy Product', 25.00, 13, '1', 20.00, '1697249478.png', '[]', 'This is short description', 'This is the main description', 1, '2023-10-13 21:11:19', '2023-10-25 06:33:44'),
-(2, NULL, '14', 'Product 12', 100.00, 0, NULL, NULL, '1697838498.jpg', NULL, 'sad', 'fadsf', 1, '2023-10-20 16:03:13', '2023-10-20 16:48:18'),
-(3, NULL, '16', 'Product 1', 25.00, 48, NULL, NULL, '1698233784.png', NULL, 'testing', 'testing', 1, '2023-10-25 06:36:24', '2023-10-25 06:43:34');
+(1, NULL, '4', 'Dummy Product', '25.00', 13, '1', '21.00', '1697249478.png', '[]', 'This is short description', 'This is the main description', 1, '2023-10-13 21:11:19', '2023-10-27 13:39:00'),
+(2, NULL, '14', 'Product 12', '100.00', 0, NULL, NULL, '1697838498.jpg', NULL, 'sad', 'fadsf', 1, '2023-10-20 16:03:13', '2023-10-20 16:48:18'),
+(3, NULL, '16', 'Product 1', '25.00', 43, NULL, NULL, '1698233784.png', NULL, 'testing', 'testing', 1, '2023-10-25 06:36:24', '2023-10-27 13:48:19');
 
 -- --------------------------------------------------------
 
@@ -429,13 +427,6 @@ CREATE TABLE `product_attributes` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `product_attributes`
---
-
-INSERT INTO `product_attributes` (`id`, `product_id`, `product_attribute_id`, `attribute_value_id`, `attribute_value`, `created_at`, `updated_at`) VALUES
-(1, 1, '1', '[1]', '[\"Black\"]', '2023-10-13 21:11:19', '2023-10-25 06:34:53');
 
 -- --------------------------------------------------------
 
@@ -455,6 +446,13 @@ CREATE TABLE `reviews` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `reviews`
+--
+
+INSERT INTO `reviews` (`id`, `user_id`, `product_id`, `review_title`, `rating`, `name`, `comments`, `status`, `created_at`, `updated_at`) VALUES
+(3, 1, 3, NULL, 4, 'Hi', 'Good', 1, '2023-10-27 13:49:47', '2023-10-27 13:49:47');
 
 -- --------------------------------------------------------
 
@@ -664,13 +662,13 @@ ALTER TABLE `banners`
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `leads`
 --
 ALTER TABLE `leads`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `length`
@@ -688,13 +686,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `parent_categories`
@@ -724,7 +722,7 @@ ALTER TABLE `product_attributes`
 -- AUTO_INCREMENT for table `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`
