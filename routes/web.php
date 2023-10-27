@@ -80,7 +80,6 @@ Route::get('remove-wishlist/{id}', [WebsiteController::class, 'remove_wishlist']
 Route::get('wishlist', [WebsiteController::class, 'wishlist'])->name('wishlist');
 Route::get('cart', [WebsiteController::class, 'add_cart'])->name('cart');
 Route::post('shipping-cart', [WebsiteController::class, 'shippingcart'])->name('shipping-cart');
-Route::post('cash_on_delivery', [WebsiteController::class, 'cash_on_delivery'])->name('cash_on_delivery');
 Route::get('checkout', [WebsiteController::class, 'checkout'])->name('checkout');
 Route::post('add-review', [WebsiteController::class, 'addreview'])->name('add.review');
 Route::post('add-lead', [WebsiteController::class, 'addlead'])->name('add.lead');

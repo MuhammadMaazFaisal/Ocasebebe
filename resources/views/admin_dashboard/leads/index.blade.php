@@ -43,7 +43,7 @@
                                                     {{ $loop->iteration }}
                                                 </td>
                                                 <td>
-                                                    {!! $value->user_id ?? null !!}
+                                                    {!! $value->user_id ?? 'Guest' !!}
                                                 </td>
                                                 <td>
                                                     {!! $value->products[0]->product_name ?? null !!}

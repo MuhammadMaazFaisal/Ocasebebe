@@ -93,9 +93,6 @@ class WebsiteController extends Controller
 
     public function filter(Request $request)
     {
-        // dd($request->all());
-        // Initialize query object
-
         $productIDs = [];
 
         // Filtering by Categories
@@ -183,156 +180,27 @@ class WebsiteController extends Controller
         return view('shop', get_defined_vars());
     }
 
-    public function our_products(Request $request)
-    {
-        $banners = Banner::get();
-        $attribute_value = AttributeValue::orderBy('id', 'desc')->get();
-        $category = ParentCategory::orderBy('id', 'desc')->get();
-
-
-        $product_list = productList();
-        $banners = Banner::get();
-        $attribute_value = AttributeValue::orderBy('id', 'desc')->get();
-        $category = ParentCategory::orderBy('id', 'desc')->get();
-
-        $request;
-        $conditions = array('min' => $request->min, 'max' => $request->max);
-        $conditions = array_filter($conditions);
-
-        if ($request->min) {
-            $min = $request->min;
-        } else {
-            $min = "";
-        }
-
-        if ($request->on_sale) {
-            if ($request->max) {
-                $max = $request->max;
-            } else {
-
-                $max = Product::max('sale_price');
-            }
-            $on_sale = $request->on_sale;
-        } else {
-            if ($request->max) {
-                $max = $request->max;
-            } else {
-                $max = Product::max('price');
-            }
-            $on_sale = $request->on_sale;
-        }
-        if ($request->accessories) {
-            $accessories = $request->accessories;
-        } else {
-            $accessories = [];
-        }
-        if ($request->color) {
-            $color = $request->color;
-        } else {
-            $color = [];
-        }
-        if ($request->rating) {
-            $rating = $request->rating;
-        } else {
-            $rating = "";
-        }
-        // if ($request->length_min) {
-        //     $length_min = $request->length_min;
-        // } else {
-        //     $length_min = "";
-        // }
-        // if ($request->length_max) {
-        //     $length_max = $request->length_max;
-        // } else {
-        //     $length_max = Product::max('length');
-        // }
-        if ($request->in_stock) {
-            $in_stock = $request->in_stock;
-        } else {
-            $in_stock = $request->in_stock;
-        }
-
-
-        if (request()->path() == 'filter-products') {
-
-            $product_list = Product::OrderBy('id', 'desc')
-                ->where(function ($product_list) use ($min, $on_sale, $max) {
-                    // min and max filter
-                    if ($min && $on_sale) {
-                        $product_list->whereBetween('sale_price', [$min, $max]);
-                    }
-                    if ($min && $on_sale == false) {
-                        $product_list->whereBetween('price', [$min, $max]);
-                    }
-                    // min and max filter end
-                })->where(function ($product_list) use ($on_sale) {
-                    if ($on_sale) {
-                        $product_list->where('discount_status', 1);
-                    }
-                })->where(function ($product_list) use ($accessories) {
-                    if ($accessories) {
-                        $product_list->whereIn('parent_category_id', $accessories);
-                    }
-                })->with('product_attribute', function ($product_list) use ($color) {
-                    if ($color) {
-                        foreach ($color as $key => $value) {
-                            return $product_list->whereJsonContains('attribute_value_id', (int)$value);
-                        }
-                    }
-                })->when($color, function ($query) use ($color) {
-                    $query->wherehas('product_attribute', function ($product_list) use ($color) {
-                        if ($color) {
-                            foreach ($color as $key => $value) {
-                                return $product_list->whereJsonContains('attribute_value_id', (int)$value);
-                            }
-                        }
-                    });
-                })->with('get_ratings', function ($product_list) use ($rating) {
-                    if ($rating) {
-                        return $product_list->where('rating', '>=', $rating);
-                        // return $product_list->whereJsonContains('attribute_value_id',$color);
-                    }
-                })->when($rating > 0, function ($query) use ($rating) {
-                    $query->wherehas('get_ratings', function ($product_list) use ($rating) {
-                        if ($rating) {
-                            return $product_list->where('rating', '>=', $rating);
-                        }
-                    });
-                    // COMMENT BECAUSE SHOWING ERROR!!!
-                    // })->where(function ($product_list) use ($length_min, $length_max) {
-                    //     if ($length_min) {
-                    //         return $product_list->whereBetween('length', [$length_min, $length_max]);
-                    //     }
-                })->where(function ($product_list) use ($in_stock) {
-                    if ($in_stock) {
-                        return $product_list->where('remaining_quantity', '>', 0);
-                    }
-                })->get();
-        }
-        return view('website.products', get_defined_vars());
-    }
-
     public function shippingcart(Request $request)
     {
 
-        if (!Auth::check()) {
-            $notification = ['status' => 400, 'message' => 'Please login first ! '];
-            return $notification;
-        }
+        // if (!Auth::check()) {
+        //     $notification = ['status' => 400, 'message' => 'Please login first ! '];
+        //     return $notification;
+        // }
 
-        if (Auth::check() && Auth::user()->role == 1) {
-            $notification = ['status' => 400, 'message' => 'Admin can not place order ! '];
-            return $notification;
-        }
+        // if (Auth::check() && Auth::user()->role == 1) {
+        //     $notification = ['status' => 400, 'message' => 'Admin can not place order ! '];
+        //     return $notification;
+        // }
 
 
-        $check_carts = Cart::where('user_id', Auth::id())->get();
+        $check_carts = Cart::where('session_id', Session::getId())->get();
         if (count($check_carts) == 0) {
             $notification = ['status' => 400, 'message' => 'Cart is empty'];
             return $notification;
         }
 
-        $cart_items = Cart::where('user_id', Auth::id())->get();
+        $cart_items = Cart::where('session_id', Session::getId())->get();
 
         $total_item_in_cart = count($cart_items);
         // $cart_item->pluck('')
@@ -344,7 +212,9 @@ class WebsiteController extends Controller
             }
         }
         $order = new Order();
-        $order->user_id = Auth::id();
+        if (Auth::check()) {
+            $order->user_id = Auth::id();
+        }
         $order->customer_name = $request->name;
         $order->customer_email = $request->email;
         $order->customer_address = $request->address;
@@ -364,15 +234,15 @@ class WebsiteController extends Controller
             $order_details->product_image = $product->image;
             $order_details->product_description = $product->description;
             $order_details->product_category = $product->parent_category_id;
-            if ($order_details->save()){
+            if ($order_details->save()) {
                 $product->stock = $product->stock - $cart_item->quantity;
                 $product->save();
             }
         }
-        if (Cart::where('user_id', Auth::id())->delete()) {
+        if (Cart::where('session_id', Session::getId())->delete()) {
             $urlhtml = view('email_templates.order_confirmation')->render();
             $subject = "Order Placed Successfully!";
-            $email = Auth::user()->email;
+            $email = $request->email;
             $data = ['email' => $email, 'subject' => $subject, 'html' => $urlhtml];
             email($data);
             return ['status' => 200, 'message' => 'Order Placed Successfully'];
@@ -422,324 +292,11 @@ class WebsiteController extends Controller
         return view('product-details', get_defined_vars());
     }
 
-    public function termscondition()
-    {
-        $terms_conditons = TermsCondition::first();
-        return view('website.terms-conditions', get_defined_vars());
-    }
 
-    public function successstory()
-    {
-        $success_story = Banner::get();
-        return view('website.success-story', get_defined_vars());
-    }
-
-    public function allvideos()
-    {
-        $videos_innerpage = Video::where('status', 1)->get();
-        return view('website.404', get_defined_vars());
-    }
-
-    public function educationvideo()
-    {
-        $page_content = Banner::get();
-
-        $education_video = Education::where('status', 1)->get();
-        return view('website.education', get_defined_vars());
-    }
-
-    public function customer_photos()
-    {
-        $customer_photos = CustomerPhoto::where('status', 1)->get();
-        return view("website.customer-photos", get_defined_vars());
-    }
-
-    public function sign_in()
-    {
-        return view("website.sign-in");
-    }
-
-    public function userlogin(Request $request)
-    {
-        $validated = $request->validate([
-            'email' => 'required|regex:/(.+)@(.+)\.(.+)/i|max:100',
-            'password' => ['required', Password::min(8)->mixedCase()->numbers()->symbols()],
-        ]);
-
-        $credentials = Auth::attempt([
-            'email' => $request->email,
-            'password' => $request->password,
-            'status' => 1,
-            'role' => 2,
-        ]);
-
-        $user_status = User::where('email', $request->email)->first();
-
-        if (User::where('email', $request->email)->exists()) {
-            if ($credentials) {
-                if (Auth::check() && Auth::user()->role == 2) {
-                    $notification = ['login' => 'Login Successfully ! '];
-
-                    if ($request->is_html2_login) {
-
-                        return redirect()->route('user.profile')->with($notification);
-                    } else {
-
-                        $notification = ['login' => 'Login Successfully ! '];
-                        return back()->with($notification);
-                    }
-                } else {
-                    $notification = ['admin' => 'You are not allowed to login here ! '];
-                    return redirect()->route('sign-in')->with($notification);
-                }
-            }
-            if ($user_status->status == 0) {
-                $notification = ['inactive' => 'Your account is not approved from the admin side!'];
-                return redirect()->route('sign-in')->with($notification);
-            } else {
-                $notification = ['invalid' => 'Invalid Credentials ! '];
-                return redirect()->route('sign-in')->with($notification);
-            }
-        } else {
-            $notification = ['notregistered' => 'You are not registered in Edify Elite Extensions ! '];
-            return redirect()->route('sign-in')->with($notification);
-        }
-    }
-
-    public function guestlogin(Request $request)
-    {
-
-        $credentials = Auth::attempt([
-            'email' => 'guest@gmail.com',
-            'password' => 'Pass@123',
-            'is_guest' => 1,
-            'role' => 2,
-        ]);
-
-        if ($credentials) {
-            if (Auth::check() && Auth::user()->role == 2) {
-
-                $notification = ['login' => 'Signed in as Guest ! '];
-                return redirect()->route('home')->with($notification);
-            } else {
-                $notification = ['admin' => 'You are not allowed to login here ! '];
-                return redirect()->route('sign-in')->with($notification);
-            }
-        }
-    }
-
-
-    public function product_user_login(Request $request)
-    {
-        $validated = $request->validate([
-            'email' => 'required|regex:/(.+)@(.+)\.(.+)/i|max:100',
-            'password' => 'required', Password::min(8)->mixedCase()->numbers()->symbols(),
-        ]);
-
-
-        $credentials = Auth::attempt([
-            'email' => $request->email,
-            'password' => $request->password,
-            'status' => 1,
-            'role' => 2,
-        ]);
-
-
-        $user_status = User::where('email', $request->email)->first();
-        if (User::where('email', $request->email)->exists()) {
-            if ($credentials) {
-                if (Auth::check() && Auth::user()->role == 2) {
-                    $notification = array('login' => 'Login Succesfully ! ');
-
-                    if ($request->slug) {
-                        return response()->json(['status' => 200, 'message' => 'You are successfully login']);
-                    }
-                } else {
-                    return response()->json([
-                        'status' => 403,
-                        'message' => 'You are not allowed to login here!'
-                    ]);
-                }
-            }
-
-            if ($user_status->status == 0) {
-                return response()->json([
-                    'status' => 404,
-                    'message' => 'Your account is not approve from admin side  ! '
-                ]);
-            } else {
-                return response()->json([
-                    'status' => 404,
-                    'message' => 'Invalid Credentials!'
-                ]);
-            }
-        } else {
-            return response()->json([
-                'status' => 404,
-                'message' => 'You are not registered in Edify Elite Extension!'
-            ]);
-        }
-    }
-
-    public function forget(Request $request)
-    {
-
-        $validated = $request->validate(['email' => 'required|regex:/(.+)@(.+)\.(.+)/i|max:100',]);
-
-        if (Auth::check() && Auth::user()->role == 1) {
-            $notification = array('admin' => 'You are logged in as admin please logout first ! ',);
-            return redirect()->route('forget_password')->with($notification);
-        }
-
-
-        $user = User::where('email', $request->email)->first();
-        if (!empty($user)) {
-            if ($user->status == 0) {
-                $notification = array('inactive' => 'Your account is not approve from admin side ! ',);
-                return back()->with($notification);
-            }
-        }
-
-        $token = Str::random(64);
-        DB::table('password_resets')->insert(['email' => $request->email, 'token' => $token, 'created_at' => Carbon::now()]);
-
-        if (!empty($user)) {
-            $check_admin = User::where('email', $request->email)->first();
-            if ($check_admin->role == 1) {
-                $notification = array('reset' => 'You can not reset password from here !',);
-
-                return redirect()->route('forget_password')->with($notification);
-            }
-
-            $message = "Wait for admin approval";
-            $token;
-            $urlhtml = view('emails.reset_mail', get_defined_vars())->render();
-            $subject = "Reset Password Email From Edify";
-            $data = ['email' => $request->email, 'subject' => $subject, 'html' => $urlhtml];
-            email($data);
-
-            // $data = ['email' => $request->email, 'name' => $user->name,];
-            // $email_user = $request->email;
-            // Mail::send(
-            //     'emails.reset_mail',
-            //     ['token' => $token, 'data' => $data],
-            //     function ($message) use ($email_user) {
-            //         $message->to($email_user, 'Reset Password')->subject('Reset Password');
-            //     }
-            // );
-
-            // Session::put('user_email', $request->email);
-            $notification = array('emailsent' => 'We have sent you an email to reset password ! ',);
-            return back()->with('We have sent you an email to reset password !');
-        } else {
-            $notification = array('invalid' => 'This email does not exist !',);
-            return back()->with($notification);
-        }
-    }
-
-    public function updatenewpassword(Request $request)
-    {
-        $validated = $request->validate([
-            'email' => 'required|regex:/(.+)@(.+)\.(.+)/i|max:100',
-            'password' => ['required', Password::min(8)->mixedCase()->numbers()->symbols()],
-        ]);
-
-        $updatePassword = DB::table('password_resets')
-            ->where(['email' => $request->email, 'token' => $request->token])->latest()
-            ->first();
-        // return $updatePassword;
-        if (!$updatePassword) {
-            $notification = array('token' => ' Invalid Token ! ');
-            return back()->with($notification);
-        } else {
-            $user = User::where('email', $request->email)
-                ->update(['password' => Hash::make($request->password)]);
-            DB::table('password_resets')->where(['email' => $request->email])->delete();
-            // Session::forget('user_email');
-            $notification = array('updated' => 'Password Updated Successfull ! ',);
-            return back()->with($notification);
-        }
-    }
-
-    public function sign_up()
-    {
-
-        return view("website.sign-up");
-    }
-
-    public function user_register(Request $request)
-    {
-        $validated = $request->validate([
-            'first_name' => 'required|max:35',
-            'email' => 'required|regex:/(.+)@(.+)\.(.+)/i|unique:users,email|max:100',
-            'password' => ['required', Password::min(8)->mixedCase()->numbers()->symbols()],
-            'cosmetology_license_number' => 'required',
-            'professional_details' => 'required',
-            'date' => 'required',
-        ]);
-        // $result = helper('myHelperFunction', 'abc');
-
-        // dd($request->all());
-        $validated = $request->validate(['first_name' => 'required|max:35', 'email' => 'required|regex:/(.+)@(.+)\.(.+)/i|unique:users,email|max:100', 'password' => ['required', Password::min(8)->mixedCase()->numbers()->symbols()],]);
-
-        $check_user = User::where('email', $request->email)->first();
-        if (!empty($check_user)) {
-            $notification = array('message' => 'User with this email already exist! ', 'alert-type' => 'error');
-            return back()->with($notification);
-        }
-
-        // for break date
-        $dateofbirth = $request->date;
-        $date = Carbon::parse($dateofbirth);
-        $day = $date->day;
-        $month = $date->month;
-        $year = $date->year;
-        // end
-
-        $user = new User();
-        $user->first_name = $request->first_name;
-        $user->last_name = $request->last_name;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->month = $month;
-        $user->day = $day;
-        $user->year = $year;
-        $user->cosmetology_license_number = $request->cosmetology_license_number;
-        $user->professional_details = $request->professional_details;
-        // if($request->extension_certification_image){
-        //     $filename = time() . '.' . $request->extension_certification_image->extension();
-        //     $request->extension_certification_image->move(public_path('profiles'), $filename);
-        //     $user->extension_certification_image = $filename;
-        //   }
-        if ($request->hasfile('extension_certification_image')) {
-            $file = $request->file('extension_certification_image');
-            $extension = $file->getClientOriginalExtension();
-            $filename_header = uniqid() . "." . $extension;
-            $filename_header = $file->move('uploads/extension_certification_image/', $filename_header);
-            $user->extension_certification_image = config('app.url') . '/' . $filename_header;
-        }
-        $user->role = 2;
-        $user->status = 0;
-        $user->save();
-
-
-        $message = "Wait for admin approval";
-        $urlhtml = view('emails.sign_up', get_defined_vars())->render();
-        $subject = "SignUp Email From Edify";
-        $data = ['email' => $request->email, 'subject' => $subject, 'html' => $urlhtml];
-        email($data);
-
-        $notification = array('signup' => "Thank you for submitting your account information. Our team will review your request and approve your account as soon as possible.You will receive an email notification once your account has been approved!", 'alert-type' => 'success');
-        return redirect()->route('sign-in')->with($notification);
-    }
     public function add_cart(Request $request)
     {
 
-        if (!Auth::check()) {
-            $notification = array('login' => 'Please Login first !', 'alert-type' => 'success');
-            return back()->with($notification);
-        }
-        $cart_items = Cart::where('user_id', Auth::id())->get();
+        $cart_items = Cart::where('session_id', Session::getId())->get();
         $cart_items;
         $total_item_in_cart = count($cart_items);
         $total_price = 0;
@@ -847,39 +404,9 @@ class WebsiteController extends Controller
         return view("website.products");
     }
 
-    public function product(Request $request, $slug = null)
-    {
-        $slug = $slug;
-        $product = Product::where(
-            'slug',
-            $slug
-        )->with('product_attribute')->with('get_parent_category', 'get_main_category')->first();
-        // return $product;
-        if (!$product) {
-            return view('website.404');
-        }
-
-        // product attribute
-        $product_attributes = [];
-        if (!empty($product->product_attribute->attribute_value_id)) {
-            $prod_attr = AttributeValue::whereIn('id', json_decode($product->product_attribute->attribute_value_id))->get();
-            $product_attributes = $prod_attr;
-        }
-
-
-        // total count of person who add current item in cart
-        $people_add_item_in_carts = Cart::where('product_id', $product->id)->count();
-        $reviews = Review::where('product_id', $product->id)->get();
-        $ratings = Review::where('product_id', $product->id)->where('status', 1)->get();
-        $avg = $ratings->average('rating');
-        $review_count = Review::where('product_id', $product->id)->count();
-        // $total_average_count = Product
-        return view("website.products", get_defined_vars());
-    }
-
     public function checkout()
     {
-        $cart_items = Cart::where('user_id', Auth::id())->get();
+        $cart_items = Cart::where('session_id', Session::getId())->get();
         $total = 0;
         foreach ($cart_items as $cart_item) {
             $available_quantity = Product::where('id', $cart_item->product_id)->first()->stock;
@@ -894,234 +421,6 @@ class WebsiteController extends Controller
         return view("checkout", get_defined_vars());
     }
 
-    public function payment()
-    {
-        return view("website.payment");
-    }
-
-    public function how_it_works()
-    {
-        $faqs = Faq::whereStatus(1)->get();
-
-        // page_id 2 -> How It works
-        $banners = Banner::where('page_id', 2)->get();
-        $page_contents = PageContent::where('page_id', 2)->get();
-
-        return view("website.how-it-work", get_defined_vars());
-    }
-
-    public function custom_experience()
-    {
-        $custom_experiences = CustomExperience::all();
-        return view("website.custom-experience", get_defined_vars());
-    }
-
-    public function create_your_own_lip()
-    {
-        return view("website.create-your-own-lip");
-    }
-
-    public function custom_lip()
-    {
-        return view("website.custom-lips");
-    }
-
-    public function brand_ambassador()
-    {
-        $brand_ambassadors = BrandAmbassador::whereStatus(1)->get();
-
-        return view("website.brand-ambassador", get_defined_vars());
-    }
-
-    public function inquiry(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'message' => 'required',
-            'contact' => 'required|max:20',
-            'email' => 'required|max:50',
-            'name' => 'required|max:50',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(
-                ['status' => 400, 'errors' => $validator->errors()->toArray()]
-            );
-        } else {
-            $inquiry = new Inquiry();
-            $inquiry->name = $request->name;
-            $inquiry->email = $request->email;
-            $inquiry->contact = $request->contact;
-            $inquiry->message = $request->message;
-            $inquiry->save();
-            $data = [
-                'name' => $request->name,
-                'email' => $request->email,
-                'contact' => $request->contact,
-                'message' => $request->message,
-            ];
-            $email_admin = "djoy62471@gmail.com";
-            // Mail::send(
-            //     'frontend.emails.contact_mail',
-            //     ['data' => $data],
-            //     function ($message) use ($email_admin) {
-            //         $message
-            //             ->to($email_admin, 'Contact')->subject('Contact');
-            //     }
-            // );
-            // $user_email = $request->email;
-            // Mail::send(
-            //     'frontend.emails.user_contact',
-            //     ['data' => $data],
-            //     function ($message) use ($user_email) {
-            //         $message
-            //             ->to($user_email, 'Contact')->subject('Contact');
-            //     }
-            // );
-            return response()->json([
-                'status' => 200,
-                'message' => 'Your Inquiry has been sent'
-            ]);
-        }
-    }
-
-    public function about_us()
-    {
-
-        // Generated by curl-to-PHP: http://incarnate.github.io/curl-to-php/
-        // $ch = curl_init();
-
-        // curl_setopt($ch, CURLOPT_URL, 'https://api.galaxysearchapi.com/PersonSearch');
-        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        // curl_setopt($ch, CURLOPT_POST, 1);
-
-        // $headers = array();
-        // $headers[] = 'Accept: application/json';
-        // $headers[] = 'Content-Type: application/json';
-        // curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
-        // $result = curl_exec($ch);
-
-        // if (curl_errno($ch)) {
-        //     echo 'Error:' . curl_error($ch);
-        // }
-        // curl_close($ch);
-        // dd($result);
-
-        $page_content = Banner::get();
-
-        return view("website.about-us", get_defined_vars());
-    }
-
-    public function newsletter(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|max:50',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(
-                ['status' => 400, 'errors' => $validator->errors()->toArray()]
-            );
-        } else {
-            $subscriber = Subscription::where('email', $request->email)->first();
-            if ($subscriber) {
-                return response()->json(
-                    ['status' => 500, 'message' => "You have already subscribed"]
-                );
-            } else {
-
-
-                $subscription = new Subscription();
-                $subscription->email = $request->email;
-                $subscription->status = 1;
-                $subscription->save();
-
-                return response()->json([
-                    'status' => 200,
-                    'message' => 'Your subscription has been sent'
-                ]);
-            }
-        }
-    }
-
-    public function refund_policy()
-    {
-        // page_id 5 -> Refund Policy
-        $page_contents = PageContent::where('id', 10)->get();
-        return view("website.refund-policy", get_defined_vars());
-    }
-
-    public function privacy_policy()
-    {
-        // id 11 -> Privacy Policy
-        $privacy_policy = PrivacyPolicy::first();
-        $page_contents = PageContent::where('id', 11)->get();
-        return view("website.privacy-policy", get_defined_vars());
-    }
-
-    public function shipping_policy()
-    {
-        //  id 12 -> Shipping Policy
-        $page_contents = PageContent::where('id', 12)->get();
-        return view("website.shipping-policy", get_defined_vars());
-    }
-
-    public function terms_of_service()
-    {
-        // id 13 -> Terms of Service
-        $page_contents = PageContent::where('id', 13)->get();
-        return view("website.terms-of-service", get_defined_vars());
-    }
-
-    public function do_not_sell_my_personal_information()
-    {
-        // id 14 -> Do not sell my personal information
-        $page_contents = PageContent::where('id', 14)->get();
-        return view("website.do-not-sell-my-personal-information", get_defined_vars());
-    }
-
-    public function contact_us()
-    {
-        $banners = Banner::get();
-        return view("website.contact-us", get_defined_vars());
-    }
-
-    public function reset_password(Request $request, $token)
-    {
-
-        return view("website.reset-password", ['token' => $token]);
-    }
-
-    function getAmount($input)
-    {
-        $input = number_format($input);
-        $symbol = '';
-        $input_count = substr_count($input, ',');
-        if ($input_count != '0') {
-            if ($input_count == '1') {
-                $symbol = 'k';
-                return substr($input, 0, -4);
-            } else if ($input_count == '2') {
-                $symbol = 'm';
-                return substr($input, 0, -8) . 'm';
-            } else if ($input_count == '3') {
-                $symbol = 'b';
-                return substr($input, 0, -12) . 'b';
-            } else {
-                return;
-            }
-        } else {
-            return [$input, $symbol];
-        }
-    }
-
-    // get all products with average ratings
-    public function shop_all_products(Request $request)
-    {
-
-        $products = Product::where('status', 1)->with('get_ratings')->withAvg('get_ratings', 'rating')->get();
-        return view('website.products', get_defined_vars());
-    }
     // get products according to category in navbar
     public function get_category_products(Request $request, $id)
     {
@@ -1140,203 +439,6 @@ class WebsiteController extends Controller
         return view('shop', get_defined_vars());
     }
 
-    public function state(Request $request)
-    {
-
-        $statelocation = State::where('country_id', $request->id)->get();
-        if (count($statelocation) > 0) {
-            return response()->json([
-                'status' => 200,
-                'states' => $statelocation
-
-            ]);
-        } else {
-            return response()->json([
-                'status' => 404,
-            ]);
-        }
-    }
-
-    public function city(Request $request)
-    {
-        $statelocation = City::where('state_id', $request->id)->get();
-        if (count($statelocation) > 0) {
-            return response()->json([
-                'status' => 200,
-                'cities' => $statelocation
-            ]);
-        } else {
-            return response()->json(['status' => 404,]);
-        }
-    }
-
-    public function checkShippingPrice(Request $request)
-    {
-        $stateId = $request->input('state_id');
-        $shippingPrice = Shipping_price::where('state_id', $stateId)->value('price');
-
-        if ($shippingPrice !== null) {
-            return response()->json([
-                'status' => 200,
-                'price' => $shippingPrice
-            ]);
-        } else {
-            return response()->json([
-                'status' => 404
-            ]);
-        }
-    }
-
-
-    public function cash_on_delivery(Request $request)
-    {
-        //  return "a";
-
-        if (!Auth::check()) {
-            return redirect()->back()->with("message", "Please login first !");
-        }
-
-        if (Auth::check() && Auth::user()->role == 1) {
-            return redirect()->back()->with("message", "Admin is not allowed to purchase!");
-        }
-
-        // return $shipping_state = Shipping_price::get();
-        $check_carts = Cart::where('user_id', Auth::id())->get();
-        if (count($check_carts) == 0) {
-            return redirect()->back()->with("message", "Sorry!, You can not direct payment without add item in cart.");
-        }
-        $validated = $request->validate([
-            'first_name' => 'required|max:35',
-            'last_name' => 'required|max:35',
-            'email' => 'required',
-            'contact' => 'required',
-            'mailling_address' => 'required|max:250',
-            'shipping_address' => 'required|max:250',
-            'country' => 'required|max:20',
-            'state' => 'required|max:20',
-            'city' => 'required|max:20',
-            'zip_code' => 'required|max:20',
-        ]);
-
-        if (Auth::user()->is_guest == 1) {
-            $cart_items = Cart::where('user_id', Auth::id())->where('session', Session::getId())->with('product', 'video', 'education')->get();
-        } else {
-            $cart_items = Cart::where('user_id', Auth::id())->with('product', 'video', 'education')->get();
-        }
-        $total_price = 0;
-        if (count($cart_items) > 0) {
-            foreach ($cart_items as $cart_item) {
-                // check discount and calculate total price
-                if (!empty($cart_item->type == 1 || $cart_item->type == 2 || $cart_item->type == 3)) {
-                    $total_price += $cart_item->price;
-                } else {
-
-                    if (!empty($cart_item->product->discount)) {
-                        $total_price += ($cart_item->quantity * $cart_item->product->discounted_price);
-                    } else {
-                        $total_price += ($cart_item->quantity * $cart_item->product->price);
-                    }
-                }
-            }
-        }
-
-        $shipping_price = $request->input('shipping_price');
-
-        // If shipping price is set, add it to the total price
-        if ($shipping_price) {
-            $total_price += $shipping_price;
-        }
-
-
-        $order = new Order();
-        $order->user_id = Auth::id();
-        $order->total_order_price = $total_price;
-        $order->order_address_id = 1;
-        $order->save();
-
-
-        $cart_total_price = 0;
-        if (count($cart_items) > 0) {
-            foreach ($cart_items as $cart_item) {
-                if (!empty($cart_item->type == 1 || $cart_item->type == 2 || $cart_item->type == 3)) {
-                    $total_price += $cart_item->price;
-                } else {
-
-                    if (!empty($cart_item->product->discount)) {
-                        $total_price += ($cart_item->quantity * $cart_item->product->discounted_price);
-                    } else {
-                        $total_price += ($cart_item->quantity * $cart_item->product->price);
-                    }
-                }
-
-                $billing = new BillingInfo();
-                $billing->user_id = Auth::id();
-                $billing->order_id = $order->id;
-                $billing->product_id = $cart_item->product_id;
-                $billing->video_id = $cart_item->video_id;
-                $billing->education_id = $cart_item->education_id;
-                $billing->attribute = $cart_item->attribute;
-                $billing->attribute_value = $cart_item->color_id;
-                $billing->price = $cart_item->price;
-                $billing->quantity = $cart_item->quantity;
-                $billing->discount = $cart_item->discount;
-                $billing->discounted_price = $cart_item->discounted_price;
-                $billing->cstm_product_fragrance = $cart_item->cstm_product_fragrance;
-                $billing->cstm_product_name = $cart_item->cstm_product_name;
-                $billing->cstm_intagram_handle = $cart_item->cstm_intagram_handle;
-                $billing->cstm_tiktok_handle = $cart_item->cstm_tiktok_handle;
-
-                if (!empty($cart_item->lengthvalue)) {
-                    $billing->length = $cart_item->lengthvalue->name;
-                } else {
-                    $billing->length = null;
-                }
-
-                $billing->save();
-            }
-        }
-        // order address
-        $order_address = new OrderAddress();
-        $order_address->user_id = Auth::id();
-        $order_address->order_id = $order->id;
-        $order_address->first_name = $request->first_name;
-        $order_address->last_name = $request->last_name;
-        $order_address->full_name = $request->full_name;
-        $order_address->email = $request->email;
-        $order_address->contact = $request->contact;
-
-        $order_address->mailling_address = $request->mailling_address;
-        $order_address->shipping_address = $request->shipping_address;
-        $order_address->country_id = $request->country;
-        $order_address->state_id = $request->state;
-        $order_address->city_id = $request->city;
-        $order_address->zip_code = $request->zip_code;
-        $order_address->save();
-
-
-        // $message = "Wait for admin approval";
-        //     // $token;
-        $urlhtml = view('emails.invoice', get_defined_vars())->render();
-        // dd($urlhtml);
-        $subject = "Invoice Email From Edify";
-        $data = ['email' => $request->email, 'subject' => $subject, 'html' => $urlhtml];
-        // dd($data);
-        email($data);
-        if (Auth::user()->is_guest == 1) {
-            $removeCart = Cart::where('user_id', Auth::id())->where('session', Session::getId());
-        } else {
-            $removeCart = Cart::where('user_id', Auth::id());
-        }
-        $removeCart->delete();
-        // dd('h');
-        $notification = array('order_success' => 'Order has been completed successfully !');
-        return redirect()->route('user.order_list')->with($notification);
-    }
-
-    public function invoice()
-    {
-        return view('emails.invoice', get_defined_vars());
-    }
 
     function addreview(Request $request)
     {
@@ -1379,19 +481,19 @@ class WebsiteController extends Controller
             'name' => 'required',
             'email' => 'required',
         ]);
-        if (Auth::check()) {
-            $leads = Leads::where('user_id', Auth::id())->where('product_id', $request->product_id)->first();
-            if ($leads) {
-                $notification = array('message' => 'You have already given response on this product !', 'status' => 404);
-                return $notification;
-            }
-        } else {
-            $notification = array('message' => 'Please login first !', 'status' => 404);
+        // get lead according to user_id or session_id
+        $leads = Leads::where('session_id', Session::getId())->where('product_id', $request->product_id)->first();
+        if ($leads) {
+            $notification = array('message' => 'You have already given response on this product !', 'status' => 404);
             return $notification;
         }
 
+
         $lead = new Leads();
-        $lead->user_id = Auth::id();
+        if (Auth::check()) {
+            $lead->user_id = Auth::id();
+        }
+        $lead->session_id = Session::getId();
         $lead->product_id = $request->product_id;
         $lead->name = $request->name;
         $lead->email = $request->email;
@@ -1407,7 +509,7 @@ class WebsiteController extends Controller
     public function leads()
     {
 
-        $leads = Leads::with('products')->get();
+        $leads = Leads::with('products')->with('users')->get();
         return view('admin_dashboard.leads.index', get_defined_vars());
     }
 

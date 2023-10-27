@@ -142,6 +142,11 @@ class ProductController extends Controller
             $product_attribute->attribute_value_id = json_encode($attr_id);
             $product_attribute->attribute_value = json_encode($attr_value);
             $product_attribute->save();
+        }else{
+            $product_attribute = ProductAttribute::where('product_id', $product->id)->first();
+            if($product_attribute){
+            	$product_attribute->delete();
+            }
         }
 
 
