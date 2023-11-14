@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://ocasebebe.test/public'),
+    'url' => env('APP_URL', 'https://ocasebebedakar.com/public'),
 
     'asset_url' => env('ASSET_URL', null),
 

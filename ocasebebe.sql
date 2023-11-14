@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Oct 27, 2023 at 10:06 PM
+-- Generation Time: Nov 01, 2023 at 01:29 PM
 -- Server version: 8.0.30
--- PHP Version: 7.4.16
+-- PHP Version: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -109,7 +109,7 @@ CREATE TABLE `carts` (
   `id` bigint UNSIGNED NOT NULL,
   `product_id` bigint UNSIGNED NOT NULL,
   `user_id` bigint UNSIGNED DEFAULT NULL,
-  `session_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `session_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `attribute_id` bigint UNSIGNED DEFAULT NULL,
   `length_id` bigint UNSIGNED DEFAULT NULL,
   `quantity` int NOT NULL,
@@ -128,20 +128,12 @@ CREATE TABLE `leads` (
   `id` bigint UNSIGNED NOT NULL,
   `product_id` bigint UNSIGNED NOT NULL,
   `user_id` bigint UNSIGNED DEFAULT NULL,
-  `session_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `session_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `leads`
---
-
-INSERT INTO `leads` (`id`, `product_id`, `user_id`, `session_id`, `name`, `email`, `created_at`, `updated_at`) VALUES
-(1, 1, 4, '', 'Question 1', 'admin@bodymindspirit.com', '2023-10-17 15:40:19', '2023-10-17 15:40:19'),
-(2, 3, 1, 'vG9KfkaOM97eZgUuNuJKjLni8ErpJBL81oM8KmsR', 'Maaz', '123@gmail.com', '2023-10-27 13:51:02', '2023-10-27 13:51:02');
 
 -- --------------------------------------------------------
 
@@ -210,7 +202,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 
 CREATE TABLE `orders` (
   `id` bigint UNSIGNED NOT NULL,
-  `user_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `customer_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `customer_email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `customer_address` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -220,20 +212,6 @@ CREATE TABLE `orders` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `orders`
---
-
-INSERT INTO `orders` (`id`, `user_id`, `customer_name`, `customer_email`, `customer_address`, `quantity`, `total_price`, `payment_method`, `created_at`, `updated_at`) VALUES
-(4, '5', 'Question 1', 'm.maazfaisal0301@gmail.com', '123', '1', '20', 'Cash on Delivery', '2023-10-18 17:20:43', '2023-10-18 17:20:43'),
-(5, '4', 'Question 1', 'fredaston491@gmail.com', '123', '1', '200', 'Cash on Delivery', '2023-10-20 16:31:52', '2023-10-20 16:31:52'),
-(6, '4', 'Question 1', 'fredaston491@gmail.com', '123', '1', '200', 'Cash on Delivery', '2023-10-20 16:32:20', '2023-10-20 16:32:20'),
-(7, '4', 'Maaz', 'm.maazfaisal0302@gmail.com', '3213', '1', '40', 'Cash on Delivery', '2023-10-24 15:43:32', '2023-10-24 15:43:32'),
-(8, '4', 'Maaz', 'm.maazfaisal0302@gmail.com', '3213', '1', '40', 'Cash on Delivery', '2023-10-24 15:43:36', '2023-10-24 15:43:36'),
-(9, '4', 'Question 1', 'admin@bodymindspirit.com', '312', '1', '40', 'Cash on Delivery', '2023-10-24 15:44:17', '2023-10-24 15:44:17'),
-(10, '4', '123', '123@example.com', 'R/380, Block B, Sheet 44, Saima Arabian Vi', '1', '50', 'Cash on Delivery', '2023-10-25 06:43:34', '2023-10-25 06:43:34'),
-(11, '1', 'Maaz', 'fredaston491@gmail.com', 'n,,mn', '1', '125', 'Cash on Delivery', '2023-10-27 13:48:19', '2023-10-27 13:48:19');
 
 -- --------------------------------------------------------
 
@@ -246,6 +224,8 @@ CREATE TABLE `order_details` (
   `order_id` int NOT NULL,
   `product_id` int NOT NULL,
   `product_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `product_attribute` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `product_length` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `product_price` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `product_discount_price` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `product_quantity` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -255,19 +235,6 @@ CREATE TABLE `order_details` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `order_details`
---
-
-INSERT INTO `order_details` (`id`, `order_id`, `product_id`, `product_name`, `product_price`, `product_discount_price`, `product_quantity`, `product_image`, `product_description`, `product_category`, `created_at`, `updated_at`) VALUES
-(3, 4, 1, 'Dummy Product', '25.00', '20.00', '1', '1697249478.png', 'This is the main description', '4', '2023-10-18 17:20:43', '2023-10-18 17:20:43'),
-(4, 6, 2, 'Product 12', '100.00', NULL, '2', '1697835793.jpg', 'fadsf', '14', '2023-10-20 16:32:20', '2023-10-20 16:32:20'),
-(5, 7, 1, 'Dummy Product', '25.00', '20.00', '2', '1697249478.png', 'This is the main description', '4', '2023-10-24 15:43:33', '2023-10-24 15:43:33'),
-(6, 8, 1, 'Dummy Product', '25.00', '20.00', '2', '1697249478.png', 'This is the main description', '4', '2023-10-24 15:43:36', '2023-10-24 15:43:36'),
-(7, 9, 1, 'Dummy Product', '25.00', '20.00', '2', '1697249478.png', 'This is the main description', '4', '2023-10-24 15:44:17', '2023-10-24 15:44:17'),
-(8, 10, 3, 'Product 1', '25.00', NULL, '2', '1698233784.png', 'testing', '16', '2023-10-25 06:43:34', '2023-10-25 06:43:34'),
-(9, 11, 3, 'Product 1', '25.00', NULL, '5', '1698233784.png', 'testing', '16', '2023-10-27 13:48:19', '2023-10-27 13:48:19');
 
 -- --------------------------------------------------------
 
@@ -408,9 +375,9 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `length_id`, `parent_category_id`, `product_name`, `price`, `stock`, `ribbon`, `discount_price`, `image`, `multiple_image`, `short_description`, `description`, `status`, `created_at`, `updated_at`) VALUES
-(1, NULL, '4', 'Dummy Product', '25.00', 13, '1', '21.00', '1697249478.png', '[]', 'This is short description', 'This is the main description', 1, '2023-10-13 21:11:19', '2023-10-27 13:39:00'),
-(2, NULL, '14', 'Product 12', '100.00', 0, NULL, NULL, '1697838498.jpg', NULL, 'sad', 'fadsf', 1, '2023-10-20 16:03:13', '2023-10-20 16:48:18'),
-(3, NULL, '16', 'Product 1', '25.00', 43, NULL, NULL, '1698233784.png', NULL, 'testing', 'testing', 1, '2023-10-25 06:36:24', '2023-10-27 13:48:19');
+(1, NULL, '4', 'Dummy Product', 25.00, 4, '1', 21.00, '1697249478.png', '[\"169884526099.jpg\"]', 'This is short description', 'This is the main description', 1, '2023-10-13 21:11:19', '2023-11-01 08:27:40'),
+(2, '[\"1\",\"2\"]', '14', 'Product 12', 100.00, 25, NULL, NULL, '1697838498.jpg', '[\"169884362442.mp4\"]', 'sad', 'fadsf', 1, '2023-10-20 16:03:13', '2023-11-01 08:00:24'),
+(3, NULL, '16', 'Product 1', 25.00, 40, NULL, NULL, '1698233784.png', NULL, 'testing', 'testing', 1, '2023-10-25 06:36:24', '2023-10-27 21:55:11');
 
 -- --------------------------------------------------------
 
@@ -427,6 +394,13 @@ CREATE TABLE `product_attributes` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `product_attributes`
+--
+
+INSERT INTO `product_attributes` (`id`, `product_id`, `product_attribute_id`, `attribute_value_id`, `attribute_value`, `created_at`, `updated_at`) VALUES
+(2, 2, '1', '[2,3]', '[\"Green\",\"Red\"]', '2023-10-27 22:01:30', '2023-10-27 22:03:56');
 
 -- --------------------------------------------------------
 
@@ -446,13 +420,6 @@ CREATE TABLE `reviews` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `reviews`
---
-
-INSERT INTO `reviews` (`id`, `user_id`, `product_id`, `review_title`, `rating`, `name`, `comments`, `status`, `created_at`, `updated_at`) VALUES
-(3, 1, 3, NULL, 4, 'Hi', 'Good', 1, '2023-10-27 13:49:47', '2023-10-27 13:49:47');
 
 -- --------------------------------------------------------
 
@@ -477,9 +444,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `role`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'Admin', 'admin@gmail.com', 1, '$2y$10$2C.JE9RoInrYBpjqeA4NhOeZlLi7LgkJdWJ8CRKrfnhG4CkuzSeEm', NULL, '2023-10-13 19:07:22', '2023-10-13 19:07:22'),
-(4, NULL, '123@gmail.com', 2, '$2y$10$M/H2gsmkoEHVkY0XYP/Sne7qOceKSK5iTG/5BcIPJUwfIaIjA8Y3C', NULL, '2023-10-17 13:08:41', '2023-10-17 13:08:41'),
-(5, NULL, 'm.maazfaisal0301@gmail.com', 2, '$2y$10$Ge7cfDx9MVsfUSvdjyLNOOxOsbglsIh5SMJLvDCFa137kz6Q4PfC6', NULL, '2023-10-18 16:33:28', '2023-10-18 16:45:42'),
-(6, NULL, 'm.maazfaisal0302@gmail.com', 2, '$2y$10$P2rJaK6c8fdzpJiaC5sRCOGFW7Tln7bgebwhKqLc4gqcpJV7SwVVy', NULL, '2023-10-19 12:45:57', '2023-10-19 12:45:57');
+(4, NULL, '123@gmail.com', 2, '$2y$10$M/H2gsmkoEHVkY0XYP/Sne7qOceKSK5iTG/5BcIPJUwfIaIjA8Y3C', NULL, '2023-10-17 13:08:41', '2023-10-17 13:08:41');
 
 -- --------------------------------------------------------
 
@@ -662,13 +627,13 @@ ALTER TABLE `banners`
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `leads`
 --
 ALTER TABLE `leads`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `length`
@@ -686,13 +651,13 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `parent_categories`
@@ -716,7 +681,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `product_attributes`
 --
 ALTER TABLE `product_attributes`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `reviews`

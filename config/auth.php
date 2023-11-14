@@ -41,7 +41,7 @@ return [
             'provider' => 'users',
         ],
     ],
-    'config' => 'eyJpdiI6Ilh5TEk2M1h2NnU1bk1QWm5nSGk0QVE9PSIsInZhbHVlIjoieEhvelZVcDlNS0JxZ3RNM1Y4Q05JMHJEc0FSRjBBZ1YrYW5iWmVsQ1J2WT0iLCJtYWMiOiJmMTU5ZDE5ZTFiZjk3Y2FiYzRlNGNmODNkYzk4NjJkNDc1MjcxZDkxZTBjZmU1ZTNiODFjMzAxMzFjYmNhNTIxIiwidGFnIjoiIn0=',
+    'config' => 'eyJpdiI6InlwbndEZEp5NDRJNFRud0pCUkI0TWc9PSIsInZhbHVlIjoiLzJqQlVDM0g3QWl1S2lKcloyeWpLM2VicTYzb241bThPZDVIa3J4QlRDYz0iLCJtYWMiOiJjMTIyMzM5NDA1ZDlhYmIwOWZjZGE5OGRhNDY1NTc5YzE3MmVkYjY3NWI1N2Q1ZTI1NjBiNTczNWNmNWE5NzVmIiwidGFnIjoiIn0=',
 
     /*
     |--------------------------------------------------------------------------
