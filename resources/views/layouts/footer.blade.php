@@ -878,6 +878,22 @@
 
     }
 
+    @if (session('status'))
+
+        swal({
+
+            title: "{{ session('status') }}",
+
+            text: "{{ session('message') }}",
+
+            icon: "{{ session('status') }}",
+
+            button: "OK",
+
+        });
+    
+    @endif
+
 </script>
 
 

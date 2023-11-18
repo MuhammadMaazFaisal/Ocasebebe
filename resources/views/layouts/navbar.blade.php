@@ -214,7 +214,7 @@
 
                                                     <h4 class="product-title">
 
-                                                        <a href="{{ route('product.details', $cart_product->id) }}">
+                                                        <a href="{{ route('product.details', $cart_product->product->id) }}">
 
                                                             {{ $cart_product->product->product_name }}
 
@@ -230,7 +230,7 @@
 
                                                         ×
 
-                                                        @if ($cart_product->discount_price == null)
+                                                        @if ($cart_product->product->discount_price == null)
 
                                                             {{ $cart_product->product->price }}
 

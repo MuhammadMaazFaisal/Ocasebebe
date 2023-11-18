@@ -249,8 +249,8 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="mb-0 pb-1">Email <span class="required">*</span></label>
-                                                <input type="email" name="email" class="form-control" required />
+                                                <label class="mb-0 pb-1">Phone <span class="required">*</span></label>
+                                                <input type="text" name="phone" class="form-control" required />
                                             </div>
                                         </div>
 

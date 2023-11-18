@@ -30,11 +30,7 @@
 
         <div class="col-sm-6 col-xl-3 col-lg-6">
 
-            <a href="
-
-            {{-- {{ route('orderManagement.index') }} --}}
-
-            " style="color:#fff">
+            <a href="{{ route('leads') }}" style="color:#fff">
 
                 <div class="card o-hidden">
 
@@ -270,11 +266,7 @@
 
         <div class="col-sm-6 col-xl-3 col-lg-6">
 
-            <a href="
-
-            {{-- {{ route('product.index') }} --}}
-
-            " style="color:#fff">
+            <a href="{{ route('product.index') }}" style="color:#fff">
 
                 <div class="card o-hidden">
 
@@ -334,11 +326,7 @@
 
         <div class="col-sm-6 col-xl-3 col-lg-6">
 
-            <a href="
-
-            {{-- {{ route('orderManagement.index') }} --}}
-
-            " style="color:#fff">
+            <a href="{{ route('orderManagement.index') }}" style="color:#fff">
 
                 <div class="card o-hidden">
 
@@ -526,11 +514,7 @@
 
         <div class="col-sm-6 col-xl-3 col-lg-6">
 
-            <a href="
-
-            {{-- {{ route('user-index') }} --}}
-
-            " style="color:#fff">
+            <a href="{{ route('user-index') }}" style="color:#fff">
 
                 <div class="card o-hidden">
 

@@ -85,7 +85,6 @@ class WebsiteController extends Controller
         foreach ($categories as $category) {
 
             $category['products'] = Product::where('parent_category_id', $category->id)->where('status', 1)->get();
-
         }
 
         $new_products = Product::where('status', 1)->orderBy('id', 'desc')->get()->take(8);
@@ -95,7 +94,6 @@ class WebsiteController extends Controller
             $new_product['avg_rating'] = Review::where('product_id', $new_product->id)->avg('rating');
 
             $new_product['category'] = ParentCategory::where('id', $new_product->parent_category_id)->first();
-
         }
 
         $products = Product::where('status', 1)->get();
@@ -105,7 +103,6 @@ class WebsiteController extends Controller
             $product['avg_rating'] = Review::where('product_id', $product->id)->avg('rating');
 
             $product['category'] = ParentCategory::where('id', $product->parent_category_id)->first();
-
         }
 
         $sale_products = Product::where('status', 1)->where('discount_price', '!=', null)->orderBy('id', 'desc')->get()->take(3);
@@ -113,7 +110,6 @@ class WebsiteController extends Controller
         foreach ($sale_products as $sale_product) {
 
             $sale_product['avg_rating'] = Review::where('product_id', $sale_product->id)->avg('rating');
-
         }
 
         $featured_products = Product::where('status', 1)->inRandomOrder()->take(3)->get();
@@ -121,7 +117,6 @@ class WebsiteController extends Controller
         foreach ($featured_products as $featured_product) {
 
             $featured_product['avg_rating'] = Review::where('product_id', $featured_product->id)->avg('rating');
-
         }
 
         $recommended_products = Product::where('status', 1)->inRandomOrder()->take(3)->get();
@@ -129,7 +124,6 @@ class WebsiteController extends Controller
         foreach ($recommended_products as $recommended_product) {
 
             $recommended_product['avg_rating'] = Review::where('product_id', $recommended_product->id)->avg('rating');
-
         }
 
         $bestselling_products = Product::where('status', 1)->inRandomOrder()->take(3)->get();
@@ -137,7 +131,6 @@ class WebsiteController extends Controller
         foreach ($bestselling_products as $bestselling_product) {
 
             $bestselling_product['avg_rating'] = Review::where('product_id', $bestselling_product->id)->avg('rating');
-
         }
 
         $banners = Banner::get();
@@ -145,7 +138,6 @@ class WebsiteController extends Controller
 
 
         return view("index", get_defined_vars());
-
     }
 
 
@@ -163,7 +155,6 @@ class WebsiteController extends Controller
             $product['avg_rating'] = Review::where('product_id', $product->id)->avg('rating');
 
             $product->category_name = ParentCategory::where('id', $product->parent_category_id)->first()->parent_category_name;
-
         }
 
         $featured_products = Product::where('status', 1)->inRandomOrder()->take(12)->get();
@@ -171,7 +162,6 @@ class WebsiteController extends Controller
         foreach ($featured_products as $featured_product) {
 
             $featured_product->avg_rating = Review::where('product_id', $featured_product->id)->avg('rating');
-
         }
 
         $attributes = AttributeValue::where('status', 1)->get();
@@ -179,7 +169,6 @@ class WebsiteController extends Controller
         $lengths = Length::where('status', 1)->get();
 
         return view("shop", get_defined_vars());
-
     }
 
 
@@ -207,7 +196,6 @@ class WebsiteController extends Controller
                 ->toArray();
 
             $productIDs[] = $categoryProducts;
-
         }
 
 
@@ -229,7 +217,6 @@ class WebsiteController extends Controller
                 ->toArray();
 
             $productIDs[] = $priceProducts;
-
         }
 
 
@@ -252,23 +239,19 @@ class WebsiteController extends Controller
 
 
 
-                foreach ($color_product->attribute_value_id as $color_product_id) {
+                    foreach ($color_product->attribute_value_id as $color_product_id) {
 
-                    if (in_array($color_product_id, $colors)) {
+                        if (in_array($color_product_id, $colors)) {
 
-                        $c_products[] = $color_product->product_id;
-
+                            $c_products[] = $color_product->product_id;
+                        }
                     }
-
                 }
-            }
-
             }
 
 
 
             $productIDs[] = $c_products;
-
         }
 
 
@@ -293,22 +276,18 @@ class WebsiteController extends Controller
 
                 if ($size_product->length_id != null) {
 
-                
-                foreach ($size_product->length_id as $size_product_id) {
 
-                    if (in_array($size_product_id, $sizes)) {
+                    foreach ($size_product->length_id as $size_product_id) {
 
-                        $s_products[] = $size_product->id;
+                        if (in_array($size_product_id, $sizes)) {
 
+                            $s_products[] = $size_product->id;
+                        }
                     }
-
                 }
             }
 
-            }
-
             $productIDs[] = $s_products;
-
         }
 
 
@@ -318,11 +297,9 @@ class WebsiteController extends Controller
         if (count($productIDs) > 1) {
 
             $commonProductIDs = call_user_func_array('array_intersect', $productIDs);
-
         } else {
 
             $commonProductIDs = $productIDs[0] ?? [];
-
         }
 
 
@@ -334,7 +311,6 @@ class WebsiteController extends Controller
         if (!($request->has('sizes')) && !($request->has('colors')) && !($request->has('categories'))) {
 
             $products = Product::where('status', 1)->paginate(12);
-
         }
 
 
@@ -344,7 +320,6 @@ class WebsiteController extends Controller
             $product->avg_rating = Review::where('product_id', $product->id)->avg('rating');
 
             $product->category_name = ParentCategory::where('id', $product->parent_category_id)->first()->parent_category_name;
-
         }
 
         $attributes = AttributeValue::where('status', 1)->get();
@@ -356,7 +331,6 @@ class WebsiteController extends Controller
         foreach ($featured_products as $featured_product) {
 
             $featured_product->avg_rating = Review::where('product_id', $featured_product->id)->avg('rating');
-
         }
 
 
@@ -366,7 +340,6 @@ class WebsiteController extends Controller
 
 
         return view('shop', get_defined_vars());
-
     }
 
 
@@ -386,7 +359,6 @@ class WebsiteController extends Controller
             $notification = ['status' => 400, 'message' => 'Cart is empty'];
 
             return $notification;
-
         }
 
 
@@ -408,9 +380,7 @@ class WebsiteController extends Controller
             foreach ($cart_items as $cart_item) {
 
                 $total_price += $cart_item->price * $cart_item->quantity;
-
             }
-
         }
 
         $order = new Order();
@@ -418,7 +388,6 @@ class WebsiteController extends Controller
         if (Auth::check()) {
 
             $order->user_id = Auth::id();
-
         }
 
         $order->customer_name = $request->name;
@@ -444,17 +413,17 @@ class WebsiteController extends Controller
                 $prod_attr = AttributeValue::where('status', 1)->whereIn('id', json_decode($product_attributes->attribute_value_id))->get();
 
                 $product_attributes = $prod_attr;
-
             }
 
-            foreach ($product_attributes as $product_attribute) {
+            if ($product_attributes != null) {
 
-                if ($product_attribute->id == $cart_item->attribute_id) {
+                foreach ($product_attributes as $product_attribute) {
 
-                    $attribute_value = $product_attribute->attribute_value;
+                    if ($product_attribute->id == $cart_item->attribute_id) {
 
+                        $attribute_value = $product_attribute->attribute_value;
+                    }
                 }
-
             }
 
             $order_details = new OrderDetails();
@@ -467,9 +436,15 @@ class WebsiteController extends Controller
 
             $order_details->product_name = $product->product_name;
 
-            $order_details->product_attribute = $attribute_value;
+            if ($product_attributes != null) {
 
-            $order_details->product_length = Length::where('id', $cart_item->length_id)->first()->name;
+                $order_details->product_attribute = $attribute_value;
+            }
+
+            if ($product->length_id != null) {
+
+                $order_details->product_length = Length::where('id', $cart_item->length_id)->first()->name;
+            }
 
             $order_details->product_price = $product->price;
 
@@ -488,9 +463,7 @@ class WebsiteController extends Controller
                 $product->stock = $product->stock - $cart_item->quantity;
 
                 $product->save();
-
             }
-
         }
 
         if (Cart::where('session_id', Session::getId())->delete()) {
@@ -506,13 +479,10 @@ class WebsiteController extends Controller
             email($data);
 
             return ['status' => 200, 'message' => 'Order Placed Successfully'];
-
         } else {
 
             return ['status' => 400, 'message' => 'Something went wrong'];
-
         }
-
     }
 
 
@@ -548,7 +518,6 @@ class WebsiteController extends Controller
             $prod_attr = AttributeValue::where('status', 1)->whereIn('id', json_decode($product_attributes->attribute_value_id))->get();
 
             $product_attributes = $prod_attr;
-
         }
 
 
@@ -562,7 +531,6 @@ class WebsiteController extends Controller
             $length_id = json_decode($product->length_id);
 
             $lengthnames = Length::whereIn('id', $length_id)->get();
-
         }
 
 
@@ -574,7 +542,6 @@ class WebsiteController extends Controller
         for ($i = 0; $i < count($related_products); $i++) {
 
             $related_products[$i]['avg_rating'] = Review::where('product_id', $related_products[$i]->id)->avg('rating');
-
         }
 
 
@@ -594,7 +561,6 @@ class WebsiteController extends Controller
 
 
         return view('product-details', get_defined_vars());
-
     }
 
 
@@ -604,10 +570,14 @@ class WebsiteController extends Controller
     public function add_cart(Request $request)
 
     {
-
-
-
         $cart_items = Cart::where('session_id', Session::getId())->get();
+
+        if (count($cart_items) == 0) {
+
+            $notification = ['status' => 'error', 'message' => 'Please add product to cart first'];
+
+            return redirect()->route('home')->with($notification);
+        }
 
         $cart_items;
 
@@ -622,19 +592,14 @@ class WebsiteController extends Controller
                 if ($cart_item->discount_price != null) {
 
                     $total_price += ($cart_item->quantity * $cart_item->discount_price);
-
                 } else {
 
                     $total_price += ($cart_item->quantity * $cart_item->price);
-
                 }
-
             }
-
         }
 
         return view("cart", get_defined_vars());
-
     }
 
 
@@ -648,7 +613,6 @@ class WebsiteController extends Controller
             $notification = array('error_wishlish' => 'Sorry! You are logged in as admin please logout first', 'alert-type' => 'error');
 
             return back()->with($notification);
-
         }
 
 
@@ -658,7 +622,6 @@ class WebsiteController extends Controller
             $notification = array('login' => 'Please Login first !', 'alert-type' => 'success');
 
             return redirect()->route('login')->with($notification);
-
         }
 
 
@@ -678,7 +641,6 @@ class WebsiteController extends Controller
 
 
         return view("wishlist", get_defined_vars());
-
     }
 
 
@@ -700,7 +662,6 @@ class WebsiteController extends Controller
                 'message' => 'Sorry! You are logged in as admin please logout first',
 
             ]);
-
         }
 
 
@@ -726,7 +687,6 @@ class WebsiteController extends Controller
                     'message' => 'This item already added to wishlist !',
 
                 ]);
-
             }
 
 
@@ -744,7 +704,6 @@ class WebsiteController extends Controller
                     'message' => 'This item already added to cart!',
 
                 ]);
-
             }
 
 
@@ -774,7 +733,6 @@ class WebsiteController extends Controller
                 'wishlist_item_count' => $wishlist_item_counts
 
             ]);
-
         } else {
 
 
@@ -788,9 +746,7 @@ class WebsiteController extends Controller
                 'message' => 'Please Login First !',
 
             ]);
-
         }
-
     }
 
 
@@ -808,7 +764,6 @@ class WebsiteController extends Controller
 
 
         return redirect()->route('wishlist');
-
     }
 
 
@@ -818,7 +773,6 @@ class WebsiteController extends Controller
     {
 
         return view("website.products");
-
     }
 
 
@@ -840,19 +794,16 @@ class WebsiteController extends Controller
                 $notification = ['message' => 'Sorry! ' . Product::where('status', 1)->where('id', $cart_item->product_id)->first()->product_name . ' has only ' . $available_quantity . ' quantity available.'];
 
                 return back()->with($notification);
-
             }
 
             $total += $cart_item->price * $cart_item->quantity;
 
             $cart_item['product_name'] = Product::where('status', 1)->where('id', $cart_item->product_id)->first()->product_name;
-
         }
 
 
 
         return view("checkout", get_defined_vars());
-
     }
 
 
@@ -872,7 +823,6 @@ class WebsiteController extends Controller
             $product->avg_rating = Review::where('product_id', $product->id)->avg('rating');
 
             $product->category_name = $parent_category->parent_category_name;
-
         }
 
         $attributes = AttributeValue::where('status', 1)->get();
@@ -884,11 +834,9 @@ class WebsiteController extends Controller
         foreach ($featured_products as $featured_product) {
 
             $featured_product->avg_rating = Review::where('product_id', $featured_product->id)->avg('rating');
-
         }
 
         return view('shop', get_defined_vars());
-
     }
 
 
@@ -914,7 +862,6 @@ class WebsiteController extends Controller
             $notification = array('message' => 'Please login first !', 'status' => 404);
 
             return $notification;
-
         }
 
         $order = Order::where('user_id', Auth::id())->with('order_details')->get();
@@ -928,7 +875,6 @@ class WebsiteController extends Controller
             $notification = array('message' => 'You have not purchased this product !', 'status' => 404);
 
             return $notification;
-
         }
 
         if ($review) {
@@ -936,7 +882,6 @@ class WebsiteController extends Controller
             $notification = array('message' => 'You have already given review on this product !', 'status' => 404);
 
             return $notification;
-
         }
 
 
@@ -960,15 +905,12 @@ class WebsiteController extends Controller
             $notification = array('message' => 'Review has been added successfully !', 'status' => 200);
 
             return $notification;
-
         } else {
 
             $notification = array('message' => 'Review has not been added successfully !', 'status' => 404);
 
             return $notification;
-
         }
-
     }
 
 
@@ -981,32 +923,15 @@ class WebsiteController extends Controller
 
             'name' => 'required',
 
-            'email' => 'required',
+            'phone' => 'required',
 
         ]);
-
-        // get lead according to user_id or session_id
-
-        $leads = Leads::where('session_id', Session::getId())->where('product_id', $request->product_id)->first();
-
-        if ($leads) {
-
-            $notification = array('message' => 'You have already given response on this product !', 'status' => 404);
-
-            return $notification;
-
-        }
-
-
-
-
 
         $lead = new Leads();
 
         if (Auth::check()) {
 
             $lead->user_id = Auth::id();
-
         }
 
         $lead->session_id = Session::getId();
@@ -1015,22 +940,19 @@ class WebsiteController extends Controller
 
         $lead->name = $request->name;
 
-        $lead->email = $request->email;
+        $lead->phone = $request->phone;
 
         if ($lead->save()) {
 
             $notification = array('message' => 'Your response has been added successfully !', 'status' => 200);
 
             return $notification;
-
         } else {
 
             $notification = array('message' => 'Your response could not be added !', 'status' => 404);
 
             return $notification;
-
         }
-
     }
 
 
@@ -1044,7 +966,6 @@ class WebsiteController extends Controller
         $leads = Leads::with('products')->with('users')->get();
 
         return view('admin_dashboard.leads.index', get_defined_vars());
-
     }
 
 
@@ -1054,7 +975,6 @@ class WebsiteController extends Controller
     {
 
         return view('forgot-password');
-
     }
 
 
@@ -1064,8 +984,5 @@ class WebsiteController extends Controller
     {
 
         return view('update-password');
-
     }
-
 }
-
