@@ -250,7 +250,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="mb-0 pb-1">Phone <span class="required">*</span></label>
-                                                <input type="text" name="phone" class="form-control" required />
+                                                <input type="tel" id="phone" name="phone" pattern="[0-9]{9}" class="form-control" required />
                                             </div>
                                         </div>
 
@@ -264,7 +264,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="#" class="btn btn-success"><i class="fab fa-whatsapp"></i> Commander avec
+                <a href="https://wa.me/221771415882" target="_blank" class="btn btn-success"><i class="fab fa-whatsapp"></i> Commander avec
                     WhatsApp</a>
             </div>
             <!-- End .product-action -->
@@ -275,11 +275,9 @@
                 <label class="sr-only">Share:</label>
 
                 <div class="social-icons mr-2">
-                    <a href="#" class="social-icon social-facebook icon-facebook" target="_blank" title="Facebook"></a>
-                    <a href="#" class="social-icon social-twitter icon-twitter" target="_blank" title="Twitter"></a>
-                    <a href="#" class="social-icon social-linkedin fab fa-linkedin-in" target="_blank" title="Linkedin"></a>
-                    <a href="#" class="social-icon social-gplus fab fa-google-plus-g" target="_blank" title="Google +"></a>
-                    <a href="#" class="social-icon social-mail icon-mail-alt" target="_blank" title="Mail"></a>
+                    <a href="https://www.facebook.com/Ocasebebe" class="social-icon social-facebook icon-facebook" target="_blank" title="Facebook"></a>
+                    <a href="https://twitter.com/bebeocase" class="social-icon social-twitter icon-twitter" target="_blank" title="Twitter"></a>
+                    <a href="https://www.instagram.com/ocase_bebe_dakar/" class="social-icon social-instagram icon-instagram" target="_blank" title="Instagram"></a>
                 </div>
                 <!-- End .social-icons -->
 

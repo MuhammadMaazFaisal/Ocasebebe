@@ -70,6 +70,10 @@
 
                                                 aria-label="Details: activate to sort column ascending">Phone</th>
 
+                                            <th class="sorting" tabindex="0" aria-controls="basic-1"
+
+                                                aria-label="Details: activate to sort column ascending">Date</th>
+
                                         </tr>
 
                                     </thead>
@@ -109,6 +113,12 @@
                                                 <td>
 
                                                     {!! $value->phone ?? null !!}
+
+                                                </td>
+
+                                                <td>
+
+                                                    {!! $value->created_at ?? null !!}
 
                                                 </td>
 
