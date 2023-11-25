@@ -824,6 +824,20 @@
                                     </div>
                                 </div>
                                 <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="type">Gender.</label>
+                                            <select id="gender" name="gender" for="exampleFormControlInput10" class="form-control btn-square gender">
+                                                <option value="">Choose Gender</option>
+                                                <option value="Male" class="form-control btn-square"  {{ $products->gender == 'Male' ? 'selected' : '' }}>Male
+                                                </option>
+                                                <option value="Female" class="form-control btn-square"{{ $products->gender == 'Female' ? 'selected' : '' }}>Female
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
                                     <div class="col-lg-12">
                                         <div class="mb-3">
                                             <label for="">Short Description</label>

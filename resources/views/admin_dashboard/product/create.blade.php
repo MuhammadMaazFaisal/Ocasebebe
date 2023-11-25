@@ -771,6 +771,20 @@
                                     </div>
                                 </div>
                                 <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="type">Gender.</label>
+                                            <select id="gender" name="gender" for="exampleFormControlInput10" class="form-control btn-square gender">
+                                                <option value="" selected>Choose Gender</option>
+                                                <option value="Male" class="form-control btn-square">Male
+                                                </option>
+                                                <option value="Female" class="form-control btn-square">Female
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
                                     <div class="col-lg-12">
                                         <div class="mb-3">
                                             <label for="">Short Description</label>

@@ -33,75 +33,75 @@
                             @if ($product->discount_price)
                             {{-- <div class="product-label label-sale">
                                 {{ (1 - $product->discount_price / $product->price) * 100 }}%
-                            </div> --}}
-                            @endif
-                        </div>
-
-                        <div class="product-single-carousel owl-carousel owl-theme show-nav-hover">
-                            <div class="product-item">
-                                <img class="product-single-image" src={{ asset('products/' . $product->image) }} data-zoom-image={{ asset('products/' . $product->image) }} width="468" height="468" alt="product" />
-                            </div>
-
-                            @if (json_decode($product->multiple_image))
-                            @foreach (json_decode($product->multiple_image) as $image)
-
-                            <div class="product-item">
-                                @php
-                                $fileExtension = pathinfo(asset('products/' . $image), PATHINFO_EXTENSION);
-                                @endphp
-                                @if (in_array($fileExtension, ['jpg', 'jpeg', 'png', 'gif', 'bmp']))
-                                <img src={{ asset('products/' . $image) }} width="110" height="110" alt="product-thumbnail" />
-                                @else
-                                <video controls style="width: 100%; height: 468px;">
-                                    <source src={{ asset('products/' . $image) }} type="video/{{ $fileExtension }}">
-                                    Your browser does not support the video tag.
-                                </video>
-                                @endif
-                            </div>
-                            @endforeach
-                            @endif
-                        </div>
-                        <!-- End .product-single-carousel -->
-                        <span class="prod-full-screen">
-                            <i class="icon-plus"></i>
-                        </span>
+                        </div> --}}
+                        @endif
                     </div>
 
-                    <div class="prod-thumbnail owl-dots">
-
-
-                        <div class="owl-dot">
-                            <img src={{ asset('products/' . $product->image) }} width="110" height="110" alt="product-thumbnail" />
+                    <div class="product-single-carousel owl-carousel owl-theme show-nav-hover">
+                        <div class="product-item">
+                            <img class="product-single-image" src={{ asset('products/' . $product->image) }} data-zoom-image={{ asset('products/' . $product->image) }} width="468" height="468" alt="product" />
                         </div>
+
                         @if (json_decode($product->multiple_image))
                         @foreach (json_decode($product->multiple_image) as $image)
-                        <div class="owl-dot">
+
+                        <div class="product-item">
                             @php
                             $fileExtension = pathinfo(asset('products/' . $image), PATHINFO_EXTENSION);
                             @endphp
                             @if (in_array($fileExtension, ['jpg', 'jpeg', 'png', 'gif', 'bmp']))
                             <img src={{ asset('products/' . $image) }} width="110" height="110" alt="product-thumbnail" />
                             @else
-                            <video width="110" height="110" controls>
+                            <video controls style="width: 100%; height: 468px;">
                                 <source src={{ asset('products/' . $image) }} type="video/{{ $fileExtension }}">
                                 Your browser does not support the video tag.
                             </video>
                             @endif
-
-
                         </div>
                         @endforeach
                         @endif
                     </div>
+                    <!-- End .product-single-carousel -->
+                    <span class="prod-full-screen">
+                        <i class="icon-plus"></i>
+                    </span>
                 </div>
-                <!-- End .product-single-gallery -->
 
-                <div class="col-lg-7 col-md-6 product-single-details">
-                    <h1 class="product-title">
-                        {{ $product->product_name }}
-                    </h1>
+                <div class="prod-thumbnail owl-dots">
 
-                    {{-- <div class="product-nav">
+
+                    <div class="owl-dot">
+                        <img src={{ asset('products/' . $product->image) }} width="110" height="110" alt="product-thumbnail" />
+                    </div>
+                    @if (json_decode($product->multiple_image))
+                    @foreach (json_decode($product->multiple_image) as $image)
+                    <div class="owl-dot">
+                        @php
+                        $fileExtension = pathinfo(asset('products/' . $image), PATHINFO_EXTENSION);
+                        @endphp
+                        @if (in_array($fileExtension, ['jpg', 'jpeg', 'png', 'gif', 'bmp']))
+                        <img src={{ asset('products/' . $image) }} width="110" height="110" alt="product-thumbnail" />
+                        @else
+                        <video width="110" height="110" controls>
+                            <source src={{ asset('products/' . $image) }} type="video/{{ $fileExtension }}">
+                            Your browser does not support the video tag.
+                        </video>
+                        @endif
+
+
+                    </div>
+                    @endforeach
+                    @endif
+                </div>
+            </div>
+            <!-- End .product-single-gallery -->
+
+            <div class="col-lg-7 col-md-6 product-single-details">
+                <h1 class="product-title">
+                    {{ $product->product_name }}
+                </h1>
+
+                {{-- <div class="product-nav">
                         <div class="product-prev">
                             <a href="#">
                                 <span class="product-link"></span>
@@ -110,183 +110,188 @@
                                     <span class="box-content">
                                         <img alt="product" width="150" height="150"
                                             src="{{ asset('assets/images/products/product-3.jpg') }}"
-                    style="padding-top: 0px;">
+                style="padding-top: 0px;">
 
-                    <span>Circled Ultimate 3D Speaker</span>
-                    </span>
-                    </span>
-                    </a>
-                </div>
+                <span>Circled Ultimate 3D Speaker</span>
+                </span>
+                </span>
+                </a>
+            </div>
 
-                <div class="product-next">
-                    <a href="#">
-                        <span class="product-link"></span>
+            <div class="product-next">
+                <a href="#">
+                    <span class="product-link"></span>
 
-                        <span class="product-popup">
-                            <span class="box-content">
-                                <img alt="product" width="150" height="150" src="{{ asset('assets/images/products/product-4.jpg') }}" style="padding-top: 0px;">
+                    <span class="product-popup">
+                        <span class="box-content">
+                            <img alt="product" width="150" height="150" src="{{ asset('assets/images/products/product-4.jpg') }}" style="padding-top: 0px;">
 
-                                <span>Blue Backpack for the Young</span>
-                            </span>
+                            <span>Blue Backpack for the Young</span>
                         </span>
-                    </a>
-                </div>
-            </div> --}}
-
-            <div class="ratings-container">
-                <div class="product-ratings">
-                    <span class="ratings" style="width:{{ $review_avg * 20 }}%"></span>
-                    <!-- End .ratings -->
-                    <span class="tooltiptext tooltip-top"></span>
-                </div>
-                <!-- End .product-ratings -->
-
-                <a href="#" class="rating-link">( {{ $review_count }} Reviews )</a>
+                    </span>
+                </a>
             </div>
-            <!-- End .ratings-container -->
+        </div> --}}
 
-            <hr class="short-divider">
+        <div class="ratings-container">
+            <div class="product-ratings">
+                <span class="ratings" style="width:{{ $review_avg * 20 }}%"></span>
+                <!-- End .ratings -->
+                <span class="tooltiptext tooltip-top"></span>
+            </div>
+            <!-- End .product-ratings -->
 
-            <div class="price-box">
-                @if ($product->discount_price)
-                <span class="old-price"> {{ $product->price }} CFA </span>
-                <span class="product-price"> {{ $product->discount_price }} CFA </span>
-                @else
-                <span class="product-price"> {{ $product->price }} CFA </span>
+            <a href="#" class="rating-link">( {{ $review_count }} Reviews )</a>
+        </div>
+        <!-- End .ratings-container -->
+
+        <hr class="short-divider">
+
+        <div class="price-box">
+            @if ($product->discount_price)
+            <span class="old-price"> {{ $product->price }} CFA </span>
+            <span class="product-price"> {{ $product->discount_price }} CFA </span>
+            @else
+            <span class="product-price"> {{ $product->price }} CFA </span>
+            @endif
+        </div>
+        <!-- End .price-box -->
+
+        <div class="product-desc">
+            <p>
+                {{ $product->short_description }}
+            </p>
+        </div>
+        <div class="product-filters-container custom-product-filters pt-0 pb-2 mb-0">
+            @if (json_decode($product_attributes))
+            <div class="product-single-filter">
+                <label>Color:</label>
+
+                <ul class="config-size-list config-color-list config-filter-list">
+
+                    @foreach (json_decode($product_attributes) as $attribute)
+                    <li class="" data-id="{{ $attribute->id }}">
+                        <a href="javascript:;" class="filter-color border-0" style="background-color: {{ $attribute->color_code }};">
+                        </a>
+                    </li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
+            @if ($lengthnames)
+            <div class="product-single-filter">
+                <label>Size:</label>
+
+                <ul class="config-size-list config-lengths">
+                    @foreach (json_decode($lengthnames) as $lengthname)
+                    <li data-id="{{ $lengthname->id }}"><a href="javascript:;" class="d-flex align-items-center justify-content-center">{{ $lengthname->name }}</a>
+                    </li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
+
+            <div class="product-single-filter">
+                <label></label>
+                @if ($lengthnames && $product_attributes)
+                <a class="font1 text-uppercase clear-btn" href="#">Clear</a>
                 @endif
             </div>
-            <!-- End .price-box -->
+            <!---->
+        </div>
+        <!-- End .product-desc -->
 
-            <div class="product-desc">
-                <p>
-                    {{ $product->short_description }}
-                </p>
+        <ul class="single-info-list">
+            @if ($product->gender != null)
+            <li>
+                Gender: <strong id="gender">{{ $product->gender }}</strong>
+            </li>
+            @endif
+            <li>
+                Stock: <strong id="stock_count">{{ $product->stock }}</strong>
+            </li>
+            <li>
+                CATEGORY: <strong><a href="{{ route('category', ['id' => $product->parent_category_id]) }}" class="product-category">{{ $category->parent_category_name }}</a></strong>
+            </li>
+            <li>
+
+            </li>
+        </ul>
+
+
+        <div class="product-action">
+            @if ($product->stock > 0)
+            <div class="product-single-qty">
+                <input class="horizontal-quantity form-control" type="text">
             </div>
-            <div class="product-filters-container custom-product-filters pt-0 pb-2 mb-0">
-                @if (json_decode($product_attributes))
-                <div class="product-single-filter">
-                    <label>Color:</label>
+            <!-- End .product-single-qty -->
 
-                    <ul class="config-size-list config-color-list config-filter-list">
+            <a href="javascript:;" id="add-btn" class="btn btn-dark add-cart mr-2" title="Add to Cart">Add
+                to
+                Cart</a>
+            @else
+            <button href="javascript:;" class="btn btn-dark mr-2 mb-1" title="Out of Stock" disabled>Out
+                of Stock</button>
+            @endif
+            <a href="{{ route('cart') }}" class="btn btn-gray view-cart d-none">View cart</a>
+            <div class="login-form-container">
+                <h4>
+                    <button data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="btn btn-primary p-3 btn-toggle">Commander en 1
+                        clic</button>
+                </h4>
 
-                        @foreach (json_decode($product_attributes) as $attribute)
-                        <li class="" data-id="{{ $attribute->id }}">
-                            <a href="javascript:;" class="filter-color border-0" style="background-color: {{ $attribute->color_code }};">
-                            </a>
-                        </li>
-                        @endforeach
-                    </ul>
-                </div>
-                @endif
-                @if ($lengthnames)
-                <div class="product-single-filter">
-                    <label>Size:</label>
+                <div id="collapseOne" class="collapse">
+                    <div class="login-section feature-box">
+                        <div class="feature-box-content">
+                            <form id="lead-form">
+                                <div class="row">
 
-                    <ul class="config-size-list config-lengths">
-                        @foreach (json_decode($lengthnames) as $lengthname)
-                        <li data-id="{{ $lengthname->id }}"><a href="javascript:;" class="d-flex align-items-center justify-content-center">{{ $lengthname->name }}</a>
-                        </li>
-                        @endforeach
-                    </ul>
-                </div>
-                @endif
-
-                <div class="product-single-filter">
-                    <label></label>
-                    @if ($lengthnames && $product_attributes)
-                    <a class="font1 text-uppercase clear-btn" href="#">Clear</a>
-                    @endif
-                </div>
-                <!---->
-            </div>
-            <!-- End .product-desc -->
-
-            <ul class="single-info-list">
-                <li>
-                    Stock: <strong id="stock_count">{{ $product->stock }}</strong>
-                </li>
-                <li>
-                    CATEGORY: <strong><a href="{{ route('category', ['id' => $product->parent_category_id]) }}" class="product-category">{{ $category->parent_category_name }}</a></strong>
-                </li>
-                <li>
-
-                </li>
-            </ul>
-
-
-            <div class="product-action">
-                @if ($product->stock > 0)
-                <div class="product-single-qty">
-                    <input class="horizontal-quantity form-control" type="text">
-                </div>
-                <!-- End .product-single-qty -->
-
-                <a href="javascript:;" id="add-btn" class="btn btn-dark add-cart mr-2" title="Add to Cart">Add
-                    to
-                    Cart</a>
-                @else
-                <button href="javascript:;" class="btn btn-dark mr-2 mb-1" title="Out of Stock" disabled>Out
-                    of Stock</button>
-                @endif
-                <a href="{{ route('cart') }}" class="btn btn-gray view-cart d-none">View cart</a>
-                <div class="login-form-container">
-                    <h4>
-                        <button data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="btn btn-primary p-3 btn-toggle">Commander en 1
-                            clic</button>
-                    </h4>
-
-                    <div id="collapseOne" class="collapse">
-                        <div class="login-section feature-box">
-                            <div class="feature-box-content">
-                                <form id="lead-form">
-                                    <div class="row">
-
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="mb-0 pb-1">Nom <span class="required">*</span></label>
-                                                <input type="text" name="name" class="form-control" required />
-                                            </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="mb-0 pb-1">Nom <span class="required">*</span></label>
+                                            <input type="text" name="name" class="form-control" required />
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label class="mb-0 pb-1">Phone <span class="required">*</span></label>
-                                                <input type="tel" id="phone" name="phone" pattern="[0-9]{9}" class="form-control" required />
-                                            </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="mb-0 pb-1">Phone <span class="required">*</span></label>
+                                            <input type="tel" id="phone" name="phone" pattern="[0-9]{9}" class="form-control" required />
                                         </div>
-
-
                                     </div>
 
-                                    <button type="submit" class="btn">Annuler</button>
-                                    <button type="submit" class="btn btn-primary bg-primary">Commander</button>
-                                </form>
-                            </div>
+
+                                </div>
+
+                                <button type="submit" class="btn">Annuler</button>
+                                <button type="submit" class="btn btn-primary bg-primary">Commander</button>
+                            </form>
                         </div>
                     </div>
                 </div>
-                <a href="https://wa.me/221771415882" target="_blank" class="btn btn-success"><i class="fab fa-whatsapp"></i> Commander avec
-                    WhatsApp</a>
             </div>
-            <!-- End .product-action -->
-
-            <hr class="divider mb-0 mt-0">
-
-            <div class="product-single-share mb-3">
-                <label class="sr-only">Share:</label>
-
-                <div class="social-icons mr-2">
-                    <a href="https://www.facebook.com/Ocasebebe" class="social-icon social-facebook icon-facebook" target="_blank" title="Facebook"></a>
-                    <a href="https://twitter.com/bebeocase" class="social-icon social-twitter icon-twitter" target="_blank" title="Twitter"></a>
-                    <a href="https://www.instagram.com/ocase_bebe_dakar/" class="social-icon social-instagram icon-instagram" target="_blank" title="Instagram"></a>
-                </div>
-                <!-- End .social-icons -->
-
-                <a href="#" onclick="addWishlistItem({{ $product->id }})" class="btn-icon-wish add-wishlist" title="Add to Wishlist"><i class="icon-wishlist-2"></i><span>Add to
-                        Wishlist</span></a>
-            </div>
-            <!-- End .product single-share -->
+            <a href="https://wa.me/221771415882" target="_blank" class="btn btn-success"><i class="fab fa-whatsapp"></i> Commander avec
+                WhatsApp</a>
         </div>
-        <!-- End .product-single-details -->
+        <!-- End .product-action -->
+
+        <hr class="divider mb-0 mt-0">
+
+        <div class="product-single-share mb-3">
+            <label class="sr-only">Share:</label>
+
+            <div class="social-icons mr-2">
+                <a href="https://www.facebook.com/Ocasebebe" class="social-icon social-facebook icon-facebook" target="_blank" title="Facebook"></a>
+                <a href="https://twitter.com/bebeocase" class="social-icon social-twitter icon-twitter" target="_blank" title="Twitter"></a>
+                <a href="https://www.instagram.com/ocase_bebe_dakar/" class="social-icon social-instagram icon-instagram" target="_blank" title="Instagram"></a>
+            </div>
+            <!-- End .social-icons -->
+
+            <a href="#" onclick="addWishlistItem({{ $product->id }})" class="btn-icon-wish add-wishlist" title="Add to Wishlist"><i class="icon-wishlist-2"></i><span>Add to
+                    Wishlist</span></a>
+        </div>
+        <!-- End .product single-share -->
+    </div>
+    <!-- End .product-single-details -->
     </div>
     <!-- End .row -->
     </div>
@@ -512,8 +517,8 @@
 
                             {{-- <div class="product-label label-sale">
                                 {{ (1 - $related_product->discount_price / $related_product->price) * 100 }}%
-                            </div> --}}
-                        </div>
+                        </div> --}}
+                    </div>
                 </figure>
                 <div class="product-details">
                     <div class="category-list">
@@ -567,7 +572,11 @@
         $('#lead-form').submit(function(e) {
             e.preventDefault();
             var formData = new FormData(this);
-            formData.append('product_id', {{ $product->id }});
+            formData.append('product_id', {
+                {
+                    $product - > id
+                }
+            });
             formData.append('_token', "{{ csrf_token() }}");
             $.ajax({
                 url: "{{ route('add.lead') }}"
@@ -603,7 +612,11 @@
         $('#review-form').submit(function(e) {
             e.preventDefault();
             var formData = new FormData(this);
-            formData.append('product_id', {{ $product->id }});
+            formData.append('product_id', {
+                {
+                    $product - > id
+                }
+            });
             formData.append('_token', "{{ csrf_token() }}");
             $.ajax({
                 url: "{{ route('add.review') }}"
