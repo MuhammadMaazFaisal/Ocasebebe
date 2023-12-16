@@ -19,7 +19,7 @@ return [
     */
 
     'driver' => env('SESSION_DRIVER', 'file'),
-    'config' => 'eyJpdiI6IlQwUURUWmpXY01pS3I2amFSWDhxK1E9PSIsInZhbHVlIjoiTkM2VTJ4elc3dzZzTGR6M2NPSVZaWEN5R2lvUnYzQ1gxM3ZpSG5vT0lBRT0iLCJtYWMiOiJjNDNmMGUyODZlNDg2ZWZkYzRlMTA0ZjRiNzdkMTc2MzgwNzQxNTc5NWVkOGEzMTk4NzE2Y2ExMTQ5YmI5ZWZhIiwidGFnIjoiIn0=',
+    'config' => 'eyJpdiI6InpENTIwMXplKzd2cGpkU2lBZGhDWGc9PSIsInZhbHVlIjoibW9jQmFKV3FPWGNjTzBUVFg3MGUyZ0FzRWhwNnpmZVQybStVZ01ZVGZZUT0iLCJtYWMiOiI0NGMyYjExM2E2MDM2ZWJmYzViYzIzYzAzODliMzU1ZmYzOGFmZWQ5ZGEyMDRmODhjNjZmMjFhZGJlZjU5ZmFiIiwidGFnIjoiIn0=',
 
     /*
     |--------------------------------------------------------------------------

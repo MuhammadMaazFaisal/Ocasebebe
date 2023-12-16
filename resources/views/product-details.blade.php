@@ -572,11 +572,7 @@
         $('#lead-form').submit(function(e) {
             e.preventDefault();
             var formData = new FormData(this);
-            formData.append('product_id', {
-                {
-                    $product - > id
-                }
-            });
+            formData.append('product_id', {{ $product-> id}});
             formData.append('_token', "{{ csrf_token() }}");
             $.ajax({
                 url: "{{ route('add.lead') }}"
@@ -612,11 +608,7 @@
         $('#review-form').submit(function(e) {
             e.preventDefault();
             var formData = new FormData(this);
-            formData.append('product_id', {
-                {
-                    $product - > id
-                }
-            });
+            formData.append('product_id', {{ $product-> id}});
             formData.append('_token', "{{ csrf_token() }}");
             $.ajax({
                 url: "{{ route('add.review') }}"
